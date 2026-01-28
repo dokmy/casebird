@@ -30,6 +30,9 @@ export function ChatMessage({ message, onCaseClick }: ChatMessageProps) {
   // Group thinking steps by iteration
   const groupedSteps = groupStepsByIteration(message.thinkingSteps || []);
 
+  // Message is complete when it has content
+  const isComplete = message.content.length > 0;
+
   return (
     <div className={cn("py-8", isUser ? "bg-transparent" : "")}>
       <div className="max-w-2xl mx-auto px-6">
@@ -74,6 +77,7 @@ export function ChatMessage({ message, onCaseClick }: ChatMessageProps) {
                         iteration={parseInt(iteration)}
                         steps={steps}
                         totalIterations={message.iterations || 1}
+                        isComplete={isComplete}
                       />
                     ))}
                   </div>
@@ -193,12 +197,14 @@ interface IterationBlockProps {
   iteration: number;
   steps: ThinkingStep[];
   totalIterations: number;
+  isComplete: boolean;
 }
 
 function IterationBlock({
   iteration,
   steps,
   totalIterations,
+  isComplete,
 }: IterationBlockProps) {
   const thoughts = steps.filter((s) => s.type === "thought");
   const toolCalls = steps.filter((s) => s.type === "tool_call");
@@ -235,6 +241,7 @@ function IterationBlock({
               name={tc.toolName || "unknown"}
               args={tc.toolArgs || {}}
               result={result?.toolSummary}
+              isComplete={isComplete}
             />
           );
         })}
@@ -247,9 +254,10 @@ interface ToolCallCardProps {
   name: string;
   args: Record<string, unknown>;
   result?: string;
+  isComplete: boolean;
 }
 
-function ToolCallCard({ name, args, result }: ToolCallCardProps) {
+function ToolCallCard({ name, args, result, isComplete }: ToolCallCardProps) {
   const isSearch = name === "searchCases";
 
   return (
@@ -267,8 +275,8 @@ function ToolCallCard({ name, args, result }: ToolCallCardProps) {
             <span className="text-sm font-serif text-foreground">
               {isSearch ? "Search" : "Retrieve"}
             </span>
-            {result && <CheckCircle2 className="w-3.5 h-3.5 text-primary" />}
-            {!result && (
+            {(result || isComplete) && <CheckCircle2 className="w-3.5 h-3.5 text-primary" />}
+            {!result && !isComplete && (
               <Loader2 className="w-3.5 h-3.5 text-muted-foreground animate-spin" />
             )}
           </div>

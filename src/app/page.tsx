@@ -6,6 +6,7 @@ import { ChatInput } from "@/components/chat/ChatInput";
 import { CaseViewer } from "@/components/chat/CaseViewer";
 import { WelcomeScreen } from "@/components/chat/WelcomeScreen";
 import { AnimatedBird } from "@/components/ui/animated-bird";
+import { FeatherIcon } from "@/components/ui/feather-icon";
 import { Message, SelectedCase, ThinkingStep, Stage, ResearchMode } from "@/types/chat";
 
 export default function Home() {
@@ -217,8 +218,9 @@ export default function Home() {
         <div className="max-w-2xl mx-auto">
           <button
             onClick={handleHomeClick}
-            className="text-xl font-serif font-medium text-foreground tracking-tight hover:text-primary transition-colors"
+            className="flex items-center gap-2 text-xl font-serif font-medium text-foreground tracking-tight hover:text-primary transition-colors group"
           >
+            <FeatherIcon className="w-5 h-5 group-hover:scale-110 transition-transform" />
             Casebird
           </button>
         </div>

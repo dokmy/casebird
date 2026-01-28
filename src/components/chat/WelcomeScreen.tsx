@@ -1,7 +1,8 @@
 "use client";
 
-import { Scale, Search, FileText, MessageSquare } from "lucide-react";
+import { Search, FileText, MessageSquare, Scale } from "lucide-react";
 import { ResearchMode } from "@/types/chat";
+import { FeatherIcon } from "@/components/ui/feather-icon";
 
 interface WelcomeScreenProps {
   onExampleClick: (example: string, mode: ResearchMode) => void;
@@ -38,7 +39,7 @@ export function WelcomeScreen({ onExampleClick }: WelcomeScreenProps) {
         {/* Logo */}
         <div className="mb-8">
           <div className="inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-primary/10 mb-4">
-            <Scale className="w-8 h-8 text-primary" />
+            <FeatherIcon className="w-10 h-10" />
           </div>
           <h1 className="text-3xl font-serif font-semibold text-foreground">Casebird</h1>
           <p className="font-serif text-muted-foreground mt-2">
