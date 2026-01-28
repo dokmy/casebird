@@ -204,14 +204,22 @@ export default function Home() {
     [handleSend]
   );
 
+  const handleHomeClick = useCallback(() => {
+    setMessages([]);
+    setSelectedCase(null);
+  }, []);
+
   return (
     <div className="h-screen flex flex-col overflow-hidden bg-background">
       {/* Header - Minimal */}
       <header className="border-b border-border/50 px-6 py-4 shrink-0">
         <div className="max-w-2xl mx-auto">
-          <h1 className="text-xl font-serif font-medium text-foreground tracking-tight">
+          <button
+            onClick={handleHomeClick}
+            className="text-xl font-serif font-medium text-foreground tracking-tight hover:text-primary transition-colors"
+          >
             Casebird
-          </h1>
+          </button>
         </div>
       </header>
 

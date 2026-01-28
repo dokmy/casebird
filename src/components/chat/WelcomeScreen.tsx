@@ -31,8 +31,9 @@ const EXAMPLES = [
 
 export function WelcomeScreen({ onExampleClick }: WelcomeScreenProps) {
   return (
-    <div className="flex-1 flex items-center justify-center p-8">
-      <div className="max-w-2xl w-full text-center">
+    <div className="flex-1 overflow-y-auto">
+      <div className="min-h-full flex items-center justify-center p-8">
+        <div className="max-w-2xl w-full text-center">
         {/* Logo */}
         <div className="mb-8">
           <div className="inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-primary/10 mb-4">
@@ -85,6 +86,7 @@ export function WelcomeScreen({ onExampleClick }: WelcomeScreenProps) {
         <p className="font-serif text-xs text-muted-foreground mt-8 italic">
           Casebird provides legal research assistance only. Always verify case citations and consult qualified legal counsel for legal advice.
         </p>
+        </div>
       </div>
     </div>
   );
