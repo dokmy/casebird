@@ -156,12 +156,47 @@ ${chunks.join("\n\n")}
   `.trim();
 }
 
-export function getCaseUrl(citation: string, language: string = "EN"): string {
-  // Parse citation like "[2024] HKCA 620"
-  const match = citation.match(/\[(\d{4})\]\s*(\w+)\s*(\d+)/);
-  if (!match) return "";
-
-  const [, year, court, number] = match;
+export function getCaseUrl(
+  citation: string,
+  language: string = "EN",
+  courtCode?: string,
+  year?: number
+): string {
   const lang = language.toUpperCase() === "TC" ? "tc" : "en";
-  return `https://www.hklii.hk/${lang}/cases/${court.toLowerCase()}/${year}/${number}`;
+
+  // If we have court and year from metadata, try to extract just the number from citation
+  if (courtCode && year) {
+    // Try to extract case number from citation
+    // Handle formats like "[2024] HKCA 620", "HKCA 620", etc.
+    const numberMatch = citation.match(/(\d+)\s*$/);
+    if (numberMatch) {
+      const number = numberMatch[1];
+      return `https://www.hklii.hk/${lang}/cases/${courtCode.toLowerCase()}/${year}/${number}`;
+    }
+  }
+
+  // Fallback: Parse citation like "[2024] HKCA 620" or "[2024] HKCA No. 620"
+  // Robust regex to handle variations
+  const citationTrimmed = citation.trim();
+
+  // Try new format: [2024] HKCA 620
+  let match = citationTrimmed.match(/\[(\d{4})\]\s*(\w+)\s+(?:No\.\s*)?(\d+)/i);
+
+  // Try format without brackets: 2024 HKCA 620
+  if (!match) {
+    match = citationTrimmed.match(/^(\d{4})\s+(\w+)\s+(?:No\.\s*)?(\d+)/i);
+  }
+
+  // Try underscore format: 2024_HKCA_620
+  if (!match) {
+    match = citationTrimmed.match(/^(\d{4})_(\w+)_(\d+)/);
+  }
+
+  if (!match) {
+    console.error("Failed to parse citation:", citation);
+    return "";
+  }
+
+  const [, parsedYear, court, number] = match;
+  return `https://www.hklii.hk/${lang}/cases/${court.toLowerCase()}/${parsedYear}/${number}`;
 }

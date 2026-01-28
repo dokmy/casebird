@@ -139,7 +139,7 @@ async function executeTool(
 
     const result = searchResults
       .map((r) => {
-        const url = getCaseUrl(r.citation);
+        const url = getCaseUrl(r.citation, r.language, r.court, r.year);
         return `**${r.citation}** (${r.court.toUpperCase()}, ${r.year}, ${r.language})
 Score: ${r.score.toFixed(4)}
 URL: ${url}
