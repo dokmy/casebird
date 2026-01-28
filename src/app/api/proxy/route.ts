@@ -55,10 +55,21 @@ export async function GET(request: NextRequest) {
     );
 
     // Add base tag to handle remaining relative URLs
-    html = html.replace(
-      "<head>",
-      '<head><base href="https://www.hklii.hk/" target="_blank">'
-    );
+    // Also inject script to neutralize history manipulation (Vue Router tries to use replaceState)
+    const headInjection = `
+      <base href="https://www.hklii.hk/" target="_blank">
+      <script>
+        // Neutralize history manipulation to prevent cross-origin errors in iframe
+        (function() {
+          var noop = function() { return true; };
+          if (window.history) {
+            window.history.pushState = noop;
+            window.history.replaceState = noop;
+          }
+        })();
+      </script>
+    `;
+    html = html.replace("<head>", `<head>${headInjection}`);
 
     // Add some custom styles for better readability
     const customStyles = `
