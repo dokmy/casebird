@@ -87,7 +87,8 @@ export function ChatMessage({ message, onCaseClick }: ChatMessageProps) {
                 remarkPlugins={[remarkGfm]}
                 components={{
                   a: ({ href, children }) => {
-                    if (href?.includes("hklii.hk/en/cases/")) {
+                    // Match HKLII case URLs (both /en/ and /tc/)
+                    if (href && /hklii\.hk\/(en|tc)\/cases\//.test(href)) {
                       return (
                         <button
                           onClick={() => {

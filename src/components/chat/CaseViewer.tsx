@@ -13,11 +13,17 @@ interface CaseViewerProps {
 export function CaseViewer({ url, citation, onClose }: CaseViewerProps) {
   const [isFullscreen, setIsFullscreen] = useState(false);
 
+  // Clean and normalize the URL
+  const cleanUrl = url.trim().replace(/[\u200B-\u200D\uFEFF]/g, ''); // Remove zero-width characters
+
+  // Debug logging
+  console.log("CaseViewer URL:", JSON.stringify(cleanUrl), "Length:", cleanUrl.length);
+
   // Use proxy to bypass X-Frame-Options
-  const proxyUrl = `/api/proxy?url=${encodeURIComponent(url)}`;
+  const proxyUrl = `/api/proxy?url=${encodeURIComponent(cleanUrl)}`;
 
   const handleOpenExternal = () => {
-    window.open(url, "_blank", "noopener,noreferrer");
+    window.open(cleanUrl, "_blank", "noopener,noreferrer");
   };
 
   if (isFullscreen) {

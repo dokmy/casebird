@@ -1,18 +1,31 @@
 import { NextRequest } from "next/server";
 
 export async function GET(request: NextRequest) {
-  const url = request.nextUrl.searchParams.get("url");
+  const rawUrl = request.nextUrl.searchParams.get("url");
 
-  if (!url) {
+  if (!rawUrl) {
     return new Response("Missing url parameter", { status: 400 });
   }
 
-  // Only allow HKLII URLs for security
-  if (!url.startsWith("https://www.hklii.hk/")) {
+  // Clean and normalize the URL
+  let url = rawUrl.trim();
+
+  // Log for debugging
+  console.log("Proxy received URL:", JSON.stringify(url), "Length:", url.length);
+
+  // Ensure it's a valid HKLII URL (with or without www)
+  const isValidHKLII = url.match(/^https?:\/\/(www\.)?hklii\.hk\//);
+  if (!isValidHKLII) {
+    console.log("Invalid URL rejected:", url);
     return new Response("Only HKLII URLs are allowed", { status: 403 });
   }
 
+  // Normalize to www version
+  url = url.replace(/^https?:\/\/hklii\.hk\//, "https://www.hklii.hk/");
+
   try {
+    console.log("Proxy fetching URL:", url);
+
     const response = await fetch(url, {
       headers: {
         "User-Agent":
@@ -21,9 +34,13 @@ export async function GET(request: NextRequest) {
           "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8",
         "Accept-Language": "en-US,en;q=0.5",
       },
+      redirect: "follow", // Explicitly follow redirects
     });
 
+    console.log("Proxy response status:", response.status, "Final URL:", response.url);
+
     if (!response.ok) {
+      console.log("Proxy fetch failed:", response.status, response.statusText);
       return new Response(`Failed to fetch: ${response.status}`, {
         status: response.status,
       });
