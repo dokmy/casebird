@@ -1,26 +1,223 @@
 @import "tailwindcss";
+@import "tw-animate-css";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
+@custom-variant dark (&:is(.dark *));
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   --font-sans: var(--font-geist-sans);
+  --font-serif: var(--font-source-serif);
   --font-mono: var(--font-geist-mono);
+  --color-sidebar-ring: var(--sidebar-ring);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar: var(--sidebar);
+  --color-chart-5: var(--chart-5);
+  --color-chart-4: var(--chart-4);
+  --color-chart-3: var(--chart-3);
+  --color-chart-2: var(--chart-2);
+  --color-chart-1: var(--chart-1);
+  --color-ring: var(--ring);
+  --color-input: var(--input);
+  --color-border: var(--border);
+  --color-destructive: var(--destructive);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-accent: var(--accent);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-muted: var(--muted);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-secondary: var(--secondary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-primary: var(--primary);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-popover: var(--popover);
+  --color-card-foreground: var(--card-foreground);
+  --color-card: var(--card);
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+  --radius-2xl: calc(var(--radius) + 8px);
+  --radius-3xl: calc(var(--radius) + 12px);
+  --radius-4xl: calc(var(--radius) + 16px);
+  /* Custom Casebird colors */
+  --color-casebird: #015d63;
+  --color-casebird-dark: #022e33;
+  --color-casebird-light: #98fb98;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+:root {
+  --radius: 0.625rem;
+  /* Slightly grey/off-white background */
+  --background: #f8f9fa;
+  --foreground: #1a1a1a;
+  /* Cards slightly lighter */
+  --card: #ffffff;
+  --card-foreground: #1a1a1a;
+  --popover: #ffffff;
+  --popover-foreground: #1a1a1a;
+  /* Primary: elegant dark teal/green */
+  --primary: #015d63;
+  --primary-foreground: #ffffff;
+  /* Secondary: muted grey */
+  --secondary: #e9ecef;
+  --secondary-foreground: #1a1a1a;
+  /* Muted: subtle grey */
+  --muted: #f1f3f4;
+  --muted-foreground: #6c757d;
+  /* Accent: pale green */
+  --accent: #e8f5e9;
+  --accent-foreground: #022e33;
+  --destructive: #dc3545;
+  /* Borders: subtle grey */
+  --border: #dee2e6;
+  --input: #dee2e6;
+  --ring: #015d63;
+  /* Chart colors with green theme */
+  --chart-1: #015d63;
+  --chart-2: #2e7d32;
+  --chart-3: #43a047;
+  --chart-4: #66bb6a;
+  --chart-5: #98fb98;
+  /* Sidebar */
+  --sidebar: #ffffff;
+  --sidebar-foreground: #1a1a1a;
+  --sidebar-primary: #015d63;
+  --sidebar-primary-foreground: #ffffff;
+  --sidebar-accent: #e8f5e9;
+  --sidebar-accent-foreground: #022e33;
+  --sidebar-border: #dee2e6;
+  --sidebar-ring: #015d63;
+}
+
+.dark {
+  --background: #022e33;
+  --foreground: #f8f9fa;
+  --card: #033c42;
+  --card-foreground: #f8f9fa;
+  --popover: #033c42;
+  --popover-foreground: #f8f9fa;
+  --primary: #98fb98;
+  --primary-foreground: #022e33;
+  --secondary: #044850;
+  --secondary-foreground: #f8f9fa;
+  --muted: #044850;
+  --muted-foreground: #adb5bd;
+  --accent: #044850;
+  --accent-foreground: #98fb98;
+  --destructive: #ff6b6b;
+  --border: #055a62;
+  --input: #055a62;
+  --ring: #98fb98;
+  --chart-1: #98fb98;
+  --chart-2: #66bb6a;
+  --chart-3: #43a047;
+  --chart-4: #2e7d32;
+  --chart-5: #015d63;
+  --sidebar: #022e33;
+  --sidebar-foreground: #f8f9fa;
+  --sidebar-primary: #98fb98;
+  --sidebar-primary-foreground: #022e33;
+  --sidebar-accent: #044850;
+  --sidebar-accent-foreground: #98fb98;
+  --sidebar-border: #055a62;
+  --sidebar-ring: #98fb98;
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  body {
+    @apply bg-background text-foreground;
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+/* Custom scrollbar styling */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--muted);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--border);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--muted-foreground);
+}
+
+/* Casebird animations */
+@keyframes birdIdle {
+  0%, 100% { transform: translateY(0) scale(1); }
+  50% { transform: translateY(-2px) scale(1.02); }
+}
+
+@keyframes birdSearch {
+  0%, 100% { transform: rotate(0deg); }
+  25% { transform: rotate(-15deg); }
+  75% { transform: rotate(15deg); }
+}
+
+@keyframes birdRead {
+  0%, 100% { transform: translateY(0) rotate(0deg); }
+  50% { transform: translateY(3px) rotate(10deg); }
+}
+
+@keyframes birdThink {
+  0%, 100% { transform: rotate(0deg); }
+  50% { transform: rotate(-8deg); }
+}
+
+@keyframes birdFly {
+  0%, 100% { transform: translateY(0); }
+  25% { transform: translateY(-6px); }
+  75% { transform: translateY(2px); }
+}
+
+@keyframes birdHappy {
+  0%, 100% { transform: translateY(0) scale(1); }
+  25% { transform: translateY(-4px) scale(1.05); }
+  50% { transform: translateY(0) scale(1); }
+  75% { transform: translateY(-2px) scale(1.02); }
+}
+
+@keyframes wingFlap {
+  0%, 100% { transform: rotate(0deg) scaleY(1); }
+  50% { transform: rotate(-20deg) scaleY(0.6); }
+}
+
+.animate-bird-idle {
+  animation: birdIdle 2s ease-in-out infinite;
+}
+
+.animate-bird-search {
+  animation: birdSearch 0.8s ease-in-out infinite;
+}
+
+.animate-bird-read {
+  animation: birdRead 1.5s ease-in-out infinite;
+}
+
+.animate-bird-think {
+  animation: birdThink 1.2s ease-in-out infinite;
+}
+
+.animate-bird-fly {
+  animation: birdFly 0.3s ease-in-out infinite;
+}
+
+.animate-bird-happy {
+  animation: birdHappy 0.5s ease-in-out infinite;
 }
