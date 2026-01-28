@@ -156,11 +156,12 @@ ${chunks.join("\n\n")}
   `.trim();
 }
 
-export function getCaseUrl(citation: string): string {
+export function getCaseUrl(citation: string, language: string = "EN"): string {
   // Parse citation like "[2024] HKCA 620"
   const match = citation.match(/\[(\d{4})\]\s*(\w+)\s*(\d+)/);
   if (!match) return "";
 
   const [, year, court, number] = match;
-  return `https://www.hklii.hk/en/cases/${court.toLowerCase()}/${year}/${number}`;
+  const lang = language.toUpperCase() === "TC" ? "tc" : "en";
+  return `https://www.hklii.hk/${lang}/cases/${court.toLowerCase()}/${year}/${number}`;
 }

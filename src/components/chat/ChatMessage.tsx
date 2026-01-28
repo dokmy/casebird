@@ -58,7 +58,7 @@ export function ChatMessage({ message, onCaseClick }: ChatMessageProps) {
                     <ChevronRight className="w-4 h-4" />
                   )}
                   <span className="font-serif italic">Research Process</span>
-                  {message.iterations && message.iterations > 0 && (
+                  {typeof message.iterations === "number" && message.iterations > 0 && (
                     <span className="text-primary font-serif">
                       — {message.iterations} round
                       {message.iterations > 1 ? "s" : ""}

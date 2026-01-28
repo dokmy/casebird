@@ -1,9 +1,10 @@
 "use client";
 
 import { Scale, Search, FileText, MessageSquare } from "lucide-react";
+import { ResearchMode } from "@/types/chat";
 
 interface WelcomeScreenProps {
-  onExampleClick: (example: string) => void;
+  onExampleClick: (example: string, mode: ResearchMode) => void;
 }
 
 const EXAMPLES = [
@@ -66,7 +67,7 @@ export function WelcomeScreen({ onExampleClick }: WelcomeScreenProps) {
           {EXAMPLES.map((example, i) => (
             <button
               key={i}
-              onClick={() => onExampleClick(example.query)}
+              onClick={() => onExampleClick(example.query, "normal")}
               className="flex items-start gap-3 p-4 rounded-lg border bg-card hover:bg-accent/50 transition-colors text-left group"
             >
               <example.icon className="w-5 h-5 text-primary shrink-0 mt-0.5" />

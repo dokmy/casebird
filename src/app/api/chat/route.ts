@@ -165,10 +165,19 @@ Snippet: ${r.text.substring(0, 500)}${r.text.length > 500 ? "..." : ""}`;
 
 export async function POST(request: Request) {
   try {
-    const { message, history } = (await request.json()) as {
+    const { message, history, mode = "normal" } = (await request.json()) as {
       message: string;
       history: Message[];
+      mode?: "fast" | "normal" | "deep";
     };
+
+    // Set max iterations based on mode
+    const modeConfig = {
+      fast: 3,
+      normal: 5,
+      deep: 10,
+    };
+    const maxIterations = modeConfig[mode] || 5;
 
     const ai = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY! });
 
@@ -206,7 +215,6 @@ export async function POST(request: Request) {
 
         try {
           let iteration = 0;
-          const maxIterations = 10;
           let pendingFunctionCallParts: Array<unknown> = [];
           let finalText = "";
 

@@ -6,7 +6,7 @@ import { ChatInput } from "@/components/chat/ChatInput";
 import { CaseViewer } from "@/components/chat/CaseViewer";
 import { WelcomeScreen } from "@/components/chat/WelcomeScreen";
 import { AnimatedBird } from "@/components/ui/animated-bird";
-import { Message, SelectedCase, ThinkingStep, Stage } from "@/types/chat";
+import { Message, SelectedCase, ThinkingStep, Stage, ResearchMode } from "@/types/chat";
 
 export default function Home() {
   const [messages, setMessages] = useState<Message[]>([]);
@@ -22,7 +22,7 @@ export default function Home() {
   }, [messages]);
 
   const handleSend = useCallback(
-    async (content: string) => {
+    async (content: string, mode: ResearchMode = "normal") => {
       const userMessage: Message = {
         id: Date.now().toString(),
         role: "user",
@@ -50,6 +50,7 @@ export default function Home() {
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({
             message: content,
+            mode,
             history: messages.map((m) => ({
               role: m.role,
               content: m.content,
@@ -198,8 +199,8 @@ export default function Home() {
   }, []);
 
   const handleExampleClick = useCallback(
-    (example: string) => {
-      handleSend(example);
+    (example: string, mode: ResearchMode) => {
+      handleSend(example, mode);
     },
     [handleSend]
   );
