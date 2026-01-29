@@ -1,8 +1,10 @@
 "use client";
 
+import { useState, useRef } from "react";
 import { Shield, Gavel, Building2, Briefcase } from "lucide-react";
 import { ResearchMode } from "@/types/chat";
 import { FeatherIcon } from "@/components/ui/feather-icon";
+import { cn } from "@/lib/utils";
 
 interface WelcomeScreenProps {
   onExampleClick: (example: string, mode: ResearchMode) => void;
@@ -67,13 +69,51 @@ const EXAMPLES_TC = [
 export function WelcomeScreen({ onExampleClick, showFooter, outputLanguage = "EN" }: WelcomeScreenProps) {
   const isChinese = outputLanguage === "TC";
   const examples = isChinese ? EXAMPLES_TC : EXAMPLES_EN;
+  const [activeIndex, setActiveIndex] = useState(0);
+  const touchStartX = useRef(0);
+
+  const handleTouchStart = (e: React.TouchEvent) => {
+    touchStartX.current = e.touches[0].clientX;
+  };
+
+  const handleTouchEnd = (e: React.TouchEvent) => {
+    const delta = touchStartX.current - e.changedTouches[0].clientX;
+    if (Math.abs(delta) > 50) {
+      if (delta > 0 && activeIndex < examples.length - 1) {
+        setActiveIndex(activeIndex + 1);
+      } else if (delta < 0 && activeIndex > 0) {
+        setActiveIndex(activeIndex - 1);
+      }
+    }
+  };
+
+  const renderCard = (example: typeof examples[0], i: number) => (
+    <button
+      key={i}
+      onClick={() => onExampleClick(example.query, "normal")}
+      className="flex items-start gap-3 p-5 rounded-lg border bg-card hover:bg-accent/50 transition-colors text-left group"
+    >
+      <example.icon className="w-5 h-5 text-primary shrink-0 mt-0.5" />
+      <div>
+        <div className="font-serif text-[10px] uppercase tracking-widest text-primary/70 mb-0.5">
+          {example.role}
+        </div>
+        <div className="font-serif font-medium text-xs text-foreground group-hover:text-primary transition-colors">
+          {example.title}
+        </div>
+        <div className="font-serif text-[11px] leading-relaxed text-muted-foreground mt-1">
+          {example.query}
+        </div>
+      </div>
+    </button>
+  );
 
   return (
     <div className="flex-1 overflow-y-auto">
-      <div className="min-h-full flex items-center justify-center p-8">
+      <div className="min-h-full flex items-center justify-center p-4 sm:p-8">
         <div className="max-w-2xl w-full text-center">
         {/* Logo */}
-        <div className="mb-8">
+        <div className="mb-6 sm:mb-8">
           <div className="inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-primary/10 mb-4">
             <FeatherIcon className="w-10 h-10" />
           </div>
@@ -86,7 +126,7 @@ export function WelcomeScreen({ onExampleClick, showFooter, outputLanguage = "EN
         </div>
 
         {/* Stats */}
-        <div className="flex justify-center gap-8 mb-8 text-sm font-serif">
+        <div className="flex justify-center gap-8 mb-6 sm:mb-8 text-sm font-serif">
           <div>
             <div className="text-2xl font-semibold text-primary">1.3M+</div>
             <div className="text-muted-foreground">{isChinese ? "法律案例" : "Legal cases"}</div>
@@ -101,32 +141,46 @@ export function WelcomeScreen({ onExampleClick, showFooter, outputLanguage = "EN
           </div>
         </div>
 
-        {/* Examples */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-          {examples.map((example, i) => (
-            <button
-              key={i}
-              onClick={() => onExampleClick(example.query, "normal")}
-              className="flex items-start gap-3 p-5 rounded-lg border bg-card hover:bg-accent/50 transition-colors text-left group"
+        {/* Examples - Mobile: swipable single card */}
+        <div className="sm:hidden">
+          <div
+            className="overflow-hidden"
+            onTouchStart={handleTouchStart}
+            onTouchEnd={handleTouchEnd}
+          >
+            <div
+              className="flex transition-transform duration-300 ease-in-out"
+              style={{ transform: `translateX(-${activeIndex * 100}%)` }}
             >
-              <example.icon className="w-5 h-5 text-primary shrink-0 mt-0.5" />
-              <div>
-                <div className="font-serif text-[10px] uppercase tracking-widest text-primary/70 mb-0.5">
-                  {example.role}
+              {examples.map((example, i) => (
+                <div key={i} className="w-full shrink-0 px-1">
+                  {renderCard(example, i)}
                 </div>
-                <div className="font-serif font-medium text-xs text-foreground group-hover:text-primary transition-colors">
-                  {example.title}
-                </div>
-                <div className="font-serif text-[11px] leading-relaxed text-muted-foreground mt-1">
-                  {example.query}
-                </div>
-              </div>
-            </button>
-          ))}
+              ))}
+            </div>
+          </div>
+          {/* Dot indicators */}
+          <div className="flex justify-center gap-1.5 mt-3">
+            {examples.map((_, i) => (
+              <button
+                key={i}
+                onClick={() => setActiveIndex(i)}
+                className={cn(
+                  "w-2 h-2 rounded-full transition-colors",
+                  i === activeIndex ? "bg-primary" : "bg-muted-foreground/30"
+                )}
+              />
+            ))}
+          </div>
+        </div>
+
+        {/* Examples - Desktop: 2-column grid */}
+        <div className="hidden sm:grid grid-cols-2 gap-3">
+          {examples.map((example, i) => renderCard(example, i))}
         </div>
 
         {/* Disclaimer */}
-        <p className="font-serif text-xs text-muted-foreground mt-8 italic">
+        <p className="font-serif text-xs text-muted-foreground mt-6 sm:mt-8 italic">
           {isChinese
             ? "Casebird 僅提供法律研究輔助。請務必核實案例引用，並就法律建議諮詢合資格的法律顧問。"
             : "Casebird provides legal research assistance only. Always verify case citations and consult qualified legal counsel for legal advice."}
