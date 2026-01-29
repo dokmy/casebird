@@ -118,7 +118,7 @@ export async function POST(request: Request) {
           // Check cancel_at_period_end from raw event data
           // eslint-disable-next-line @typescript-eslint/no-explicit-any
           const rawSub = subscription as any;
-          const cancelAtPeriodEnd = rawSub.cancel_at_period_end === true;
+          const cancelAtPeriodEnd = rawSub.cancel_at_period_end === true || rawSub.cancel_at != null;
 
           let status: string;
           if (cancelAtPeriodEnd) {
