@@ -21,7 +21,7 @@ export async function POST(request: Request) {
     // Get or create Stripe customer
     const { data: sub } = await supabase
       .from("subscriptions")
-      .select("stripe_customer_id")
+      .select("stripe_customer_id, stripe_subscription_id")
       .eq("user_id", user.id)
       .single();
 
@@ -46,6 +46,15 @@ export async function POST(request: Request) {
         },
         { onConflict: "user_id" }
       );
+    }
+
+    // Cancel existing subscription if upgrading
+    if (sub?.stripe_subscription_id) {
+      try {
+        await stripe.subscriptions.cancel(sub.stripe_subscription_id);
+      } catch (e) {
+        console.error("Failed to cancel existing subscription:", e);
+      }
     }
 
     const session = await stripe.checkout.sessions.create({
