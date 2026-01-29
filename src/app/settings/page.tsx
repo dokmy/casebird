@@ -13,6 +13,7 @@ export default function SettingsPage() {
   const [saving, setSaving] = useState(false);
   const [subscription, setSubscription] = useState<{
     plan: string;
+    status: string;
     message_count: number;
     message_limit: number;
     current_period_end: string | null;
@@ -37,7 +38,7 @@ export default function SettingsPage() {
           .single(),
         supabase
           .from("subscriptions")
-          .select("plan, message_count, message_limit, current_period_end, stripe_customer_id")
+          .select("plan, status, message_count, message_limit, current_period_end, stripe_customer_id")
           .eq("user_id", user.id)
           .single(),
       ]);
@@ -162,13 +163,20 @@ export default function SettingsPage() {
                   </div>
                   <div className="font-serif text-xs text-muted-foreground">
                     {subscription.message_count}/{subscription.message_limit} messages used
-                    {subscription.current_period_end && (
+                    {subscription.status === "canceled" && subscription.current_period_end ? (
+                      <> · Cancels {new Date(subscription.current_period_end).toLocaleDateString()}</>
+                    ) : subscription.current_period_end ? (
                       <> · Resets {new Date(subscription.current_period_end).toLocaleDateString()}</>
-                    )}
+                    ) : null}
                     {subscription.plan === "free" && (
                       <> · Free tier does not reset</>
                     )}
                   </div>
+                  {subscription.status === "canceled" && (
+                    <div className="mt-2 font-serif text-xs text-orange-600 font-medium">
+                      Your subscription is set to cancel at the end of the billing period. You can resubscribe from the billing portal.
+                    </div>
+                  )}
                 </div>
 
                 {/* Plan cards */}
