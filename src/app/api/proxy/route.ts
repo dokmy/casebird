@@ -7,40 +7,37 @@ export async function GET(request: NextRequest) {
     return new Response("Missing url parameter", { status: 400 });
   }
 
-  // Clean and normalize the URL
-  let url = rawUrl.trim();
+  const url = rawUrl.trim().replace(/[\u200B-\u200D\uFEFF]/g, "");
 
-  // Log for debugging
-  console.log("Proxy received URL:", JSON.stringify(url), "Length:", url.length);
-
-  // Ensure it's a valid HKLII URL (with or without www)
-  const isValidHKLII = url.match(/^https?:\/\/(www\.)?hklii\.hk\//);
-  if (!isValidHKLII) {
-    console.log("Invalid URL rejected:", url);
+  // Ensure it's a valid HKLII URL
+  if (!url.match(/^https?:\/\/(www\.)?hklii\.hk\//)) {
     return new Response("Only HKLII URLs are allowed", { status: 403 });
   }
 
-  // Normalize to www version
-  url = url.replace(/^https?:\/\/hklii\.hk\//, "https://www.hklii.hk/");
+  // Extract the path from the URL (e.g. /en/cases/hkcfi/2005/1126)
+  const pathMatch = url.match(/hklii\.hk(\/.*)/);
+  if (!pathMatch) {
+    return new Response("Could not parse URL path", { status: 400 });
+  }
+  const casePath = pathMatch[1]; // e.g. /en/cases/hkcfi/2005/1126
 
   try {
-    console.log("Proxy fetching URL:", url);
+    // Fetch the HKLII SPA shell HTML
+    const normalizedUrl = url.replace(
+      /^https?:\/\/hklii\.hk\//,
+      "https://www.hklii.hk/"
+    );
 
-    const response = await fetch(url, {
+    const response = await fetch(normalizedUrl, {
       headers: {
         "User-Agent":
           "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
         Accept:
-          "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8",
-        "Accept-Language": "en-US,en;q=0.5",
+          "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
       },
-      redirect: "follow", // Explicitly follow redirects
     });
 
-    console.log("Proxy response status:", response.status, "Final URL:", response.url);
-
     if (!response.ok) {
-      console.log("Proxy fetch failed:", response.status, response.statusText);
       return new Response(`Failed to fetch: ${response.status}`, {
         status: response.status,
       });
@@ -48,49 +45,35 @@ export async function GET(request: NextRequest) {
 
     let html = await response.text();
 
-    // Rewrite relative URLs to absolute
-    html = html.replace(
-      /(href|src)=["']\/(?!\/)/g,
-      '$1="https://www.hklii.hk/'
-    );
+    // Inject a script BEFORE anything else that:
+    // 1. Sets window.location.pathname to the correct HKLII path (so Vue Router matches the route)
+    // 2. Stubs history methods after Vue Router initializes to prevent cross-origin errors
+    const injection = `<script>
+// Set the correct path for Vue Router before it initializes
+try { history.replaceState(null, '', '${casePath}'); } catch(e) {}
 
-    // Add base tag to handle remaining relative URLs
-    // Also inject script to neutralize history manipulation (Vue Router tries to use replaceState)
-    const headInjection = `
-      <base href="https://www.hklii.hk/" target="_blank">
-      <script>
-        // Neutralize history manipulation to prevent cross-origin errors in iframe
-        (function() {
-          var noop = function() { return true; };
-          if (window.history) {
-            window.history.pushState = noop;
-            window.history.replaceState = noop;
-          }
-        })();
-      </script>
-    `;
-    html = html.replace("<head>", `<head>${headInjection}`);
+// After Vue Router reads the path and does its initial replaceState, stub to prevent errors
+var _origReplace = history.replaceState.bind(history);
+var _origPush = history.pushState.bind(history);
+var _callCount = 0;
+history.replaceState = function() {
+  _callCount++;
+  // Allow Vue Router's initial replaceState, then block subsequent ones
+  if (_callCount <= 2) {
+    try { return _origReplace.apply(history, arguments); } catch(e) {}
+  }
+};
+history.pushState = function() {
+  try { return _origPush.apply(history, arguments); } catch(e) {}
+};
+</script>`;
 
-    // Add some custom styles for better readability
-    const customStyles = `
-      <style>
-        body {
-          max-width: 100% !important;
-          padding: 20px !important;
-          font-size: 14px !important;
-          line-height: 1.6 !important;
-        }
-        .judgment-body {
-          max-width: 100% !important;
-        }
-      </style>
-    `;
-    html = html.replace("</head>", `${customStyles}</head>`);
+    html = html.replace("<head>", `<head>${injection}`);
 
+    // Remove X-Frame-Options if present in the HTML (it's in HTTP headers, but just in case)
     return new Response(html, {
       headers: {
         "Content-Type": "text/html; charset=utf-8",
-        // Remove X-Frame-Options to allow embedding
         "Cache-Control": "public, max-age=3600",
       },
     });

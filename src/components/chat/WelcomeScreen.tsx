@@ -1,6 +1,6 @@
 "use client";
 
-import { Search, FileText, MessageSquare, Scale } from "lucide-react";
+import { Shield, Gavel, Building2, Briefcase } from "lucide-react";
 import { ResearchMode } from "@/types/chat";
 import { FeatherIcon } from "@/components/ui/feather-icon";
 
@@ -10,24 +10,28 @@ interface WelcomeScreenProps {
 
 const EXAMPLES = [
   {
-    icon: Search,
-    title: "Find precedents",
-    query: "What are the leading cases on breach of employment contract in Hong Kong?",
+    icon: Shield,
+    role: "Personal Injury",
+    title: "PSLA awards for shoulder injury",
+    query: "Find Hong Kong personal injury cases where the plaintiff suffered a rotator cuff tear with PSLA awards between HK$200,000 and HK$500,000",
   },
   {
-    icon: Scale,
-    title: "Legal principles",
-    query: "What is the test for judicial review in Hong Kong?",
+    icon: Gavel,
+    role: "Criminal Defence",
+    title: "Sentencing for dangerous driving",
+    query: "What are the sentencing guidelines and recent precedents for dangerous driving causing death under s.36 of the Road Traffic Ordinance in Hong Kong?",
   },
   {
-    icon: FileText,
-    title: "Case analysis",
-    query: "Explain the doctrine of legitimate expectations under Hong Kong law",
+    icon: Building2,
+    role: "Insurance Claims",
+    title: "Fraud in PI claims",
+    query: "Find cases where personal injury claims were dismissed or reduced due to surveillance evidence of exaggeration or fraud in Hong Kong",
   },
   {
-    icon: MessageSquare,
-    title: "Court decisions",
-    query: "What has the Court of Final Appeal said about constitutional interpretation?",
+    icon: Briefcase,
+    role: "Corporate / In-House",
+    title: "Director liability for breach",
+    query: "What is the standard for holding directors personally liable for breach of fiduciary duty in Hong Kong, and what remedies have the courts awarded?",
   },
 ];
 
@@ -69,14 +73,17 @@ export function WelcomeScreen({ onExampleClick }: WelcomeScreenProps) {
             <button
               key={i}
               onClick={() => onExampleClick(example.query, "normal")}
-              className="flex items-start gap-3 p-4 rounded-lg border bg-card hover:bg-accent/50 transition-colors text-left group"
+              className="flex items-start gap-3 p-5 rounded-lg border bg-card hover:bg-accent/50 transition-colors text-left group"
             >
               <example.icon className="w-5 h-5 text-primary shrink-0 mt-0.5" />
               <div>
-                <div className="font-serif font-medium text-sm text-foreground group-hover:text-primary transition-colors">
+                <div className="font-serif text-[10px] uppercase tracking-widest text-primary/70 mb-0.5">
+                  {example.role}
+                </div>
+                <div className="font-serif font-medium text-xs text-foreground group-hover:text-primary transition-colors">
                   {example.title}
                 </div>
-                <div className="font-serif text-xs text-muted-foreground mt-1 line-clamp-2">
+                <div className="font-serif text-[11px] leading-relaxed text-muted-foreground mt-1">
                   {example.query}
                 </div>
               </div>

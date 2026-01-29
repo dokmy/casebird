@@ -13,14 +13,9 @@ interface CaseViewerProps {
 export function CaseViewer({ url, citation, onClose }: CaseViewerProps) {
   const [isFullscreen, setIsFullscreen] = useState(false);
 
-  // Clean and normalize the URL
-  const cleanUrl = url.trim().replace(/[\u200B-\u200D\uFEFF]/g, ''); // Remove zero-width characters
-
-  // Debug logging
-  console.log("CaseViewer URL:", JSON.stringify(cleanUrl), "Length:", cleanUrl.length);
-
-  // Use proxy to bypass X-Frame-Options
-  const proxyUrl = `/api/proxy?url=${encodeURIComponent(cleanUrl)}`;
+  // Clean and normalize the URL - point directly at HKLII (no proxy needed)
+  // HKLII's CSP frame-ancestors * overrides X-Frame-Options in modern browsers
+  const cleanUrl = url.trim().replace(/[\u200B-\u200D\uFEFF]/g, '');
 
   const handleOpenExternal = () => {
     window.open(cleanUrl, "_blank", "noopener,noreferrer");
@@ -39,7 +34,7 @@ export function CaseViewer({ url, citation, onClose }: CaseViewerProps) {
           />
           <div className="flex-1">
             <iframe
-              src={proxyUrl}
+              src={cleanUrl}
               className="w-full h-full border-0"
               sandbox="allow-same-origin allow-scripts allow-popups allow-forms"
               title={citation}
@@ -61,7 +56,7 @@ export function CaseViewer({ url, citation, onClose }: CaseViewerProps) {
       />
       <div className="flex-1 overflow-hidden">
         <iframe
-          src={proxyUrl}
+          src={cleanUrl}
           className="w-full h-full border-0"
           sandbox="allow-same-origin allow-scripts allow-popups allow-forms"
           title={citation}
