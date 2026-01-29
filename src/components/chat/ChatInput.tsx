@@ -20,9 +20,11 @@ interface ChatInputProps {
   caseLanguage: CaseLanguage;
   onCaseLanguageChange: (lang: CaseLanguage) => void;
   caseLanguageLocked?: boolean;
+  messageCount?: number;
+  messageLimit?: number;
 }
 
-export function ChatInput({ onSend, isLoading, disabled, caseLanguage, onCaseLanguageChange, caseLanguageLocked }: ChatInputProps) {
+export function ChatInput({ onSend, isLoading, disabled, caseLanguage, onCaseLanguageChange, caseLanguageLocked, messageCount, messageLimit }: ChatInputProps) {
   const [input, setInput] = useState("");
   const [mode, setMode] = useState<ResearchMode>("normal");
   const [showLangMenu, setShowLangMenu] = useState(false);
@@ -173,9 +175,19 @@ export function ChatInput({ onSend, isLoading, disabled, caseLanguage, onCaseLan
             )}
           </Button>
         </div>
-        <p className="text-xs text-muted-foreground mt-2 text-center font-serif">
-          Press Enter to send, Shift+Enter for new line.
-        </p>
+        <div className="flex items-center justify-center gap-3 mt-2">
+          <p className="text-xs text-muted-foreground text-center font-serif">
+            Press Enter to send, Shift+Enter for new line.
+          </p>
+          {messageCount !== undefined && messageLimit !== undefined && (
+            <p className={cn(
+              "text-xs font-serif",
+              messageCount >= messageLimit * 0.8 ? "text-orange-500" : "text-muted-foreground"
+            )}>
+              {messageCount}/{messageLimit}
+            </p>
+          )}
+        </div>
       </div>
     </div>
   );

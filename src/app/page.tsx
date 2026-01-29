@@ -8,6 +8,7 @@ import { CaseViewer } from "@/components/chat/CaseViewer";
 import { WelcomeScreen } from "@/components/chat/WelcomeScreen";
 import { Sidebar, ConversationItem } from "@/components/chat/Sidebar";
 import { AuthModal } from "@/components/auth/AuthModal";
+import { UpgradeModal } from "@/components/chat/UpgradeModal";
 import { AnimatedBird } from "@/components/ui/animated-bird";
 import { FeatherIcon } from "@/components/ui/feather-icon";
 import { Message, SelectedCase, ThinkingStep, Stage, ResearchMode, CaseLanguage } from "@/types/chat";
@@ -24,8 +25,14 @@ export default function Home() {
   const [isAuthenticated, setIsAuthenticated] = useState<boolean | null>(null);
   const [loadingConversations, setLoadingConversations] = useState(true);
   const [showAuthModal, setShowAuthModal] = useState(false);
+  const [showUpgradeModal, setShowUpgradeModal] = useState(false);
   const [outputLanguage, setOutputLanguage] = useState<"EN" | "TC">("EN");
   const [caseLanguage, setCaseLanguage] = useState<CaseLanguage>("any");
+  const [subscription, setSubscription] = useState<{
+    plan: string;
+    message_count: number;
+    message_limit: number;
+  } | null>(null);
   const scrollRef = useRef<HTMLDivElement>(null);
   const supabase = createClient();
 
@@ -37,7 +44,7 @@ export default function Home() {
         setIsAuthenticated(true);
         setUserEmail(user.email || "");
         setUserId(user.id);
-        const [convResult, settingsResult] = await Promise.all([
+        const [convResult, settingsResult, subResult] = await Promise.all([
           supabase
             .from("conversations")
             .select("id, title, updated_at, case_language")
@@ -47,10 +54,21 @@ export default function Home() {
             .select("output_language")
             .eq("user_id", user.id)
             .single(),
+          supabase
+            .from("subscriptions")
+            .select("plan, message_count, message_limit")
+            .eq("user_id", user.id)
+            .single(),
         ]);
         if (convResult.data) setConversations(convResult.data);
         if (settingsResult.data) {
           setOutputLanguage(settingsResult.data.output_language as "EN" | "TC");
+        }
+        if (subResult.data) {
+          setSubscription(subResult.data);
+        } else {
+          // No subscription yet — will be auto-created on first message
+          setSubscription({ plan: "free", message_count: 0, message_limit: 10 });
         }
       } else {
         setIsAuthenticated(false);
@@ -207,9 +225,22 @@ export default function Home() {
           }),
         });
 
+        if (response.status === 403) {
+          const errorData = await response.json();
+          if (errorData.error === "limit_reached") {
+            setSubscription((prev) => prev ? { ...prev, message_count: errorData.count, message_limit: errorData.limit } : prev);
+            setShowUpgradeModal(true);
+            // Remove the optimistic user message
+            setMessages((prev) => prev.filter((m) => m.id !== userMessage.id));
+            setIsLoading(false);
+            return;
+          }
+        }
         if (!response.ok) {
           throw new Error("Failed to send message");
         }
+        // Update local subscription count
+        setSubscription((prev) => prev ? { ...prev, message_count: prev.message_count + 1 } : prev);
 
         const reader = response.body?.getReader();
         const decoder = new TextDecoder();
@@ -550,7 +581,7 @@ export default function Home() {
               </div>
             )}
 
-            <ChatInput onSend={handleSend} isLoading={isLoading} caseLanguage={caseLanguage} onCaseLanguageChange={setCaseLanguage} caseLanguageLocked={messages.length > 0} />
+            <ChatInput onSend={handleSend} isLoading={isLoading} caseLanguage={caseLanguage} onCaseLanguageChange={setCaseLanguage} caseLanguageLocked={messages.length > 0} messageCount={subscription?.message_count} messageLimit={subscription?.message_limit} />
           </div>
 
           {/* Case Viewer Panel */}
@@ -565,6 +596,14 @@ export default function Home() {
           )}
         </div>
       </div>
+      {showUpgradeModal && subscription && (
+        <UpgradeModal
+          currentPlan={subscription.plan}
+          messageCount={subscription.message_count}
+          messageLimit={subscription.message_limit}
+          onClose={() => setShowUpgradeModal(false)}
+        />
+      )}
     </div>
   );
 }

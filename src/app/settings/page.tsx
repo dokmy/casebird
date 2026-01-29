@@ -11,6 +11,14 @@ export default function SettingsPage() {
   const [outputLanguage, setOutputLanguage] = useState<"EN" | "TC">("EN");
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
+  const [subscription, setSubscription] = useState<{
+    plan: string;
+    message_count: number;
+    message_limit: number;
+    current_period_end: string | null;
+    stripe_customer_id: string | null;
+  } | null>(null);
+  const [loadingPortal, setLoadingPortal] = useState(false);
   const supabase = createClient();
 
   useEffect(() => {
@@ -20,13 +28,23 @@ export default function SettingsPage() {
         window.location.href = "/";
         return;
       }
-      const { data } = await supabase
-        .from("user_settings")
-        .select("output_language")
-        .eq("user_id", user.id)
-        .single();
-      if (data) {
-        setOutputLanguage(data.output_language as "EN" | "TC");
+      const [settingsRes, subRes] = await Promise.all([
+        supabase
+          .from("user_settings")
+          .select("output_language")
+          .eq("user_id", user.id)
+          .single(),
+        supabase
+          .from("subscriptions")
+          .select("plan, message_count, message_limit, current_period_end, stripe_customer_id")
+          .eq("user_id", user.id)
+          .single(),
+      ]);
+      if (settingsRes.data) {
+        setOutputLanguage(settingsRes.data.output_language as "EN" | "TC");
+      }
+      if (subRes.data) {
+        setSubscription(subRes.data);
       }
       setLoading(false);
     };
@@ -108,6 +126,69 @@ export default function SettingsPage() {
                 <Loader2 className="w-3 h-3 animate-spin" />
                 Saving...
               </div>
+            )}
+          </div>
+
+          {/* Subscription */}
+          <div className="pt-6 border-t border-border">
+            <h2 className="text-sm font-serif font-medium text-foreground mb-1">
+              Subscription
+            </h2>
+            {subscription ? (
+              <div className="space-y-3">
+                <div className="flex items-center justify-between p-4 rounded-lg border border-border bg-card">
+                  <div>
+                    <div className="font-serif text-sm font-medium text-foreground capitalize">
+                      {subscription.plan} plan
+                    </div>
+                    <div className="font-serif text-xs text-muted-foreground mt-0.5">
+                      {subscription.message_count}/{subscription.message_limit} messages used
+                      {subscription.current_period_end && (
+                        <> · Resets {new Date(subscription.current_period_end).toLocaleDateString()}</>
+                      )}
+                    </div>
+                  </div>
+                  {/* Usage bar */}
+                  <div className="w-20 h-2 bg-muted rounded-full overflow-hidden">
+                    <div
+                      className={cn(
+                        "h-full rounded-full transition-all",
+                        subscription.message_count >= subscription.message_limit * 0.8
+                          ? "bg-orange-500"
+                          : "bg-primary"
+                      )}
+                      style={{ width: `${Math.min((subscription.message_count / subscription.message_limit) * 100, 100)}%` }}
+                    />
+                  </div>
+                </div>
+                {subscription.stripe_customer_id ? (
+                  <button
+                    onClick={async () => {
+                      setLoadingPortal(true);
+                      try {
+                        const res = await fetch("/api/stripe/portal", { method: "POST" });
+                        const data = await res.json();
+                        if (data.url) window.location.href = data.url;
+                      } catch (e) {
+                        console.error("Portal error:", e);
+                      }
+                      setLoadingPortal(false);
+                    }}
+                    disabled={loadingPortal}
+                    className="text-sm font-serif text-primary hover:underline disabled:opacity-50"
+                  >
+                    {loadingPortal ? "Loading..." : "Manage billing"}
+                  </button>
+                ) : subscription.plan === "free" ? (
+                  <p className="text-xs font-serif text-muted-foreground">
+                    Upgrade to Pro or Max for more messages.
+                  </p>
+                ) : null}
+              </div>
+            ) : (
+              <p className="text-xs font-serif text-muted-foreground">
+                No subscription data available.
+              </p>
             )}
           </div>
         </div>

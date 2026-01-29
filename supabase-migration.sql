@@ -108,3 +108,30 @@ create trigger user_settings_updated_at
 
 -- Add case_language to conversations (run separately if table already exists)
 -- alter table public.conversations add column case_language text not null default 'any' check (case_language in ('any', 'EN', 'TC'));
+
+-- Subscriptions table (for Stripe billing)
+create table public.subscriptions (
+  user_id uuid references auth.users(id) on delete cascade primary key,
+  stripe_customer_id text,
+  stripe_subscription_id text,
+  plan text not null default 'free' check (plan in ('free', 'pro', 'max')),
+  status text not null default 'active' check (status in ('active', 'canceled', 'past_due', 'incomplete')),
+  message_count integer not null default 0,
+  message_limit integer not null default 10,
+  current_period_end timestamptz,
+  created_at timestamptz default now() not null,
+  updated_at timestamptz default now() not null
+);
+
+alter table public.subscriptions enable row level security;
+
+create policy "Users can read own subscription"
+  on public.subscriptions for select
+  using (auth.uid() = user_id);
+
+-- Server-side only insert/update (via service role in webhook)
+-- No client-side insert/update policies needed
+
+create trigger subscriptions_updated_at
+  before update on public.subscriptions
+  for each row execute function public.update_updated_at();

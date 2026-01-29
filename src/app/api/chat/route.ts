@@ -239,6 +239,35 @@ export async function POST(request: Request) {
       return Response.json({ error: "Unauthorized" }, { status: 401 });
     }
 
+    // Check usage limits
+    const { data: subscription } = await supabase
+      .from("subscriptions")
+      .select("message_count, message_limit, plan, status")
+      .eq("user_id", user.id)
+      .single();
+
+    // Auto-create free subscription if none exists
+    if (!subscription) {
+      await supabase.from("subscriptions").insert({
+        user_id: user.id,
+        plan: "free",
+        status: "active",
+        message_count: 0,
+        message_limit: 10,
+      });
+    } else if (subscription.message_count >= subscription.message_limit) {
+      return Response.json(
+        { error: "limit_reached", plan: subscription.plan, count: subscription.message_count, limit: subscription.message_limit },
+        { status: 403 }
+      );
+    }
+
+    // Increment message count
+    await supabase
+      .from("subscriptions")
+      .update({ message_count: (subscription?.message_count ?? 0) + 1 })
+      .eq("user_id", user.id);
+
     const { message, history, mode = "normal", outputLanguage = "EN", caseLanguage } = (await request.json()) as {
       message: string;
       history: Message[];
