@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react";
 import Link from "next/link";
-import { ArrowLeft, Loader2 } from "lucide-react";
+import { ArrowLeft, Loader2, Zap, Crown } from "lucide-react";
 import { FeatherIcon } from "@/components/ui/feather-icon";
 import { createClient } from "@/lib/supabase/client";
 import { cn } from "@/lib/utils";
@@ -19,6 +19,7 @@ export default function SettingsPage() {
     stripe_customer_id: string | null;
   } | null>(null);
   const [loadingPortal, setLoadingPortal] = useState(false);
+  const [loadingCheckout, setLoadingCheckout] = useState<string | null>(null);
   const supabase = createClient();
 
   useEffect(() => {
@@ -134,22 +135,21 @@ export default function SettingsPage() {
             <h2 className="text-sm font-serif font-medium text-foreground mb-1">
               Subscription
             </h2>
+
             {subscription ? (
-              <div className="space-y-3">
-                <div className="flex items-center justify-between p-4 rounded-lg border border-border bg-card">
-                  <div>
+              <div className="space-y-4">
+                {/* Current usage */}
+                <div className="p-4 rounded-lg border border-border bg-card">
+                  <div className="flex items-center justify-between mb-3">
                     <div className="font-serif text-sm font-medium text-foreground capitalize">
                       {subscription.plan} plan
                     </div>
-                    <div className="font-serif text-xs text-muted-foreground mt-0.5">
-                      {subscription.message_count}/{subscription.message_limit} messages used
-                      {subscription.current_period_end && (
-                        <> · Resets {new Date(subscription.current_period_end).toLocaleDateString()}</>
-                      )}
+                    <div className="font-serif text-xs text-muted-foreground">
+                      {subscription.message_limit - subscription.message_count} messages remaining
                     </div>
                   </div>
                   {/* Usage bar */}
-                  <div className="w-20 h-2 bg-muted rounded-full overflow-hidden">
+                  <div className="w-full h-2 bg-muted rounded-full overflow-hidden mb-2">
                     <div
                       className={cn(
                         "h-full rounded-full transition-all",
@@ -160,8 +160,90 @@ export default function SettingsPage() {
                       style={{ width: `${Math.min((subscription.message_count / subscription.message_limit) * 100, 100)}%` }}
                     />
                   </div>
+                  <div className="font-serif text-xs text-muted-foreground">
+                    {subscription.message_count}/{subscription.message_limit} messages used
+                    {subscription.current_period_end && (
+                      <> · Resets {new Date(subscription.current_period_end).toLocaleDateString()}</>
+                    )}
+                    {subscription.plan === "free" && (
+                      <> · Free tier does not reset</>
+                    )}
+                  </div>
                 </div>
-                {subscription.stripe_customer_id ? (
+
+                {/* Plan cards */}
+                {subscription.plan !== "max" && (
+                  <div className="space-y-3">
+                    <p className="font-serif text-xs text-muted-foreground">
+                      {subscription.plan === "free" ? "Upgrade for more messages:" : "Upgrade to Max for more messages:"}
+                    </p>
+                    <div className={cn("grid gap-3", subscription.plan === "free" ? "grid-cols-2" : "grid-cols-1")}>
+                      {subscription.plan === "free" && (
+                        <button
+                          onClick={async () => {
+                            setLoadingCheckout("pro");
+                            try {
+                              const res = await fetch("/api/stripe/checkout", {
+                                method: "POST",
+                                headers: { "Content-Type": "application/json" },
+                                body: JSON.stringify({ plan: "pro" }),
+                              });
+                              const data = await res.json();
+                              if (data.url) window.location.href = data.url;
+                            } catch (e) {
+                              console.error("Checkout error:", e);
+                            }
+                            setLoadingCheckout(null);
+                          }}
+                          disabled={loadingCheckout !== null}
+                          className="p-4 rounded-lg border-2 border-border hover:border-primary/50 transition-all text-left disabled:opacity-50"
+                        >
+                          <div className="flex items-center gap-2 mb-2">
+                            <Zap className="w-4 h-4 text-primary" />
+                            <span className="font-serif text-sm font-semibold text-foreground">Pro</span>
+                          </div>
+                          <div className="font-serif text-lg font-semibold text-foreground">HK$399<span className="text-xs font-normal text-muted-foreground">/mo</span></div>
+                          <div className="font-serif text-xs text-muted-foreground mt-1">100 messages/month</div>
+                          <div className="mt-3 w-full py-2 rounded-lg bg-primary text-primary-foreground font-serif text-xs font-medium text-center">
+                            {loadingCheckout === "pro" ? <Loader2 className="w-3 h-3 animate-spin mx-auto" /> : "Subscribe"}
+                          </div>
+                        </button>
+                      )}
+                      <button
+                        onClick={async () => {
+                          setLoadingCheckout("max");
+                          try {
+                            const res = await fetch("/api/stripe/checkout", {
+                              method: "POST",
+                              headers: { "Content-Type": "application/json" },
+                              body: JSON.stringify({ plan: "max" }),
+                            });
+                            const data = await res.json();
+                            if (data.url) window.location.href = data.url;
+                          } catch (e) {
+                            console.error("Checkout error:", e);
+                          }
+                          setLoadingCheckout(null);
+                        }}
+                        disabled={loadingCheckout !== null}
+                        className="p-4 rounded-lg border-2 border-border hover:border-primary/50 transition-all text-left disabled:opacity-50"
+                      >
+                        <div className="flex items-center gap-2 mb-2">
+                          <Crown className="w-4 h-4 text-primary" />
+                          <span className="font-serif text-sm font-semibold text-foreground">Max</span>
+                        </div>
+                        <div className="font-serif text-lg font-semibold text-foreground">HK$999<span className="text-xs font-normal text-muted-foreground">/mo</span></div>
+                        <div className="font-serif text-xs text-muted-foreground mt-1">500 messages/month</div>
+                        <div className="mt-3 w-full py-2 rounded-lg bg-primary text-primary-foreground font-serif text-xs font-medium text-center">
+                          {loadingCheckout === "max" ? <Loader2 className="w-3 h-3 animate-spin mx-auto" /> : "Subscribe"}
+                        </div>
+                      </button>
+                    </div>
+                  </div>
+                )}
+
+                {/* Manage billing (for paid users) */}
+                {subscription.stripe_customer_id && (
                   <button
                     onClick={async () => {
                       setLoadingPortal(true);
@@ -177,13 +259,9 @@ export default function SettingsPage() {
                     disabled={loadingPortal}
                     className="text-sm font-serif text-primary hover:underline disabled:opacity-50"
                   >
-                    {loadingPortal ? "Loading..." : "Manage billing"}
+                    {loadingPortal ? "Loading..." : "Manage billing & cancel"}
                   </button>
-                ) : subscription.plan === "free" ? (
-                  <p className="text-xs font-serif text-muted-foreground">
-                    Upgrade to Pro or Max for more messages.
-                  </p>
-                ) : null}
+                )}
               </div>
             ) : (
               <p className="text-xs font-serif text-muted-foreground">
