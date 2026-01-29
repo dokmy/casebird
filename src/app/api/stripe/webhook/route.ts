@@ -115,9 +115,13 @@ export async function POST(request: Request) {
           .single();
 
         if (sub) {
-          // Determine status: if user scheduled cancellation, mark as canceled
+          // Check cancel_at_period_end from raw event data
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
+          const rawSub = subscription as any;
+          const cancelAtPeriodEnd = rawSub.cancel_at_period_end === true;
+
           let status: string;
-          if ((subscription as unknown as { cancel_at_period_end?: boolean }).cancel_at_period_end) {
+          if (cancelAtPeriodEnd) {
             status = "canceled";
           } else if (subscription.status === "active") {
             status = "active";
@@ -127,21 +131,22 @@ export async function POST(request: Request) {
             status = "active";
           }
 
-          const updateData: Record<string, unknown> = {
+          console.log("[webhook] subscription.updated:", {
+            customerId,
             plan,
-            message_limit: PLAN_CONFIG[plan].limit,
-            status,
-            current_period_end: getPeriodEnd(subscription),
-          };
-
-          // If cancellation was reversed (user resubscribed), restore active
-          if (status === "canceled") {
-            // Keep current plan until period ends
-          }
+            stripeStatus: subscription.status,
+            cancelAtPeriodEnd,
+            resolvedStatus: status,
+          });
 
           await supabase
             .from("subscriptions")
-            .update(updateData)
+            .update({
+              plan,
+              message_limit: PLAN_CONFIG[plan].limit,
+              status,
+              current_period_end: getPeriodEnd(subscription),
+            })
             .eq("user_id", sub.user_id);
         }
         break;
