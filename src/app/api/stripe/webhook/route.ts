@@ -115,15 +115,33 @@ export async function POST(request: Request) {
           .single();
 
         if (sub) {
+          // Determine status: if user scheduled cancellation, mark as canceled
+          let status: string;
+          if ((subscription as unknown as { cancel_at_period_end?: boolean }).cancel_at_period_end) {
+            status = "canceled";
+          } else if (subscription.status === "active") {
+            status = "active";
+          } else if (subscription.status === "past_due") {
+            status = "past_due";
+          } else {
+            status = "active";
+          }
+
+          const updateData: Record<string, unknown> = {
+            plan,
+            message_limit: PLAN_CONFIG[plan].limit,
+            status,
+            current_period_end: getPeriodEnd(subscription),
+          };
+
+          // If cancellation was reversed (user resubscribed), restore active
+          if (status === "canceled") {
+            // Keep current plan until period ends
+          }
+
           await supabase
             .from("subscriptions")
-            .update({
-              plan,
-              message_limit: PLAN_CONFIG[plan].limit,
-              status:
-                subscription.status === "active" ? "active" : subscription.status === "past_due" ? "past_due" : "active",
-              current_period_end: getPeriodEnd(subscription),
-            })
+            .update(updateData)
             .eq("user_id", sub.user_id);
         }
         break;

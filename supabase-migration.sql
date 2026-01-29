@@ -129,8 +129,15 @@ create policy "Users can read own subscription"
   on public.subscriptions for select
   using (auth.uid() = user_id);
 
--- Server-side only insert/update (via service role in webhook)
--- No client-side insert/update policies needed
+-- Allow users to insert their own subscription (auto-create free tier)
+create policy "Users can insert own subscription"
+  on public.subscriptions for insert
+  with check (auth.uid() = user_id);
+
+-- Allow users to update own subscription (e.g., increment message_count)
+create policy "Users can update own subscription"
+  on public.subscriptions for update
+  using (auth.uid() = user_id);
 
 create trigger subscriptions_updated_at
   before update on public.subscriptions
