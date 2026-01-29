@@ -34,7 +34,8 @@ export function ChatInput({ onSend, isLoading, disabled, caseLanguage, onCaseLan
     const textarea = textareaRef.current;
     if (textarea) {
       textarea.style.height = "auto";
-      const newHeight = Math.min(Math.max(textarea.scrollHeight, 80), 200);
+      const minH = window.innerWidth < 640 ? 60 : 80;
+      const newHeight = Math.min(Math.max(textarea.scrollHeight, minH), 200);
       textarea.style.height = `${newHeight}px`;
     }
   }, [input]);
@@ -76,19 +77,19 @@ export function ChatInput({ onSend, isLoading, disabled, caseLanguage, onCaseLan
   const currentLangLabel = CASE_LANGUAGE_OPTIONS.find((o) => o.value === caseLanguage)?.label || "All languages";
 
   return (
-    <div className="border-t bg-background p-4">
+    <div className="border-t bg-background px-3 pt-4 pb-2 sm:p-4">
       <div className="max-w-3xl mx-auto">
         {/* Mode selector & case language dropdown */}
-        <div className="flex items-center justify-center gap-4 mb-3">
+        <div className="flex items-center justify-center gap-2 sm:gap-4 mb-2 sm:mb-3">
           {/* Research mode */}
-          <div className="flex items-center gap-1">
+          <div className="flex items-center gap-0.5 sm:gap-1">
             {(Object.keys(RESEARCH_MODE_CONFIG) as ResearchMode[]).map((m) => (
               <button
                 key={m}
                 onClick={() => setMode(m)}
                 disabled={isLoading}
                 className={cn(
-                  "flex items-center gap-1.5 px-3 py-1.5 text-xs font-serif rounded-full transition-all",
+                  "flex items-center gap-1 sm:gap-1.5 px-2 sm:px-3 py-1 sm:py-1.5 text-[10px] sm:text-xs font-serif rounded-full transition-all",
                   mode === m
                     ? "bg-primary text-primary-foreground"
                     : "bg-muted text-muted-foreground hover:bg-muted/80"
@@ -110,7 +111,7 @@ export function ChatInput({ onSend, isLoading, disabled, caseLanguage, onCaseLan
               onClick={() => !caseLanguageLocked && setShowLangMenu(!showLangMenu)}
               disabled={isLoading || caseLanguageLocked}
               className={cn(
-                "flex items-center gap-1.5 px-3 py-1.5 text-xs font-serif rounded-full transition-all",
+                "flex items-center gap-1 sm:gap-1.5 px-2 sm:px-3 py-1 sm:py-1.5 text-[10px] sm:text-xs font-serif rounded-full transition-all",
                 caseLanguageLocked
                   ? "bg-muted/50 text-muted-foreground/50 cursor-not-allowed"
                   : "bg-muted text-muted-foreground hover:bg-muted/80"
@@ -156,7 +157,7 @@ export function ChatInput({ onSend, isLoading, disabled, caseLanguage, onCaseLan
             onKeyDown={handleKeyDown}
             placeholder="Ask about Hong Kong case law..."
             disabled={isLoading || disabled}
-            className="min-h-[80px] max-h-[200px] resize-none pr-12 bg-card"
+            className="min-h-[60px] sm:min-h-[80px] max-h-[200px] resize-none pr-12 bg-card text-sm"
             rows={1}
           />
           <Button

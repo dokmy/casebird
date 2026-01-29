@@ -460,23 +460,19 @@ export default function Home() {
           </button>
         </header>
 
-        {/* Centered welcome */}
-        <div className="flex-1 flex flex-col items-center justify-center px-4 -mt-16 overflow-y-auto">
+        {/* Welcome + input in one scrollable area */}
+        <div className="flex-1 overflow-y-auto px-4">
           <WelcomeScreen onExampleClick={handleExampleClick} showFooter outputLanguage={outputLanguage} />
-        </div>
-
-        {/* Chat input */}
-        <div className="shrink-0 w-full max-w-2xl mx-auto px-4">
-          <ChatInput onSend={handleSend} isLoading={false} caseLanguage={caseLanguage} onCaseLanguageChange={setCaseLanguage} />
-        </div>
-
-        {/* Footer */}
-        <div className="shrink-0 pb-4 pt-2 text-center">
-          <p className="text-xs font-serif text-muted-foreground">
-            <Link href="/terms" className="hover:underline">Terms of Use</Link>
-            {" · "}
-            <Link href="/privacy" className="hover:underline">Privacy Policy</Link>
-          </p>
+          <div className="w-full max-w-2xl mx-auto mt-6">
+              <ChatInput onSend={handleSend} isLoading={false} caseLanguage={caseLanguage} onCaseLanguageChange={setCaseLanguage} />
+            </div>
+          <div className="pb-4 pt-2 text-center">
+            <p className="text-xs font-serif text-muted-foreground">
+              <Link href="/terms" className="hover:underline">Terms of Use</Link>
+              {" · "}
+              <Link href="/privacy" className="hover:underline">Privacy Policy</Link>
+            </p>
+          </div>
         </div>
 
         {showAuthModal && <AuthModal onClose={() => setShowAuthModal(false)} />}
@@ -521,7 +517,9 @@ export default function Home() {
             className={`flex flex-col ${selectedCase ? "w-1/2" : "w-full"} transition-all duration-300`}
           >
             {messages.length === 0 ? (
-              <WelcomeScreen onExampleClick={handleExampleClick} outputLanguage={outputLanguage} />
+              <div className="flex-1 flex items-center justify-center overflow-y-auto">
+                <WelcomeScreen onExampleClick={handleExampleClick} outputLanguage={outputLanguage} />
+              </div>
             ) : (
               <div className="flex-1 overflow-y-auto" ref={scrollRef}>
                 <div className="pb-4">

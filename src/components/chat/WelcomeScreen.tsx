@@ -101,7 +101,7 @@ export function WelcomeScreen({ onExampleClick, showFooter, outputLanguage = "EN
         <div className="font-serif font-medium text-xs text-foreground group-hover:text-primary transition-colors">
           {example.title}
         </div>
-        <div className="font-serif text-[11px] leading-relaxed text-muted-foreground mt-1 line-clamp-2 sm:line-clamp-none">
+        <div className="font-serif text-[11px] leading-relaxed text-muted-foreground mt-1">
           {example.query}
         </div>
       </div>
@@ -109,15 +109,15 @@ export function WelcomeScreen({ onExampleClick, showFooter, outputLanguage = "EN
   );
 
   return (
-    <div className="flex-1 overflow-y-auto">
-      <div className="min-h-full flex items-center justify-center p-4 sm:p-8">
+    <div>
+      <div className="flex items-center justify-center p-4 sm:p-8">
         <div className="max-w-2xl w-full text-center overflow-hidden">
         {/* Logo */}
-        <div className="mb-6 sm:mb-8">
-          <div className="inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-primary/10 mb-4">
+        <div className="mb-4 sm:mb-8">
+          <div className="inline-flex items-center justify-center w-12 h-12 sm:w-16 sm:h-16 rounded-2xl bg-primary/10 mb-3 sm:mb-4">
             <FeatherIcon className="w-10 h-10" />
           </div>
-          <h1 className="text-3xl font-serif font-semibold text-foreground">Casebird</h1>
+          <h1 className="text-2xl sm:text-3xl font-serif font-semibold text-foreground">Casebird</h1>
           <p className="font-serif text-muted-foreground mt-2 text-sm sm:text-base px-2">
             {isChinese
               ? "AI 驅動的香港法律研究助理"
@@ -126,7 +126,7 @@ export function WelcomeScreen({ onExampleClick, showFooter, outputLanguage = "EN
         </div>
 
         {/* Stats */}
-        <div className="flex justify-center gap-8 mb-6 sm:mb-8 text-sm font-serif">
+        <div className="flex justify-center gap-6 sm:gap-8 mb-4 sm:mb-8 text-sm font-serif">
           <div>
             <div className="text-2xl font-semibold text-primary">1.3M+</div>
             <div className="text-muted-foreground">{isChinese ? "法律案例" : "Legal cases"}</div>
@@ -141,24 +141,13 @@ export function WelcomeScreen({ onExampleClick, showFooter, outputLanguage = "EN
           </div>
         </div>
 
-        {/* Examples - Mobile: swipable single card */}
-        <div className="sm:hidden">
-          <div
-            className="overflow-hidden w-full"
-            onTouchStart={handleTouchStart}
-            onTouchEnd={handleTouchEnd}
-          >
-            <div
-              className="flex transition-transform duration-300 ease-in-out"
-              style={{ transform: `translateX(-${activeIndex * 100}%)` }}
-            >
-              {examples.map((example, i) => (
-                <div key={i} className="w-full min-w-full px-1">
-                  {renderCard(example, i)}
-                </div>
-              ))}
-            </div>
-          </div>
+        {/* Examples - Mobile: show one card at a time */}
+        <div
+          className="sm:hidden"
+          onTouchStart={handleTouchStart}
+          onTouchEnd={handleTouchEnd}
+        >
+          {renderCard(examples[activeIndex], activeIndex)}
           {/* Dot indicators */}
           <div className="flex justify-center gap-1.5 mt-3">
             {examples.map((_, i) => (
@@ -180,7 +169,7 @@ export function WelcomeScreen({ onExampleClick, showFooter, outputLanguage = "EN
         </div>
 
         {/* Disclaimer */}
-        <p className="font-serif text-xs text-muted-foreground mt-6 sm:mt-8 italic">
+        <p className="font-serif text-xs text-muted-foreground mt-4 sm:mt-8 italic">
           {isChinese
             ? "Casebird 僅提供法律研究輔助。請務必核實案例引用，並就法律建議諮詢合資格的法律顧問。"
             : "Casebird provides legal research assistance only. Always verify case citations and consult qualified legal counsel for legal advice."}
