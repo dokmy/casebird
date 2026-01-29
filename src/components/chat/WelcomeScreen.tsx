@@ -91,17 +91,17 @@ export function WelcomeScreen({ onExampleClick, showFooter, outputLanguage = "EN
     <button
       key={i}
       onClick={() => onExampleClick(example.query, "normal")}
-      className="flex items-start gap-3 p-5 rounded-lg border bg-card hover:bg-accent/50 transition-colors text-left group"
+      className="flex items-start gap-3 p-4 rounded-lg border bg-card hover:bg-accent/50 transition-colors text-left group w-full overflow-hidden"
     >
       <example.icon className="w-5 h-5 text-primary shrink-0 mt-0.5" />
-      <div>
+      <div className="min-w-0 flex-1">
         <div className="font-serif text-[10px] uppercase tracking-widest text-primary/70 mb-0.5">
           {example.role}
         </div>
         <div className="font-serif font-medium text-xs text-foreground group-hover:text-primary transition-colors">
           {example.title}
         </div>
-        <div className="font-serif text-[11px] leading-relaxed text-muted-foreground mt-1">
+        <div className="font-serif text-[11px] leading-relaxed text-muted-foreground mt-1 line-clamp-2 sm:line-clamp-none">
           {example.query}
         </div>
       </div>
@@ -111,14 +111,14 @@ export function WelcomeScreen({ onExampleClick, showFooter, outputLanguage = "EN
   return (
     <div className="flex-1 overflow-y-auto">
       <div className="min-h-full flex items-center justify-center p-4 sm:p-8">
-        <div className="max-w-2xl w-full text-center">
+        <div className="max-w-2xl w-full text-center overflow-hidden">
         {/* Logo */}
         <div className="mb-6 sm:mb-8">
           <div className="inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-primary/10 mb-4">
             <FeatherIcon className="w-10 h-10" />
           </div>
           <h1 className="text-3xl font-serif font-semibold text-foreground">Casebird</h1>
-          <p className="font-serif text-muted-foreground mt-2">
+          <p className="font-serif text-muted-foreground mt-2 text-sm sm:text-base px-2">
             {isChinese
               ? "AI 驅動的香港法律研究助理"
               : "Your AI-powered Hong Kong legal research assistant"}
