@@ -31,6 +31,8 @@ interface SidebarProps {
   activeConversationId: string | null;
   userEmail: string;
   loading?: boolean;
+  mobileOpen?: boolean;
+  onMobileClose?: () => void;
   onNewChat: () => void;
   onSelectConversation: (id: string) => void;
   onDeleteConversation: (id: string) => void | Promise<void>;
@@ -43,6 +45,8 @@ export function Sidebar({
   activeConversationId,
   userEmail,
   loading,
+  mobileOpen,
+  onMobileClose,
   onNewChat,
   onSelectConversation,
   onDeleteConversation,
@@ -84,9 +88,20 @@ export function Sidebar({
     setDeletingId(null);
   };
 
+  const handleSelectConversation = (id: string) => {
+    onSelectConversation(id);
+    onMobileClose?.();
+  };
+
+  const handleNewChatMobile = () => {
+    onNewChat();
+    onMobileClose?.();
+  };
+
+  // Desktop collapsed view
   if (collapsed) {
     return (
-      <div className="w-12 border-r border-border/50 flex flex-col items-center py-3 gap-3 shrink-0 bg-card/50">
+      <div className="hidden md:flex w-12 border-r border-border/50 flex-col items-center py-3 gap-3 shrink-0 bg-card/50">
         <button
           onClick={() => setCollapsed(false)}
           className="p-2 rounded-lg hover:bg-accent/50 text-muted-foreground hover:text-foreground transition-colors"
@@ -105,8 +120,8 @@ export function Sidebar({
     );
   }
 
-  return (
-    <div className="w-64 border-r border-border/50 flex flex-col shrink-0 bg-card/50">
+  const sidebarContent = (
+    <div className="w-64 border-r border-border/50 flex flex-col shrink-0 bg-card md:bg-card/50 h-full">
       {/* Header */}
       <div className="p-3 flex items-center justify-between border-b border-border/50">
         <div className="flex items-center gap-2">
@@ -114,9 +129,15 @@ export function Sidebar({
           <span className="font-serif text-sm font-medium">Casebird</span>
         </div>
         <button
-          onClick={() => setCollapsed(true)}
+          onClick={() => {
+            if (mobileOpen) {
+              onMobileClose?.();
+            } else {
+              setCollapsed(true);
+            }
+          }}
           className="p-1.5 rounded-lg hover:bg-accent/50 text-muted-foreground hover:text-foreground transition-colors"
-          title="Collapse sidebar"
+          title="Close sidebar"
         >
           <PanelLeftClose className="w-4 h-4" />
         </button>
@@ -125,7 +146,7 @@ export function Sidebar({
       {/* New Chat Button */}
       <div className="p-3">
         <button
-          onClick={onNewChat}
+          onClick={handleNewChatMobile}
           className="w-full flex items-center gap-2 px-3 py-2 rounded-lg border border-border/60 hover:bg-accent/50 transition-colors text-sm font-serif"
         >
           <Plus className="w-4 h-4" />
@@ -156,7 +177,7 @@ export function Sidebar({
                     : "hover:bg-accent/30 text-muted-foreground hover:text-foreground"
                 )}
                 onClick={() => {
-                  if (editingId !== conv.id && deletingId !== conv.id) onSelectConversation(conv.id);
+                  if (editingId !== conv.id && deletingId !== conv.id) handleSelectConversation(conv.id);
                 }}
               >
                 {deletingId === conv.id ? (
@@ -269,5 +290,24 @@ export function Sidebar({
         </div>
       </div>
     </div>
+  );
+
+  return (
+    <>
+      {/* Desktop sidebar */}
+      <div className="hidden md:flex shrink-0">
+        {sidebarContent}
+      </div>
+
+      {/* Mobile overlay sidebar */}
+      {mobileOpen && (
+        <div className="fixed inset-0 z-50 md:hidden">
+          <div className="absolute inset-0 bg-black/50" onClick={onMobileClose} />
+          <div className="relative h-full">
+            {sidebarContent}
+          </div>
+        </div>
+      )}
+    </>
   );
 }

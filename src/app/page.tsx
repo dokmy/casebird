@@ -2,6 +2,7 @@
 
 import { useState, useRef, useEffect, useCallback } from "react";
 import Link from "next/link";
+import { Menu } from "lucide-react";
 import { ChatMessage } from "@/components/chat/ChatMessage";
 import { ChatInput } from "@/components/chat/ChatInput";
 import { CaseViewer } from "@/components/chat/CaseViewer";
@@ -33,6 +34,7 @@ export default function Home() {
     message_count: number;
     message_limit: number;
   } | null>(null);
+  const [mobileSidebarOpen, setMobileSidebarOpen] = useState(false);
   const scrollRef = useRef<HTMLDivElement>(null);
   const supabase = createClient();
 
@@ -519,6 +521,8 @@ export default function Home() {
         conversations={conversations}
         activeConversationId={activeConversationId}
         userEmail={userEmail}
+        mobileOpen={mobileSidebarOpen}
+        onMobileClose={() => setMobileSidebarOpen(false)}
         onNewChat={handleNewChat}
         onSelectConversation={handleSelectConversation}
         onDeleteConversation={handleDeleteConversation}
@@ -530,8 +534,15 @@ export default function Home() {
       {/* Main Content */}
       <div className="flex-1 flex flex-col min-h-0 min-w-0">
         {/* Header */}
-        <header className="border-b border-border/50 px-6 py-4 shrink-0">
-          <div className="max-w-2xl mx-auto">
+        <header className="border-b border-border/50 px-4 md:px-6 py-4 shrink-0">
+          <div className="max-w-2xl mx-auto flex items-center gap-3">
+            <button
+              onClick={() => setMobileSidebarOpen(true)}
+              className="md:hidden p-1.5 -ml-1.5 rounded-lg hover:bg-accent/50 text-muted-foreground hover:text-foreground transition-colors"
+              title="Open menu"
+            >
+              <Menu className="w-5 h-5" />
+            </button>
             <button
               onClick={handleNewChat}
               className="flex items-center gap-2 text-xl font-serif font-medium text-foreground tracking-tight hover:text-primary transition-colors group"
@@ -545,7 +556,7 @@ export default function Home() {
         <div className="flex-1 flex min-h-0">
           {/* Chat Panel */}
           <div
-            className={`flex flex-col ${selectedCase ? "w-1/2" : "w-full"} transition-all duration-300`}
+            className={`flex flex-col ${selectedCase ? "md:w-1/2" : "w-full"} w-full transition-all duration-300`}
           >
             {messages.length === 0 ? (
               <div className="flex-1 flex items-center justify-center overflow-y-auto">
@@ -584,9 +595,9 @@ export default function Home() {
             <ChatInput onSend={handleSend} isLoading={isLoading} caseLanguage={caseLanguage} onCaseLanguageChange={setCaseLanguage} caseLanguageLocked={messages.length > 0} messageCount={subscription?.message_count} messageLimit={subscription?.message_limit} />
           </div>
 
-          {/* Case Viewer Panel */}
+          {/* Case Viewer Panel - desktop side panel */}
           {selectedCase && (
-            <div className="w-1/2 transition-all duration-300">
+            <div className="hidden md:block w-1/2 transition-all duration-300">
               <CaseViewer
                 url={selectedCase.url}
                 citation={selectedCase.citation}
@@ -596,6 +607,19 @@ export default function Home() {
           )}
         </div>
       </div>
+
+      {/* Case Viewer - mobile bottom sheet */}
+      {selectedCase && (
+        <div className="md:hidden">
+          <CaseViewer
+            url={selectedCase.url}
+            citation={selectedCase.citation}
+            onClose={() => setSelectedCase(null)}
+            mobile
+          />
+        </div>
+      )}
+
       {showUpgradeModal && subscription && (
         <UpgradeModal
           currentPlan={subscription.plan}
