@@ -144,7 +144,7 @@ export function WelcomeScreen({ onExampleClick, showFooter, outputLanguage = "EN
         {/* Examples - Mobile: swipable single card */}
         <div className="sm:hidden">
           <div
-            className="overflow-hidden"
+            className="overflow-hidden w-full"
             onTouchStart={handleTouchStart}
             onTouchEnd={handleTouchEnd}
           >
@@ -153,7 +153,7 @@ export function WelcomeScreen({ onExampleClick, showFooter, outputLanguage = "EN
               style={{ transform: `translateX(-${activeIndex * 100}%)` }}
             >
               {examples.map((example, i) => (
-                <div key={i} className="w-full shrink-0 px-1">
+                <div key={i} className="w-full min-w-full px-1">
                   {renderCard(example, i)}
                 </div>
               ))}

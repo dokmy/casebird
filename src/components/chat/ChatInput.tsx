@@ -34,7 +34,7 @@ export function ChatInput({ onSend, isLoading, disabled, caseLanguage, onCaseLan
     const textarea = textareaRef.current;
     if (textarea) {
       textarea.style.height = "auto";
-      const newHeight = Math.min(Math.max(textarea.scrollHeight, 60), 200);
+      const newHeight = Math.min(Math.max(textarea.scrollHeight, 80), 200);
       textarea.style.height = `${newHeight}px`;
     }
   }, [input]);
@@ -156,7 +156,7 @@ export function ChatInput({ onSend, isLoading, disabled, caseLanguage, onCaseLan
             onKeyDown={handleKeyDown}
             placeholder="Ask about Hong Kong case law..."
             disabled={isLoading || disabled}
-            className="min-h-[60px] max-h-[200px] resize-none pr-12 bg-card"
+            className="min-h-[80px] max-h-[200px] resize-none pr-12 bg-card"
             rows={1}
           />
           <Button
