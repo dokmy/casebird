@@ -1,7 +1,8 @@
 import { GoogleGenAI, Type, FunctionDeclaration, Tool } from "@google/genai";
 import { searchCases, getCaseDetails, getCaseUrl } from "@/lib/pinecone";
+import { createClient } from "@/lib/supabase/server";
 
-const SYSTEM_PROMPT = `You are an expert legal assistant specializing in Hong Kong law. You help lawyers research case precedents, analyze legal issues, and find relevant authorities.
+const SYSTEM_PROMPT_EN = `You are an expert legal assistant specializing in Hong Kong law. You help lawyers research case precedents, analyze legal issues, and find relevant authorities.
 
 ## CRITICAL: Reading Full Cases
 **YOU MUST use getCaseDetails to read the full case text before providing detailed analysis.**
@@ -19,14 +20,14 @@ const SYSTEM_PROMPT = `You are an expert legal assistant specializing in Hong Ko
 
 ## CRITICAL: Case References Must Be Hyperlinks
 **EVERY case citation mentioned MUST be a clickable markdown hyperlink.**
-- Format: [Citation](https://www.hklii.hk/en/cases/COURT/YEAR/NUMBER)
-- Example: [[2024] HKCA 620](https://www.hklii.hk/en/cases/hkca/2024/620)
+- **Always use the exact URL provided in the search results** — do NOT construct URLs yourself
+- Each search result includes a URL field — copy it exactly
 - This applies to ALL case mentions - in text, tables, lists, everywhere
 - Users click these links to open the case in the viewer panel
 
 ## Search Capabilities
 You can search with filters:
-- **court**: "hkcfa" (Court of Final Appeal), "hkca" (Court of Appeal), "hkcfi" (Court of First Instance), "hkdc" (District Court), "hkfc" (Family Court)
+- **court**: "hkcfa" (Court of Final Appeal), "ukpc" (UK Privy Council), "hkca" (Court of Appeal), "hkcfi" (Court of First Instance), "hkct" (Competition Tribunal), "hkdc" (District Court), "hkfc" (Family Court), "hkmagc" (Magistrates' Courts), "hkcrc" (Coroner's Court), "hklat" (Labour Tribunal), "hkldt" (Lands Tribunal), "hkoat" (Obscene Articles Tribunal), "hksct" (Small Claims Tribunal)
 - **language**: "EN" (English) or "TC" (Traditional Chinese)
 - **yearFrom/yearTo**: Filter by year range
 
@@ -40,14 +41,76 @@ Use these filters to narrow searches when the user specifies jurisdiction or tim
 
 | Case | Court | Year | Key Point | Outcome |
 |------|-------|------|-----------|---------|
-| [[2024] HKCA 620](url) | CA | 2024 | Brief description | Outcome |
+| [[2024] HKCA 620](use URL from search results) | CA | 2024 | Brief description | Outcome |
 
 ## Tool Usage Guidelines
 - Use searchCases with specific, targeted queries
 - Make multiple searches with different angles if needed (the search supports hybrid semantic + keyword matching)
 - Use filters when appropriate (court level, language, year range)
 - ALWAYS use getCaseDetails before quoting or analyzing a case in depth
-- You can make up to 10 tool calls per response if needed`;
+- You can make up to 10 tool calls per response if needed
+
+## CRITICAL: Never Translate Case Quotes
+**When quoting from a case, you MUST use the EXACT original text from the judgment — never translate it.**
+- If the case is in English, quote in English even if responding in Chinese
+- If the case is in Chinese, quote in Chinese even if responding in English
+- Your analysis and commentary can be in the user's preferred language, but all blockquotes must be verbatim from the source`;
+
+const SYSTEM_PROMPT_TC = `你是一位專精於香港法律的法律研究助理。你幫助律師研究案例先例、分析法律問題，並尋找相關法律依據。
+
+## 重要：閱讀完整案例
+**你必須使用 getCaseDetails 閱讀完整案例全文，才能提供詳細分析。**
+- 搜尋結果只顯示片段——這些不足以進行正確的法律分析
+- 使用 searchCases 找到相關案例後，務必調用 getCaseDetails 閱讀完整判決書
+- 只有閱讀完整案例後，你才能準確引用和分析
+
+## 重要：引用原始案例文本
+**你必須直接引用案例文本來支持你的分析。**
+- 使用引用格式（>）引用案例中的原文
+- 盡可能包含段落編號
+- 格式：
+  > "法庭裁定被告的行為..."
+  > — [案件名稱](url)，第45段
+
+## 重要：案例引用必須是超連結
+**提及的每一個案例引用都必須是可點擊的 markdown 超連結。**
+- **務必使用搜尋結果中提供的確切 URL**——不要自行構建 URL
+- 每個搜尋結果都包含 URL 欄位——請直接複製使用
+- 這適用於所有案例提及——在正文、表格、列表中都是如此
+- 用戶點擊這些連結可在側面板中打開案例
+
+## 搜尋功能
+你可以使用以下篩選條件進行搜尋：
+- **court**："hkcfa"（終審法院）、"ukpc"（英國樞密院）、"hkca"（上訴法庭）、"hkcfi"（原訟法庭）、"hkct"（競爭事務審裁處）、"hkdc"（區域法院）、"hkfc"（家事法庭）、"hkmagc"（裁判法院）、"hkcrc"（死因裁判法庭）、"hklat"（勞資審裁處）、"hkldt"（土地審裁處）、"hkoat"（淫褻物品審裁處）、"hksct"（小額錢債審裁處）
+- **language**："EN"（英文）或 "TC"（繁體中文）
+- **yearFrom/yearTo**：按年份範圍篩選
+
+當用戶指定司法管轄區或時間範圍時，使用這些篩選條件縮小搜尋範圍。
+
+## 回應格式
+1. 首先簡要總結回答用戶的問題
+2. 提供帶有案例引用的詳細分析
+3. 使用引用格式引用案例中的相關段落
+4. 適當時包含相關案例的摘要表格：
+
+| 案例 | 法院 | 年份 | 要點 | 結果 |
+|------|------|------|------|------|
+| [[2024] HKCA 620](使用搜尋結果中的 URL) | CA | 2024 | 簡要描述 | 結果 |
+
+## 工具使用指引
+- 使用 searchCases 進行具體、有針對性的查詢
+- 如有需要，從不同角度進行多次搜尋（搜尋支持語義+關鍵詞混合匹配）
+- 適當使用篩選條件（法院級別、語言、年份範圍）
+- 在深入引用或分析案例之前，務必使用 getCaseDetails
+- 每次回應最多可進行10次工具調用
+
+## 絕對重要：禁止翻譯案例引文
+**引用案例原文時，你必須使用判決書中的原始文字——絕對不可翻譯。**
+- 如果案例是英文的，即使你用中文回覆，引用也必須保持英文原文
+- 如果案例是中文的，引用必須保持中文原文
+- 你的分析和評論可以使用用戶偏好的語言，但所有引用區塊（blockquote）必須是原文逐字引用
+
+## 重要：你必須全程使用繁體中文，包括你的思考過程和最終回覆。所有分析、摘要、推理和說明都必須以繁體中文撰寫。案例引用和法律術語可保留英文原文。`;
 
 const searchCasesDeclaration: FunctionDeclaration = {
   name: "searchCases",
@@ -67,7 +130,7 @@ const searchCasesDeclaration: FunctionDeclaration = {
       court: {
         type: Type.STRING,
         description:
-          "Filter by court: hkcfa (Court of Final Appeal), hkca (Court of Appeal), hkcfi (Court of First Instance), hkdc (District Court), hkfc (Family Court)",
+          "Filter by court: hkcfa (Court of Final Appeal), ukpc (UK Privy Council), hkca (Court of Appeal), hkcfi (Court of First Instance), hkct (Competition Tribunal), hkdc (District Court), hkfc (Family Court), hkmagc (Magistrates' Courts), hkcrc (Coroner's Court), hklat (Labour Tribunal), hkldt (Lands Tribunal), hkoat (Obscene Articles Tribunal), hksct (Small Claims Tribunal)",
       },
       language: {
         type: Type.STRING,
@@ -117,7 +180,8 @@ interface Message {
 // Helper to execute tools
 async function executeTool(
   name: string,
-  args: Record<string, unknown>
+  args: Record<string, unknown>,
+  caseLanguageOverride?: "EN" | "TC"
 ): Promise<{ result: string; summary: string }> {
   if (name === "searchCases") {
     const typedArgs = args as {
@@ -129,10 +193,13 @@ async function executeTool(
       yearTo?: number;
     };
 
+    // User's case language filter overrides whatever Gemini chose
+    const effectiveLanguage = caseLanguageOverride || typedArgs.language;
+
     const searchResults = await searchCases(typedArgs.query, {
       numResults: typedArgs.numResults,
       court: typedArgs.court,
-      language: typedArgs.language,
+      language: effectiveLanguage,
       yearFrom: typedArgs.yearFrom,
       yearTo: typedArgs.yearTo,
     });
@@ -165,11 +232,23 @@ Snippet: ${r.text.substring(0, 500)}${r.text.length > 500 ? "..." : ""}`;
 
 export async function POST(request: Request) {
   try {
-    const { message, history, mode = "normal" } = (await request.json()) as {
+    // Auth check
+    const supabase = await createClient();
+    const { data: { user } } = await supabase.auth.getUser();
+    if (!user) {
+      return Response.json({ error: "Unauthorized" }, { status: 401 });
+    }
+
+    const { message, history, mode = "normal", outputLanguage = "EN", caseLanguage } = (await request.json()) as {
       message: string;
       history: Message[];
       mode?: "fast" | "normal" | "deep";
+      outputLanguage?: "EN" | "TC";
+      caseLanguage?: "EN" | "TC";
     };
+
+    console.log("[chat] outputLanguage:", outputLanguage, "caseLanguage:", caseLanguage, "mode:", mode);
+    const systemPrompt = outputLanguage === "TC" ? SYSTEM_PROMPT_TC : SYSTEM_PROMPT_EN;
 
     // Set max iterations based on mode
     const modeConfig = {
@@ -226,7 +305,7 @@ export async function POST(request: Request) {
             model: "gemini-3-flash-preview",
             contents: conversationContents,
             config: {
-              systemInstruction: SYSTEM_PROMPT,
+              systemInstruction: systemPrompt,
               tools: tools,
               // Enable native thinking mode
               thinkingConfig: {
@@ -307,16 +386,29 @@ export async function POST(request: Request) {
 
                   // Send descriptive stage based on tool
                   if (typedPart.functionCall.name === "searchCases") {
-                    const query = (typedPart.functionCall.args as { query?: string })?.query || "";
-                    sendStage("searching", `Searching: "${query.substring(0, 50)}${query.length > 50 ? "..." : ""}"`);
+                    const searchArgs = typedPart.functionCall.args as Record<string, unknown>;
+                    const query = (searchArgs.query as string) || "";
+                    // Build filter summary for visibility
+                    const filters: string[] = [];
+                    if (caseLanguage) filters.push(`lang=${caseLanguage}`);
+                    else if (searchArgs.language) filters.push(`lang=${searchArgs.language}`);
+                    if (searchArgs.court) filters.push(`court=${searchArgs.court}`);
+                    if (searchArgs.yearFrom || searchArgs.yearTo) filters.push(`year=${searchArgs.yearFrom || "…"}-${searchArgs.yearTo || "…"}`);
+                    const filterStr = filters.length > 0 ? ` [${filters.join(", ")}]` : "";
+                    sendStage("searching", `Searching: "${query.substring(0, 50)}${query.length > 50 ? "..." : ""}"${filterStr}`);
                   } else if (typedPart.functionCall.name === "getCaseDetails") {
                     const citation = (typedPart.functionCall.args as { citation?: string })?.citation || "";
                     sendStage("retrieving", `Retrieving: ${citation}`);
                   }
 
+                  // Show effective args (with case language override applied)
+                  const displayArgs = { ...typedPart.functionCall.args };
+                  if (typedPart.functionCall.name === "searchCases" && caseLanguage) {
+                    displayArgs.language = caseLanguage;
+                  }
                   sendEvent("tool_call", {
                     name: typedPart.functionCall.name,
-                    args: typedPart.functionCall.args,
+                    args: displayArgs,
                     iteration: iteration + 1,
                   });
                 }
@@ -368,7 +460,8 @@ export async function POST(request: Request) {
               try {
                 const { result, summary } = await executeTool(
                   call.name,
-                  call.args || {}
+                  call.args || {},
+                  caseLanguage
                 );
 
                 sendEvent("tool_result", {
@@ -418,7 +511,7 @@ export async function POST(request: Request) {
               model: "gemini-3-flash-preview",
               contents: conversationContents,
               config: {
-                systemInstruction: SYSTEM_PROMPT,
+                systemInstruction: systemPrompt,
                 tools: tools,
                 thinkingConfig: {
                   thinkingBudget: 2048,
@@ -470,7 +563,7 @@ export async function POST(request: Request) {
               model: "gemini-3-flash-preview",
               contents: conversationContents,
               config: {
-                systemInstruction: SYSTEM_PROMPT,
+                systemInstruction: systemPrompt,
                 // No tools - forces model to just answer
                 thinkingConfig: {
                   thinkingBudget: 1024,

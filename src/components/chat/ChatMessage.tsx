@@ -224,12 +224,14 @@ function IterationBlock({
       <div className="p-4 space-y-4">
         {/* Thoughts */}
         {thoughts.map((thought, i) => (
-          <p
+          <div
             key={`thought-${i}`}
-            className="text-sm font-serif text-muted-foreground italic leading-relaxed"
+            className="text-sm font-serif text-muted-foreground italic leading-relaxed prose prose-sm max-w-none prose-p:my-1 prose-p:font-serif prose-p:italic prose-p:text-muted-foreground prose-strong:text-muted-foreground prose-strong:font-semibold"
           >
-            {thought.content}
-          </p>
+            <ReactMarkdown remarkPlugins={[remarkGfm]}>
+              {thought.content}
+            </ReactMarkdown>
+          </div>
         ))}
 
         {/* Tool Calls */}

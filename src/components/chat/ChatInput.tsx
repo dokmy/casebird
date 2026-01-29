@@ -3,20 +3,31 @@
 import { useState, useRef, useEffect, KeyboardEvent } from "react";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
-import { Send, Loader2, Zap, Scale, Search } from "lucide-react";
-import { ResearchMode, RESEARCH_MODE_CONFIG } from "@/types/chat";
+import { Send, Loader2, Zap, Scale, Search, ChevronDown } from "lucide-react";
+import { ResearchMode, CaseLanguage, RESEARCH_MODE_CONFIG } from "@/types/chat";
 import { cn } from "@/lib/utils";
+
+const CASE_LANGUAGE_OPTIONS: { value: CaseLanguage; label: string }[] = [
+  { value: "any", label: "All languages" },
+  { value: "EN", label: "English only" },
+  { value: "TC", label: "中文 only" },
+];
 
 interface ChatInputProps {
   onSend: (message: string, mode: ResearchMode) => void;
   isLoading: boolean;
   disabled?: boolean;
+  caseLanguage: CaseLanguage;
+  onCaseLanguageChange: (lang: CaseLanguage) => void;
+  caseLanguageLocked?: boolean;
 }
 
-export function ChatInput({ onSend, isLoading, disabled }: ChatInputProps) {
+export function ChatInput({ onSend, isLoading, disabled, caseLanguage, onCaseLanguageChange, caseLanguageLocked }: ChatInputProps) {
   const [input, setInput] = useState("");
   const [mode, setMode] = useState<ResearchMode>("normal");
+  const [showLangMenu, setShowLangMenu] = useState(false);
   const textareaRef = useRef<HTMLTextAreaElement>(null);
+  const langMenuRef = useRef<HTMLDivElement>(null);
 
   // Auto-resize textarea
   useEffect(() => {
@@ -27,6 +38,19 @@ export function ChatInput({ onSend, isLoading, disabled }: ChatInputProps) {
       textarea.style.height = `${newHeight}px`;
     }
   }, [input]);
+
+  // Close dropdown on outside click
+  useEffect(() => {
+    const handleClickOutside = (e: MouseEvent) => {
+      if (langMenuRef.current && !langMenuRef.current.contains(e.target as Node)) {
+        setShowLangMenu(false);
+      }
+    };
+    if (showLangMenu) {
+      document.addEventListener("mousedown", handleClickOutside);
+      return () => document.removeEventListener("mousedown", handleClickOutside);
+    }
+  }, [showLangMenu]);
 
   const handleSubmit = () => {
     const trimmed = input.trim();
@@ -49,28 +73,79 @@ export function ChatInput({ onSend, isLoading, disabled }: ChatInputProps) {
     deep: <Search className="w-3.5 h-3.5" />,
   };
 
+  const currentLangLabel = CASE_LANGUAGE_OPTIONS.find((o) => o.value === caseLanguage)?.label || "All languages";
+
   return (
     <div className="border-t bg-background p-4">
       <div className="max-w-3xl mx-auto">
-        {/* Mode selector */}
-        <div className="flex items-center justify-center gap-1 mb-3">
-          {(Object.keys(RESEARCH_MODE_CONFIG) as ResearchMode[]).map((m) => (
+        {/* Mode selector & case language dropdown */}
+        <div className="flex items-center justify-center gap-4 mb-3">
+          {/* Research mode */}
+          <div className="flex items-center gap-1">
+            {(Object.keys(RESEARCH_MODE_CONFIG) as ResearchMode[]).map((m) => (
+              <button
+                key={m}
+                onClick={() => setMode(m)}
+                disabled={isLoading}
+                className={cn(
+                  "flex items-center gap-1.5 px-3 py-1.5 text-xs font-serif rounded-full transition-all",
+                  mode === m
+                    ? "bg-primary text-primary-foreground"
+                    : "bg-muted text-muted-foreground hover:bg-muted/80"
+                )}
+                title={RESEARCH_MODE_CONFIG[m].description}
+              >
+                {modeIcons[m]}
+                <span>{RESEARCH_MODE_CONFIG[m].label}</span>
+              </button>
+            ))}
+          </div>
+
+          {/* Divider */}
+          <div className="w-px h-4 bg-border" />
+
+          {/* Case language dropdown */}
+          <div className="relative" ref={langMenuRef}>
             <button
-              key={m}
-              onClick={() => setMode(m)}
-              disabled={isLoading}
+              onClick={() => !caseLanguageLocked && setShowLangMenu(!showLangMenu)}
+              disabled={isLoading || caseLanguageLocked}
               className={cn(
                 "flex items-center gap-1.5 px-3 py-1.5 text-xs font-serif rounded-full transition-all",
-                mode === m
-                  ? "bg-primary text-primary-foreground"
+                caseLanguageLocked
+                  ? "bg-muted/50 text-muted-foreground/50 cursor-not-allowed"
                   : "bg-muted text-muted-foreground hover:bg-muted/80"
               )}
-              title={RESEARCH_MODE_CONFIG[m].description}
+              title={caseLanguageLocked ? "Case language is locked for this conversation. Start a new chat to change it." : undefined}
             >
-              {modeIcons[m]}
-              <span>{RESEARCH_MODE_CONFIG[m].label}</span>
+              <span className="text-muted-foreground/70">Cases:</span>
+              <span className={caseLanguage !== "any" && !caseLanguageLocked ? "text-foreground" : ""}>
+                {currentLangLabel}
+              </span>
+              {!caseLanguageLocked && <ChevronDown className="w-3 h-3" />}
             </button>
-          ))}
+
+            {showLangMenu && (
+              <div className="absolute bottom-full left-0 mb-1 w-40 bg-card border border-border rounded-lg shadow-lg py-1 z-50">
+                {CASE_LANGUAGE_OPTIONS.map((opt) => (
+                  <button
+                    key={opt.value}
+                    onClick={() => {
+                      onCaseLanguageChange(opt.value);
+                      setShowLangMenu(false);
+                    }}
+                    className={cn(
+                      "w-full text-left px-3 py-2 text-xs font-serif transition-colors",
+                      caseLanguage === opt.value
+                        ? "bg-primary/10 text-primary"
+                        : "text-foreground hover:bg-accent/50"
+                    )}
+                  >
+                    {opt.label}
+                  </button>
+                ))}
+              </div>
+            )}
+          </div>
         </div>
 
         <div className="relative flex items-end gap-2">

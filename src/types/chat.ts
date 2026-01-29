@@ -40,6 +40,8 @@ export interface SelectedCase {
 
 export type ResearchMode = "fast" | "normal" | "deep";
 
+export type CaseLanguage = "any" | "EN" | "TC";
+
 export const RESEARCH_MODE_CONFIG: Record<ResearchMode, { maxIterations: number; label: string; description: string }> = {
   fast: { maxIterations: 3, label: "Fast", description: "Quick answers" },
   normal: { maxIterations: 5, label: "Normal", description: "Balanced research" },
