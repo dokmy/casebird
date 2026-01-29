@@ -134,11 +134,46 @@ create policy "Users can insert own subscription"
   on public.subscriptions for insert
   with check (auth.uid() = user_id);
 
--- Allow users to update own subscription (e.g., increment message_count)
-create policy "Users can update own subscription"
-  on public.subscriptions for update
-  using (auth.uid() = user_id);
+-- NO UPDATE policy for subscriptions — users cannot directly modify their subscription.
+-- Message count is incremented via the increment_message_count RPC (SECURITY DEFINER).
+-- All other updates (plan, limits, status) go through the Stripe webhook using service role.
 
 create trigger subscriptions_updated_at
   before update on public.subscriptions
   for each row execute function public.update_updated_at();
+
+-- RPC: Atomically check message limit and increment count.
+-- Returns { allowed, plan, count, limit }.
+-- SECURITY DEFINER bypasses RLS so users don't need UPDATE access.
+create or replace function public.increment_message_count(uid uuid)
+returns jsonb
+language plpgsql
+security definer
+as $$
+declare
+  sub record;
+begin
+  -- Auto-create free subscription if none exists
+  insert into public.subscriptions (user_id, plan, status, message_count, message_limit)
+  values (uid, 'free', 'active', 0, 10)
+  on conflict (user_id) do nothing;
+
+  -- Lock the row and check limit
+  select plan, message_count, message_limit
+  into sub
+  from public.subscriptions
+  where user_id = uid
+  for update;
+
+  if sub.message_count >= sub.message_limit then
+    return jsonb_build_object('allowed', false, 'plan', sub.plan, 'count', sub.message_count, 'limit', sub.message_limit);
+  end if;
+
+  -- Increment
+  update public.subscriptions
+  set message_count = message_count + 1
+  where user_id = uid;
+
+  return jsonb_build_object('allowed', true, 'plan', sub.plan, 'count', sub.message_count + 1, 'limit', sub.message_limit);
+end;
+$$;

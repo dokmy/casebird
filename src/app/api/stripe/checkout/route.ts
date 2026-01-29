@@ -61,8 +61,8 @@ export async function POST(request: Request) {
       customer: customerId,
       mode: "subscription",
       line_items: [{ price: priceId, quantity: 1 }],
-      success_url: `${request.headers.get("origin") || process.env.NEXT_PUBLIC_APP_URL}/?checkout=success`,
-      cancel_url: `${request.headers.get("origin") || process.env.NEXT_PUBLIC_APP_URL}/?checkout=canceled`,
+      success_url: `${process.env.NEXT_PUBLIC_APP_URL}/?checkout=success`,
+      cancel_url: `${process.env.NEXT_PUBLIC_APP_URL}/?checkout=canceled`,
       metadata: { user_id: user.id, plan },
     });
 

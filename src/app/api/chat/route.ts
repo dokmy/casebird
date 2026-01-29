@@ -239,34 +239,22 @@ export async function POST(request: Request) {
       return Response.json({ error: "Unauthorized" }, { status: 401 });
     }
 
-    // Check usage limits
-    const { data: subscription } = await supabase
-      .from("subscriptions")
-      .select("message_count, message_limit, plan, status")
-      .eq("user_id", user.id)
-      .single();
+    // Atomically check limit and increment message count
+    const { data: rpcResult, error: rpcError } = await supabase
+      .rpc("increment_message_count", { uid: user.id });
 
-    // Auto-create free subscription if none exists
-    if (!subscription) {
-      await supabase.from("subscriptions").insert({
-        user_id: user.id,
-        plan: "free",
-        status: "active",
-        message_count: 0,
-        message_limit: 10,
-      });
-    } else if (subscription.message_count >= subscription.message_limit) {
+    if (rpcError) {
+      console.error("RPC error:", rpcError);
+      return Response.json({ error: "Failed to check usage" }, { status: 500 });
+    }
+
+    // rpcResult: { allowed: boolean, plan: string, count: number, limit: number }
+    if (!rpcResult?.allowed) {
       return Response.json(
-        { error: "limit_reached", plan: subscription.plan, count: subscription.message_count, limit: subscription.message_limit },
+        { error: "limit_reached", plan: rpcResult?.plan || "free", count: rpcResult?.count || 0, limit: rpcResult?.limit || 0 },
         { status: 403 }
       );
     }
-
-    // Increment message count
-    await supabase
-      .from("subscriptions")
-      .update({ message_count: (subscription?.message_count ?? 0) + 1 })
-      .eq("user_id", user.id);
 
     const { message, history, mode = "normal", outputLanguage = "EN", caseLanguage } = (await request.json()) as {
       message: string;
