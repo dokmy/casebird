@@ -30,6 +30,9 @@ export const metadata: Metadata = {
     "legal AI",
     "court cases",
   ],
+  icons: {
+    icon: "/favicon.svg",
+  },
 };
 
 export default function RootLayout({
