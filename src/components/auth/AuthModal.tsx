@@ -31,7 +31,7 @@ export function AuthModal({ onClose }: AuthModalProps) {
           email,
           password,
           options: {
-            emailRedirectTo: `${window.location.origin}/auth/callback`,
+            emailRedirectTo: `${window.location.origin}/auth/callback?type=signup`,
           },
         });
         if (error) throw error;
