@@ -1,181 +1,167 @@
 "use client";
 
-import { useState, useRef } from "react";
-import { Shield, Gavel, Building2, Briefcase } from "lucide-react";
-import { ResearchMode } from "@/types/chat";
-import { FeatherIcon } from "@/components/ui/feather-icon";
+import { useState } from "react";
+import { Shield, Gavel, Building2, Briefcase, FileCheck } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { FeatherIcon } from "@/components/ui/feather-icon";
 
 interface WelcomeScreenProps {
-  onExampleClick: (example: string, mode: ResearchMode) => void;
-  showFooter?: boolean;
+  onExampleClick: (query: string) => void;
   outputLanguage?: "EN" | "TC";
 }
 
-const EXAMPLES_EN = [
-  {
-    icon: Shield,
-    role: "Personal Injury",
-    title: "PSLA awards for shoulder injury",
-    query: "Find Hong Kong personal injury cases where the plaintiff suffered a rotator cuff tear with PSLA awards between HK$200,000 and HK$500,000",
-  },
-  {
-    icon: Gavel,
-    role: "Criminal Defence",
-    title: "Sentencing for dangerous driving",
-    query: "What are the sentencing guidelines and recent precedents for dangerous driving causing death under s.36 of the Road Traffic Ordinance in Hong Kong?",
-  },
-  {
-    icon: Building2,
-    role: "Insurance Claims",
-    title: "Fraud in PI claims",
-    query: "Find cases where personal injury claims were dismissed or reduced due to surveillance evidence of exaggeration or fraud in Hong Kong",
-  },
-  {
-    icon: Briefcase,
-    role: "Corporate / In-House",
-    title: "Director liability for breach",
-    query: "What is the standard for holding directors personally liable for breach of fiduciary duty in Hong Kong, and what remedies have the courts awarded?",
-  },
-];
+const FIELDS = [
+  { id: "criminal", label: "Criminal", icon: Gavel },
+  { id: "pi", label: "Personal Injury", icon: Shield },
+  { id: "corporate", label: "Corporate", icon: Building2 },
+  { id: "inhouse", label: "In-house", icon: Briefcase },
+  { id: "insurance", label: "Insurance", icon: FileCheck },
+] as const;
 
-const EXAMPLES_TC = [
-  {
-    icon: Shield,
-    role: "人身傷害",
-    title: "肩傷的痛楚及損失賠償",
-    query: "搜尋香港人身傷害案例，原告人肩袖撕裂，痛楚、痛苦及喪失生活樂趣的賠償金額介乎港幣200,000至500,000元",
-  },
-  {
-    icon: Gavel,
-    role: "刑事辯護",
-    title: "危險駕駛的量刑指引",
-    query: "香港《道路交通條例》第36條危險駕駛引致死亡的量刑指引及近期案例有哪些？",
-  },
-  {
-    icon: Building2,
-    role: "保險索償",
-    title: "人身傷害索償中的欺詐",
-    query: "搜尋香港因監控證據顯示誇大傷勢或欺詐而被駁回或減少賠償的人身傷害索償案例",
-  },
-  {
-    icon: Briefcase,
-    role: "企業法務",
-    title: "董事違反信義責任",
-    query: "在香港，追究董事個人因違反受信責任而承擔法律責任的標準是什麼？法院曾判給哪些補救措施？",
-  },
-];
+const SAMPLE_QUERIES: Record<string, { title: string; query: string }[]> = {
+  criminal: [
+    {
+      title: "Sentencing for dangerous driving",
+      query: "What are the sentencing guidelines and recent precedents for dangerous driving causing death under s.36 of the Road Traffic Ordinance in Hong Kong?",
+    },
+    {
+      title: "Bail conditions for fraud charges",
+      query: "What bail conditions have Hong Kong courts imposed in large-scale commercial fraud cases, and what factors are considered?",
+    },
+    {
+      title: "Triad-related offences sentencing",
+      query: "Find recent Hong Kong sentencing precedents for offences under the Organized and Serious Crimes Ordinance (Cap. 455), particularly for triad-related activities.",
+    },
+  ],
+  pi: [
+    {
+      title: "PSLA awards for shoulder injury",
+      query: "Find Hong Kong personal injury cases where the plaintiff suffered a rotator cuff tear with PSLA awards between HK$200,000 and HK$500,000",
+    },
+    {
+      title: "Loss of earning capacity for young plaintiff",
+      query: "How have Hong Kong courts assessed loss of future earning capacity for plaintiffs under 30 who suffered permanent disability in workplace accidents?",
+    },
+    {
+      title: "Contributory negligence in traffic accidents",
+      query: "Find Hong Kong cases where contributory negligence was assessed for pedestrians hit by vehicles, and what percentage reductions were applied.",
+    },
+  ],
+  corporate: [
+    {
+      title: "Director liability for breach of duty",
+      query: "What is the standard for holding directors personally liable for breach of fiduciary duty in Hong Kong, and what remedies have the courts awarded?",
+    },
+    {
+      title: "Unfair prejudice petitions",
+      query: "Find Hong Kong cases on unfair prejudice petitions under s.724 of the Companies Ordinance. What conduct has the court found to be unfairly prejudicial to minority shareholders?",
+    },
+    {
+      title: "Shareholder derivative actions",
+      query: "What are the requirements for bringing a statutory derivative action under Part 14 Division 4 of the Companies Ordinance in Hong Kong?",
+    },
+  ],
+  inhouse: [
+    {
+      title: "Legal professional privilege for in-house counsel",
+      query: "How do Hong Kong courts treat legal professional privilege for communications with in-house lawyers? Are there any limitations compared to external counsel?",
+    },
+    {
+      title: "Employment non-compete enforceability",
+      query: "Find Hong Kong cases on the enforceability of non-compete clauses in employment contracts. What factors make a restraint of trade clause reasonable?",
+    },
+    {
+      title: "Data privacy breach liability",
+      query: "What are the legal consequences under Hong Kong's Personal Data (Privacy) Ordinance for companies that suffer data breaches, and what enforcement actions has the PCPD taken?",
+    },
+  ],
+  insurance: [
+    {
+      title: "Fraud in PI claims",
+      query: "Find cases where personal injury claims were dismissed or reduced due to surveillance evidence of exaggeration or fraud in Hong Kong",
+    },
+    {
+      title: "Insurer's duty to indemnify",
+      query: "Find Hong Kong cases where insurers disputed their duty to indemnify on grounds of non-disclosure or misrepresentation by the insured under the Insurance Ordinance.",
+    },
+    {
+      title: "Subrogation rights disputes",
+      query: "How have Hong Kong courts dealt with disputes over an insurer's right of subrogation, particularly where the insured has already settled with the tortfeasor?",
+    },
+  ],
+};
 
-export function WelcomeScreen({ onExampleClick, showFooter, outputLanguage = "EN" }: WelcomeScreenProps) {
+export function WelcomeScreen({ onExampleClick, outputLanguage = "EN" }: WelcomeScreenProps) {
+  const [activeField, setActiveField] = useState<string | null>(null);
   const isChinese = outputLanguage === "TC";
-  const examples = isChinese ? EXAMPLES_TC : EXAMPLES_EN;
-  const [activeIndex, setActiveIndex] = useState(0);
-  const touchStartX = useRef(0);
 
-  const handleTouchStart = (e: React.TouchEvent) => {
-    touchStartX.current = e.touches[0].clientX;
-  };
-
-  const handleTouchEnd = (e: React.TouchEvent) => {
-    const delta = touchStartX.current - e.changedTouches[0].clientX;
-    if (Math.abs(delta) > 50) {
-      if (delta > 0 && activeIndex < examples.length - 1) {
-        setActiveIndex(activeIndex + 1);
-      } else if (delta < 0 && activeIndex > 0) {
-        setActiveIndex(activeIndex - 1);
-      }
-    }
-  };
-
-  const renderCard = (example: typeof examples[0], i: number) => (
-    <button
-      key={i}
-      onClick={() => onExampleClick(example.query, "normal")}
-      className="flex items-start gap-3 p-4 rounded-lg border bg-card hover:bg-accent/50 transition-colors text-left group w-full overflow-hidden"
-    >
-      <example.icon className="w-5 h-5 text-primary shrink-0 mt-0.5" />
-      <div className="min-w-0 flex-1">
-        <div className="font-serif text-[10px] uppercase tracking-widest text-primary/70 mb-0.5">
-          {example.role}
-        </div>
-        <div className="font-serif font-medium text-xs text-foreground group-hover:text-primary transition-colors">
-          {example.title}
-        </div>
-        <div className="font-serif text-[11px] leading-relaxed text-muted-foreground mt-1">
-          {example.query}
-        </div>
-      </div>
-    </button>
-  );
+  const samples = activeField ? SAMPLE_QUERIES[activeField] || [] : [];
 
   return (
-    <div>
-      <div className="flex items-center justify-center p-4 sm:p-8">
-        <div className="max-w-2xl w-full text-center overflow-hidden">
-        {/* Logo */}
-        <div className="mb-4 sm:mb-8">
-          <div className="inline-flex items-center justify-center w-12 h-12 sm:w-16 sm:h-16 rounded-2xl bg-primary/10 mb-3 sm:mb-4">
-            <FeatherIcon className="w-10 h-10" />
-          </div>
-          <h1 className="text-2xl sm:text-3xl font-serif font-semibold text-foreground">Casebird</h1>
-          <p className="font-serif text-muted-foreground mt-2 text-sm sm:text-base px-2">
-            {isChinese
-              ? "AI 驅動的香港法律研究助理"
-              : "Your AI-powered Hong Kong legal research assistant"}
-          </p>
+    <div className="w-full max-w-2xl mx-auto text-center px-4">
+      {/* Logo & branding */}
+      <div className="mb-6">
+        <div className="inline-flex items-center justify-center w-14 h-14 rounded-2xl bg-primary/10 mb-3">
+          <FeatherIcon className="w-8 h-8" />
         </div>
-
-        {/* Stats */}
-        <div className="flex justify-center gap-6 sm:gap-8 mb-4 sm:mb-8 text-sm font-serif">
-          <div>
-            <div className="text-2xl font-semibold text-primary">1.3M+</div>
-            <div className="text-muted-foreground">{isChinese ? "法律案例" : "Legal cases"}</div>
-          </div>
-          <div>
-            <div className="text-2xl font-semibold text-primary">13</div>
-            <div className="text-muted-foreground">{isChinese ? "涵蓋法院" : "Courts covered"}</div>
-          </div>
-          <div>
-            <div className="text-2xl font-semibold text-primary">EN/TC</div>
-            <div className="text-muted-foreground">{isChinese ? "雙語支持" : "Bilingual"}</div>
-          </div>
-        </div>
-
-        {/* Examples - Mobile: show one card at a time */}
-        <div
-          className="sm:hidden"
-          onTouchStart={handleTouchStart}
-          onTouchEnd={handleTouchEnd}
-        >
-          {renderCard(examples[activeIndex], activeIndex)}
-          {/* Dot indicators */}
-          <div className="flex justify-center gap-1.5 mt-3">
-            {examples.map((_, i) => (
-              <button
-                key={i}
-                onClick={() => setActiveIndex(i)}
-                className={cn(
-                  "w-2 h-2 rounded-full transition-colors",
-                  i === activeIndex ? "bg-primary" : "bg-muted-foreground/30"
-                )}
-              />
-            ))}
-          </div>
-        </div>
-
-        {/* Examples - Desktop: 2-column grid */}
-        <div className="hidden sm:grid grid-cols-2 gap-3">
-          {examples.map((example, i) => renderCard(example, i))}
-        </div>
-
-        {/* Disclaimer */}
-        <p className="font-serif text-xs text-muted-foreground mt-4 sm:mt-8 italic">
+        <h1 className="text-2xl sm:text-3xl font-serif font-semibold text-foreground">Casebird</h1>
+        <p className="font-serif text-muted-foreground mt-1.5 text-sm sm:text-base">
           {isChinese
-            ? "Casebird 僅提供法律研究輔助。請務必核實案例引用，並就法律建議諮詢合資格的法律顧問。"
-            : "Casebird provides legal research assistance only. Always verify case citations and consult qualified legal counsel for legal advice."}
+            ? "搜尋 200,000+ 香港法律案例"
+            : "Search 200,000+ Hong Kong legal cases instantly"}
         </p>
+      </div>
+
+      {/* Field chips */}
+      <div className="mb-4">
+        <p className="text-xs font-serif text-muted-foreground mb-2">
+          {isChinese ? "選擇領域查看示例查詢" : "Try a sample enquiry"}
+        </p>
+        <div className="flex flex-wrap justify-center gap-2">
+          {FIELDS.map((field) => (
+            <button
+              key={field.id}
+              onClick={() => setActiveField(activeField === field.id ? null : field.id)}
+              className={cn(
+                "flex items-center gap-1.5 px-3 py-1.5 text-xs font-serif rounded-full transition-all border",
+                activeField === field.id
+                  ? "bg-primary text-primary-foreground border-primary"
+                  : "bg-card text-muted-foreground border-border hover:border-primary/50 hover:text-foreground"
+              )}
+            >
+              <field.icon className="w-3.5 h-3.5" />
+              {field.label}
+            </button>
+          ))}
         </div>
       </div>
+
+      {/* Sample inquiries */}
+      {activeField && samples.length > 0 && (
+        <div className="space-y-2 text-left">
+          {samples.map((sample, i) => (
+            <button
+              key={i}
+              onClick={() => onExampleClick(sample.query)}
+              className="w-full p-3 rounded-lg border border-border bg-card hover:bg-accent/50 transition-colors text-left group"
+            >
+              <div className="font-serif font-medium text-sm text-foreground group-hover:text-primary transition-colors">
+                {sample.title}
+              </div>
+              <div className="font-serif text-xs leading-relaxed text-muted-foreground mt-0.5 line-clamp-2">
+                {sample.query}
+              </div>
+            </button>
+          ))}
+        </div>
+      )}
+
+      {/* Disclaimer */}
+      <p className="font-serif text-xs text-muted-foreground mt-4 italic">
+        {isChinese
+          ? "Casebird 僅提供法律研究輔助。請務必核實案例引用，並就法律建議諮詢合資格的法律顧問。"
+          : "Casebird provides legal research assistance only. Always verify case citations and consult qualified legal counsel for legal advice."}
+      </p>
     </div>
   );
 }

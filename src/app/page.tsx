@@ -35,6 +35,7 @@ export default function Home() {
     message_limit: number;
   } | null>(null);
   const [mobileSidebarOpen, setMobileSidebarOpen] = useState(false);
+  const [chatInput, setChatInput] = useState("");
   const scrollRef = useRef<HTMLDivElement>(null);
   const supabase = createClient();
 
@@ -127,6 +128,7 @@ export default function Home() {
 
       setMessages((prev) => [...prev, userMessage]);
       setIsLoading(true);
+      setChatInput("");
 
       // Create or reuse conversation
       let convId = activeConversationId;
@@ -421,10 +423,10 @@ export default function Home() {
   }, []);
 
   const handleExampleClick = useCallback(
-    (example: string, mode: ResearchMode) => {
-      handleSend(example, mode);
+    (query: string) => {
+      setChatInput(query);
     },
-    [handleSend]
+    []
   );
 
   const handleNewChat = useCallback(() => {
@@ -493,13 +495,13 @@ export default function Home() {
           </button>
         </header>
 
-        {/* Welcome + input in one scrollable area */}
-        <div className="flex-1 overflow-y-auto px-4">
-          <WelcomeScreen onExampleClick={handleExampleClick} showFooter outputLanguage={outputLanguage} />
-          <div className="w-full max-w-2xl mx-auto mt-6">
-              <ChatInput onSend={handleSend} isLoading={false} caseLanguage={caseLanguage} onCaseLanguageChange={setCaseLanguage} />
-            </div>
-          <div className="pb-4 pt-2 text-center">
+        {/* Centered welcome + input */}
+        <div className="flex-1 flex flex-col items-center justify-center overflow-y-auto px-4 pb-4">
+          <WelcomeScreen onExampleClick={handleExampleClick} outputLanguage={outputLanguage} />
+          <div className="w-full max-w-2xl mx-auto mt-4">
+            <ChatInput onSend={handleSend} isLoading={false} caseLanguage={caseLanguage} onCaseLanguageChange={setCaseLanguage} input={chatInput} onInputChange={setChatInput} />
+          </div>
+          <div className="pt-2 text-center">
             <p className="text-xs font-serif text-muted-foreground">
               <Link href="/terms" className="hover:underline">Terms of Use</Link>
               {" · "}
@@ -559,7 +561,7 @@ export default function Home() {
             className={`flex flex-col ${selectedCase ? "md:w-1/2" : "w-full"} w-full transition-all duration-300`}
           >
             {messages.length === 0 ? (
-              <div className="flex-1 flex items-center justify-center overflow-y-auto">
+              <div className="flex-1 flex items-center justify-center overflow-y-auto px-4">
                 <WelcomeScreen onExampleClick={handleExampleClick} outputLanguage={outputLanguage} />
               </div>
             ) : (
@@ -592,7 +594,7 @@ export default function Home() {
               </div>
             )}
 
-            <ChatInput onSend={handleSend} isLoading={isLoading} caseLanguage={caseLanguage} onCaseLanguageChange={setCaseLanguage} caseLanguageLocked={messages.length > 0} messageCount={subscription?.message_count} messageLimit={subscription?.message_limit} />
+            <ChatInput onSend={handleSend} isLoading={isLoading} caseLanguage={caseLanguage} onCaseLanguageChange={setCaseLanguage} caseLanguageLocked={messages.length > 0} messageCount={subscription?.message_count} messageLimit={subscription?.message_limit} input={chatInput} onInputChange={setChatInput} />
           </div>
 
           {/* Case Viewer Panel - desktop side panel */}

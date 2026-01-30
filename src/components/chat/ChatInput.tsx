@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useRef, useEffect, KeyboardEvent } from "react";
+import { useRef, useEffect, KeyboardEvent, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { Send, Loader2, Zap, Scale, Search, ChevronDown } from "lucide-react";
@@ -22,10 +22,11 @@ interface ChatInputProps {
   caseLanguageLocked?: boolean;
   messageCount?: number;
   messageLimit?: number;
+  input: string;
+  onInputChange: (value: string) => void;
 }
 
-export function ChatInput({ onSend, isLoading, disabled, caseLanguage, onCaseLanguageChange, caseLanguageLocked, messageCount, messageLimit }: ChatInputProps) {
-  const [input, setInput] = useState("");
+export function ChatInput({ onSend, isLoading, disabled, caseLanguage, onCaseLanguageChange, caseLanguageLocked, messageCount, messageLimit, input, onInputChange: setInput }: ChatInputProps) {
   const [mode, setMode] = useState<ResearchMode>("normal");
   const [showLangMenu, setShowLangMenu] = useState(false);
   const textareaRef = useRef<HTMLTextAreaElement>(null);
@@ -36,7 +37,7 @@ export function ChatInput({ onSend, isLoading, disabled, caseLanguage, onCaseLan
     const textarea = textareaRef.current;
     if (textarea) {
       textarea.style.height = "auto";
-      const minH = window.innerWidth < 640 ? 60 : 80;
+      const minH = window.innerWidth < 640 ? 66 : 88;
       const newHeight = Math.min(Math.max(textarea.scrollHeight, minH), 200);
       textarea.style.height = `${newHeight}px`;
     }
@@ -59,7 +60,6 @@ export function ChatInput({ onSend, isLoading, disabled, caseLanguage, onCaseLan
     const trimmed = input.trim();
     if (trimmed && !isLoading && !disabled) {
       onSend(trimmed, mode);
-      setInput("");
     }
   };
 
@@ -159,7 +159,7 @@ export function ChatInput({ onSend, isLoading, disabled, caseLanguage, onCaseLan
             onKeyDown={handleKeyDown}
             placeholder="Ask about Hong Kong case law..."
             disabled={isLoading || disabled}
-            className="min-h-[60px] sm:min-h-[80px] max-h-[200px] resize-none pr-12 bg-card text-sm"
+            className="min-h-[66px] sm:min-h-[88px] max-h-[200px] resize-none pr-12 bg-card text-sm"
             rows={1}
           />
           <Button
