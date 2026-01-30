@@ -13,7 +13,7 @@ async function notifyNewSignup(email: string) {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        from: "Casebird <onboarding@resend.dev>",
+        from: "Casebird <noreply@casebird.ai>",
         to: "adrien@stepone.agency",
         subject: `New Casebird signup: ${email}`,
         text: `A new user signed up for Casebird:\n\nEmail: ${email}\nTime: ${new Date().toISOString()}`,
