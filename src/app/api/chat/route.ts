@@ -1,4 +1,4 @@
-import { GoogleGenAI, Type, FunctionDeclaration, Tool } from "@google/genai";
+import { GoogleGenAI, Type, FunctionDeclaration, Tool, ThinkingLevel } from "@google/genai";
 import { searchCases, getCaseDetails, getCaseUrl } from "@/lib/pinecone";
 import { createClient } from "@/lib/supabase/server";
 
@@ -268,10 +268,10 @@ export async function POST(request: Request) {
     const systemPrompt = outputLanguage === "TC" ? SYSTEM_PROMPT_TC : SYSTEM_PROMPT_EN;
 
     // Set max iterations and thinking level based on mode
-    const modeConfig: Record<string, { maxIterations: number; thinkingLevel: "minimal" | "low" | "medium" | "high" }> = {
-      fast: { maxIterations: 3, thinkingLevel: "low" },
-      normal: { maxIterations: 5, thinkingLevel: "medium" },
-      deep: { maxIterations: 10, thinkingLevel: "high" },
+    const modeConfig: Record<string, { maxIterations: number; thinkingLevel: ThinkingLevel }> = {
+      fast: { maxIterations: 3, thinkingLevel: ThinkingLevel.LOW },
+      normal: { maxIterations: 5, thinkingLevel: ThinkingLevel.MEDIUM },
+      deep: { maxIterations: 10, thinkingLevel: ThinkingLevel.HIGH },
     };
     const { maxIterations, thinkingLevel } = modeConfig[mode] || modeConfig.normal;
 
@@ -583,7 +583,7 @@ export async function POST(request: Request) {
                 systemInstruction: systemPrompt,
                 // No tools - forces model to just answer
                 thinkingConfig: {
-                  thinkingLevel: "low",
+                  thinkingLevel: ThinkingLevel.LOW,
                   includeThoughts: true,
                 },
               },
