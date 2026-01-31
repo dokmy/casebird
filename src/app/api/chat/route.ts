@@ -268,7 +268,7 @@ export async function POST(request: Request) {
     const systemPrompt = outputLanguage === "TC" ? SYSTEM_PROMPT_TC : SYSTEM_PROMPT_EN;
 
     // Set max iterations and thinking level based on mode
-    const modeConfig: Record<string, { maxIterations: number; thinkingLevel: string }> = {
+    const modeConfig: Record<string, { maxIterations: number; thinkingLevel: "minimal" | "low" | "medium" | "high" }> = {
       fast: { maxIterations: 3, thinkingLevel: "low" },
       normal: { maxIterations: 5, thinkingLevel: "medium" },
       deep: { maxIterations: 10, thinkingLevel: "high" },
