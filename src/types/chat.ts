@@ -5,6 +5,7 @@ export interface Message {
   thinkingSteps?: ThinkingStep[];
   iterations?: number;
   currentStage?: Stage;
+  caseUrls?: Record<string, string>;
 }
 
 export interface Stage {
@@ -29,7 +30,7 @@ export interface ThinkingStep {
 }
 
 export interface StreamEvent {
-  type: "thinking" | "tool_call" | "tool_result" | "text" | "done" | "error" | "stage";
+  type: "thinking" | "tool_call" | "tool_result" | "text" | "done" | "error" | "stage" | "case_urls";
   data: unknown;
 }
 

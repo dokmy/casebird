@@ -371,6 +371,10 @@ export default function Home() {
                       const data = event.data as { iterations?: number };
                       return { ...m, iterations: data.iterations || 1, currentStage: undefined };
                     }
+                    case "case_urls": {
+                      const urls = event.data as Record<string, string>;
+                      return { ...m, caseUrls: { ...(m.caseUrls || {}), ...urls } };
+                    }
                     case "error":
                       return {
                         ...m,

@@ -100,7 +100,9 @@ export function ChatMessage({ message, onCaseClick }: ChatMessageProps) {
                         <button
                           onClick={() => {
                             const citation = extractCitation(children);
-                            onCaseClick(href, citation);
+                            // Use backend-built URL if available (Gemini may use wrong language)
+                            const correctUrl = (message.caseUrls && findUrlByCitation(message.caseUrls, citation)) || href;
+                            onCaseClick(correctUrl, citation);
                           }}
                           className="inline-flex items-center gap-1.5 text-primary hover:underline font-serif"
                         >
@@ -313,6 +315,16 @@ function ToolCallCard({ name, args, result, isComplete }: ToolCallCardProps) {
       </div>
     </div>
   );
+}
+
+function findUrlByCitation(caseUrls: Record<string, string>, citation: string): string | undefined {
+  // Exact match first
+  if (caseUrls[citation]) return caseUrls[citation];
+  // Try matching by checking if the citation text contains a known citation key
+  for (const [key, url] of Object.entries(caseUrls)) {
+    if (citation.includes(key) || key.includes(citation)) return url;
+  }
+  return undefined;
 }
 
 function extractCitation(children: React.ReactNode): string {

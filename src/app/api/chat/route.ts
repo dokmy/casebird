@@ -182,7 +182,7 @@ async function executeTool(
   name: string,
   args: Record<string, unknown>,
   caseLanguageOverride?: "EN" | "TC"
-): Promise<{ result: string; summary: string }> {
+): Promise<{ result: string; summary: string; urls?: Record<string, string> }> {
   if (name === "searchCases") {
     const typedArgs = args as {
       query: string;
@@ -204,9 +204,11 @@ async function executeTool(
       yearTo: typedArgs.yearTo,
     });
 
+    const urls: Record<string, string> = {};
     const result = searchResults
       .map((r) => {
         const url = getCaseUrl(r.citation, r.language, r.court, r.year);
+        urls[r.citation] = url;
         return `**${r.citation}** (${r.court.toUpperCase()}, ${r.year}, ${r.language})
 Score: ${r.score.toFixed(4)}
 URL: ${url}
@@ -217,6 +219,7 @@ Snippet: ${r.text.substring(0, 500)}${r.text.length > 500 ? "..." : ""}`;
     return {
       result: result || "No cases found matching the search criteria.",
       summary: `Found ${searchResults.length} cases`,
+      urls,
     };
   } else if (name === "getCaseDetails") {
     const typedArgs = args as { citation: string };
@@ -313,6 +316,8 @@ export async function POST(request: Request) {
           let iteration = 0;
           let pendingFunctionCallParts: Array<unknown> = [];
           let finalText = "";
+          // Map citation → correct HKLII URL (built from Pinecone metadata)
+          const caseUrlMap: Record<string, string> = {};
 
           // Stage 1: Understanding the query
           sendStage("understanding", "Understanding your question...");
@@ -475,11 +480,17 @@ export async function POST(request: Request) {
               ).functionCall;
 
               try {
-                const { result, summary } = await executeTool(
+                const { result, summary, urls } = await executeTool(
                   call.name,
                   call.args || {},
                   caseLanguage
                 );
+
+                // Collect citation→URL mappings from search results
+                if (urls) {
+                  Object.assign(caseUrlMap, urls);
+                  sendEvent("case_urls", urls);
+                }
 
                 sendEvent("tool_result", {
                   name: call.name,
