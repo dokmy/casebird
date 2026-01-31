@@ -138,9 +138,9 @@ Vercel has separate env var sets: test keys for Development, live keys for Previ
 
 ## Chat Modes
 
-- **Fast**: Max 3 tool call iterations
-- **Normal**: Max 5 iterations (default)
-- **Deep**: Max 10 iterations
+- **Fast**: Max 3 tool call iterations, thinking level: low
+- **Normal**: Max 5 iterations (default), thinking level: medium
+- **Deep**: Max 10 iterations, thinking level: high
 
 ## Output Language
 

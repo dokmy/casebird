@@ -267,13 +267,13 @@ export async function POST(request: Request) {
     console.log("[chat] outputLanguage:", outputLanguage, "caseLanguage:", caseLanguage, "mode:", mode);
     const systemPrompt = outputLanguage === "TC" ? SYSTEM_PROMPT_TC : SYSTEM_PROMPT_EN;
 
-    // Set max iterations based on mode
-    const modeConfig = {
-      fast: 3,
-      normal: 5,
-      deep: 10,
+    // Set max iterations and thinking level based on mode
+    const modeConfig: Record<string, { maxIterations: number; thinkingLevel: string }> = {
+      fast: { maxIterations: 3, thinkingLevel: "low" },
+      normal: { maxIterations: 5, thinkingLevel: "medium" },
+      deep: { maxIterations: 10, thinkingLevel: "high" },
     };
-    const maxIterations = modeConfig[mode] || 5;
+    const { maxIterations, thinkingLevel } = modeConfig[mode] || modeConfig.normal;
 
     const ai = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY! });
 
@@ -326,7 +326,7 @@ export async function POST(request: Request) {
               tools: tools,
               // Enable native thinking mode
               thinkingConfig: {
-                thinkingBudget: 2048,
+                thinkingLevel,
                 includeThoughts: true,
               },
             },
@@ -531,7 +531,7 @@ export async function POST(request: Request) {
                 systemInstruction: systemPrompt,
                 tools: tools,
                 thinkingConfig: {
-                  thinkingBudget: 2048,
+                  thinkingLevel,
                   includeThoughts: true,
                 },
               },
@@ -583,7 +583,7 @@ export async function POST(request: Request) {
                 systemInstruction: systemPrompt,
                 // No tools - forces model to just answer
                 thinkingConfig: {
-                  thinkingBudget: 1024,
+                  thinkingLevel: "low",
                   includeThoughts: true,
                 },
               },
