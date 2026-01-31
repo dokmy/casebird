@@ -21,17 +21,20 @@ interface ChatMessageProps {
 }
 
 export function ChatMessage({ message, onCaseClick }: ChatMessageProps) {
-  const [showThinking, setShowThinking] = useState(false);
   const isUser = message.role === "user";
 
   const hasThinkingSteps =
     message.thinkingSteps && message.thinkingSteps.length > 0;
 
-  // Group thinking steps by iteration
-  const groupedSteps = groupStepsByIteration(message.thinkingSteps || []);
-
   // Message is complete when it has content
   const isComplete = message.content.length > 0;
+
+  // Auto-expand while streaming (no content yet), collapse once done
+  const [showThinking, setShowThinking] = useState(false);
+  const isStreaming = hasThinkingSteps && !isComplete;
+
+  // Group thinking steps by iteration
+  const groupedSteps = groupStepsByIteration(message.thinkingSteps || []);
 
   return (
     <div className={cn("py-8", isUser ? "bg-transparent" : "")}>
@@ -55,7 +58,7 @@ export function ChatMessage({ message, onCaseClick }: ChatMessageProps) {
                   onClick={() => setShowThinking(!showThinking)}
                   className="flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground transition-colors"
                 >
-                  {showThinking ? (
+                  {(showThinking || isStreaming) ? (
                     <ChevronDown className="w-4 h-4" />
                   ) : (
                     <ChevronRight className="w-4 h-4" />
@@ -69,7 +72,7 @@ export function ChatMessage({ message, onCaseClick }: ChatMessageProps) {
                   )}
                 </button>
 
-                {showThinking && (
+                {(showThinking || isStreaming) && (
                   <div className="mt-4 space-y-4">
                     {Object.entries(groupedSteps).map(([iteration, steps]) => (
                       <IterationBlock
@@ -206,7 +209,7 @@ function IterationBlock({
   totalIterations,
   isComplete,
 }: IterationBlockProps) {
-  const thoughts = steps.filter((s) => s.type === "thought");
+  const thoughts = steps.filter((s) => s.type === "thought" || s.type === "iteration" || s.type === "reasoning" || s.type === "continue" || s.type === "limit");
   const toolCalls = steps.filter((s) => s.type === "tool_call");
   const toolResults = steps.filter((s) => s.type === "tool_result");
 
