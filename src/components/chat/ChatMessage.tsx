@@ -287,6 +287,22 @@ function ToolCallCard({ name, args, result, isComplete }: ToolCallCardProps) {
               ? `"${(args as { query?: string }).query}"`
               : (args as { citation?: string }).citation}
           </p>
+          {isSearch && (() => {
+            const searchArgs = args as { language?: string; court?: string; yearFrom?: number; yearTo?: number };
+            const filters: string[] = [];
+            if (searchArgs.language) filters.push(searchArgs.language === "EN" ? "English" : "中文");
+            if (searchArgs.court) filters.push(searchArgs.court.toUpperCase());
+            if (searchArgs.yearFrom && searchArgs.yearTo) filters.push(`${searchArgs.yearFrom}–${searchArgs.yearTo}`);
+            else if (searchArgs.yearFrom) filters.push(`${searchArgs.yearFrom}+`);
+            else if (searchArgs.yearTo) filters.push(`–${searchArgs.yearTo}`);
+            return filters.length > 0 ? (
+              <div className="flex gap-1.5 mt-1.5 flex-wrap">
+                {filters.map((f, i) => (
+                  <span key={i} className="text-[10px] font-serif px-1.5 py-0.5 rounded bg-muted text-muted-foreground">{f}</span>
+                ))}
+              </div>
+            ) : null;
+          })()}
           {result && (
             <p className="text-xs font-serif text-primary mt-1">{result}</p>
           )}
