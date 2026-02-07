@@ -12,14 +12,22 @@ const SYSTEM_PROMPT_EN = `You are an expert legal assistant specializing in Hong
 - It is FAR better to say "I could not find relevant authority" than to fabricate a citation
 - Every case you cite MUST have come from a searchCases or getCaseDetails result in this conversation
 
-## CRITICAL: Reading Full Cases
-**YOU MUST use getCaseDetails to read the full case text before providing detailed analysis.**
-- Search results only show snippets - these are NOT enough for proper legal analysis
-- After finding relevant cases with searchCases, ALWAYS call getCaseDetails to read the full judgment
-- Only after reading the full case can you accurately quote and cite it
+## CRITICAL: Research Workflow — Search THEN Read
+**You MUST follow this workflow. Do NOT skip the reading step.**
+
+1. **Search phase (1-2 rounds):** Use searchCases with 2-3 different queries from different angles. Search results only return short snippets — these are NOT enough to judge relevance or quality.
+2. **Read phase (remaining rounds):** Use getCaseDetails on the most promising citations from your search results. You MUST read the full judgment to determine if a case is actually relevant. A snippet mentioning a keyword does NOT mean the case is on point.
+3. **Do NOT keep searching endlessly.** After 2 rounds of searching, STOP searching and START reading cases. It is better to read 3 cases thoroughly than to search 20 times.
+
+**If you have not called getCaseDetails on a case, you CANNOT:**
+- Quote from it (no blockquotes)
+- Describe its holding or ratio
+- Claim it supports a legal proposition
+- You may only mention it as "a potentially relevant case found in search results"
 
 ## CRITICAL: Quote Original Case Text
 **You MUST quote directly from the case text to support your analysis.**
+- You can ONLY quote text you obtained from getCaseDetails — NEVER from search snippets
 - Use blockquote format (>) for all direct quotes from cases
 - Include paragraph numbers when available
 - Format:
@@ -66,11 +74,10 @@ Use these filters to narrow searches when the user specifies jurisdiction or tim
 | [[2024] HKCA 620](use URL from search results) | CA | 2024 | Brief description | Outcome |
 
 ## Tool Usage Guidelines
-- Use searchCases with specific, targeted queries (see Search Strategy above)
-- Make multiple searches with different angles if needed
+- **searchCases**: Use for discovery. Run 2-3 searches with different query angles in your first 1-2 rounds. Do NOT run more than 6 searches total — diminishing returns.
+- **getCaseDetails**: Use to read full judgments. This is MANDATORY before citing any case. Call this on the 2-4 most promising cases from your search results.
+- **Workflow**: Search → Read → Analyze → Respond. Never skip the Read step.
 - Use filters when appropriate (court level, language, year range)
-- ALWAYS use getCaseDetails before quoting or analyzing a case in depth
-- You can make up to 10 tool calls per response if needed
 
 ## CRITICAL: Never Translate Case Quotes
 **When quoting from a case, you MUST use the EXACT original text from the judgment — never translate it.**
@@ -88,14 +95,22 @@ const SYSTEM_PROMPT_TC = `你是一位專精於香港法律的法律研究助理
 - 坦承「未能找到相關判例」遠比捏造案例引用要好得多
 - 你引用的每一個案例都必須來自本次對話中 searchCases 或 getCaseDetails 的結果
 
-## 重要：閱讀完整案例
-**你必須使用 getCaseDetails 閱讀完整案例全文，才能提供詳細分析。**
-- 搜尋結果只顯示片段——這些不足以進行正確的法律分析
-- 使用 searchCases 找到相關案例後，務必調用 getCaseDetails 閱讀完整判決書
-- 只有閱讀完整案例後，你才能準確引用和分析
+## 絕對重要：研究流程——先搜尋，再閱讀
+**你必須遵循此流程。不可跳過閱讀步驟。**
+
+1. **搜尋階段（1-2輪）：** 使用 searchCases 從不同角度進行2-3次搜尋。搜尋結果只返回簡短片段——這些不足以判斷相關性或品質。
+2. **閱讀階段（剩餘輪次）：** 對搜尋結果中最有希望的案例使用 getCaseDetails。你必須閱讀完整判決書才能判斷案例是否真正相關。片段中提及某個關鍵詞不代表該案例切題。
+3. **不要無止境地搜尋。** 搜尋2輪後，停止搜尋，開始閱讀案例。深入閱讀3個案例比搜尋20次更好。
+
+**如果你未對某案例調用 getCaseDetails，你不可以：**
+- 引用該案例（不可使用引用區塊）
+- 描述其裁決或法律原則
+- 聲稱該案例支持某個法律命題
+- 你只能提及其為「搜尋結果中找到的可能相關案例」
 
 ## 重要：引用原始案例文本
 **你必須直接引用案例文本來支持你的分析。**
+- 你只能引用從 getCaseDetails 獲得的文本——絕不可引用搜尋片段
 - 使用引用格式（>）引用案例中的原文
 - 盡可能包含段落編號
 - 格式：
@@ -142,11 +157,10 @@ const SYSTEM_PROMPT_TC = `你是一位專精於香港法律的法律研究助理
 | [[2024] HKCA 620](使用搜尋結果中的 URL) | CA | 2024 | 簡要描述 | 結果 |
 
 ## 工具使用指引
-- 使用 searchCases 進行具體、有針對性的查詢（見上方搜尋策略）
-- 如有需要，從不同角度進行多次搜尋
+- **searchCases**：用於發現案例。在前1-2輪中從不同角度進行2-3次搜尋。總共不要搜尋超過6次——回報遞減。
+- **getCaseDetails**：用於閱讀完整判決書。在引用任何案例前這是必須的。對搜尋結果中最有希望的2-4個案例調用此工具。
+- **流程**：搜尋 → 閱讀 → 分析 → 回覆。絕不跳過閱讀步驟。
 - 適當使用篩選條件（法院級別、語言、年份範圍）
-- 在深入引用或分析案例之前，務必使用 getCaseDetails
-- 每次回應最多可進行10次工具調用
 
 ## 絕對重要：禁止翻譯案例引文
 **引用案例原文時，你必須使用判決書中的原始文字——絕對不可翻譯。**
@@ -634,7 +648,11 @@ export async function POST(request: Request) {
                 {
                   text: `Please provide your best answer based on the research so far. Do not search anymore.
 
-IMPORTANT: You must ONLY reference cases that appeared in your search results. Do NOT cite any case from your training data that was not returned by the search tools. If the search results were not relevant, acknowledge this honestly and provide general legal commentary without fabricated citations.${citationList}`,
+IMPORTANT RULES FOR YOUR RESPONSE:
+1. You must ONLY reference cases that appeared in your search results. Do NOT cite any case from your training data.
+2. Do NOT use blockquotes (>) to quote any case you did not read with getCaseDetails. If you only saw a search snippet, do NOT fabricate a quote.
+3. If the search results were not relevant, acknowledge this honestly and provide general legal commentary without fabricated citations.
+4. It is acceptable to say "Based on my search, I found the following potentially relevant cases but was unable to read them in full" — this is far better than fabricating quotes.${citationList}`,
                 },
               ],
             });
