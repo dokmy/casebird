@@ -296,7 +296,7 @@ async function executeTool(
   name: string,
   args: Record<string, unknown>,
   caseLanguageOverride?: "EN" | "TC"
-): Promise<{ result: string; summary: string; urls?: Record<string, string> }> {
+): Promise<{ result: string; summary: string; urls?: Record<string, string>; scores?: Record<string, number> }> {
   if (name === "searchCases") {
     const typedArgs = args as {
       query: string;
@@ -319,10 +319,12 @@ async function executeTool(
     });
 
     const urls: Record<string, string> = {};
+    const scores: Record<string, number> = {};
     const result = searchResults
       .map((r) => {
         const url = getCaseUrl(r.citation, r.language, r.court, r.year);
         urls[r.citation] = url;
+        scores[r.citation] = r.score;
         return `**${r.citation}** (${r.court.toUpperCase()}, ${r.year}, ${r.language})
 Score: ${r.score.toFixed(4)}
 URL: ${url}
@@ -334,6 +336,7 @@ Snippet: ${r.text.substring(0, 500)}${r.text.length > 500 ? "..." : ""}`;
       result: result || "No cases found matching the search criteria.",
       summary: `Found ${searchResults.length} cases`,
       urls,
+      scores,
     };
   } else if (name === "getCaseDetails") {
     const typedArgs = args as { citation: string };
@@ -432,6 +435,10 @@ export async function POST(request: Request) {
           let finalText = "";
           // Map citation → correct HKLII URL (built from Pinecone metadata)
           const caseUrlMap: Record<string, string> = {};
+          // Track best search score per case (for ranking READ suggestions)
+          const caseScoreMap: Record<string, number> = {};
+          // Track which cases have been read via getCaseDetails
+          const casesRead = new Set<string>();
           // Track tool usage
           let searchCount = 0;
           let readCount = 0;
@@ -616,7 +623,7 @@ export async function POST(request: Request) {
                 if (call.name === "searchCases") searchCount++;
                 if (call.name === "getCaseDetails") readCount++;
 
-                const { result, summary, urls } = await executeTool(
+                const { result, summary, urls, scores } = await executeTool(
                   call.name,
                   call.args || {},
                   caseLanguage
@@ -626,6 +633,21 @@ export async function POST(request: Request) {
                 if (urls) {
                   Object.assign(caseUrlMap, urls);
                   sendEvent("case_urls", urls);
+                }
+
+                // Track best score per case across all searches
+                if (scores) {
+                  for (const [citation, score] of Object.entries(scores)) {
+                    if (!caseScoreMap[citation] || score > caseScoreMap[citation]) {
+                      caseScoreMap[citation] = score;
+                    }
+                  }
+                }
+
+                // Track which cases have been read
+                if (call.name === "getCaseDetails") {
+                  const citation = (call.args as { citation?: string })?.citation;
+                  if (citation) casesRead.add(citation);
                 }
 
                 sendEvent("tool_result", {
@@ -680,13 +702,31 @@ export async function POST(request: Request) {
             // Inject phase guidance so Gemini knows what to do next
             const nextPhaseLabel = nextPhase.toUpperCase();
             let phaseGuidance = "";
-            if (nextPhase === "read" && Object.keys(caseUrlMap).length > 0) {
-              const topCitations = Object.keys(caseUrlMap).slice(0, 4);
-              phaseGuidance = `\n\nNEXT PHASE: READ. You must now use getCaseDetails to read the most promising cases from your search results. Suggested cases: ${topCitations.join(", ")}. Do NOT search — read the cases you found.`;
+            if (nextPhase === "read" && Object.keys(caseScoreMap).length > 0) {
+              // Rank cases by best score across ALL searches, excluding already-read cases
+              const unreadByScore = Object.entries(caseScoreMap)
+                .filter(([citation]) => !casesRead.has(citation))
+                .sort(([, a], [, b]) => b - a)
+                .slice(0, 4)
+                .map(([citation]) => citation);
+              const suggestions = unreadByScore.length > 0
+                ? `Suggested cases (ranked by relevance across all searches): ${unreadByScore.join(", ")}.`
+                : `Choose the most promising cases from your search results.`;
+              phaseGuidance = `\n\nNEXT PHASE: READ. You must now use getCaseDetails to read cases. ${suggestions} Do NOT search — read the cases you found.`;
             } else if (nextPhase === "search") {
               phaseGuidance = `\n\nNEXT PHASE: SEARCH. Continue searching from different angles. Try different legal terms, broader/narrower queries, or different filters.`;
             } else if (nextPhase === "both") {
-              phaseGuidance = `\n\nNEXT PHASE: FLEXIBLE. You may search for more cases or read cases you haven't read yet. Use your judgment on what will help most.`;
+              // In BOTH phase, nudge toward reading unread cases if there are good ones
+              const unreadByScore = Object.entries(caseScoreMap)
+                .filter(([citation]) => !casesRead.has(citation))
+                .sort(([, a], [, b]) => b - a)
+                .slice(0, 3)
+                .map(([citation]) => citation);
+              if (unreadByScore.length > 0) {
+                phaseGuidance = `\n\nNEXT PHASE: FLEXIBLE. You may search for more cases or read cases you haven't read yet. Unread cases worth reading: ${unreadByScore.join(", ")}. Prefer reading unread cases over searching unless you have a specific gap to fill.`;
+              } else {
+                phaseGuidance = `\n\nNEXT PHASE: FLEXIBLE. You may search for more cases or read cases you haven't read yet. Use your judgment on what will help most.`;
+              }
             }
 
             if (phaseGuidance) {
