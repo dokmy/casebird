@@ -53,12 +53,11 @@ Config in `src/lib/stripe.ts` (`PLAN_CONFIG`). Only user messages count toward t
 
 ### Message Usage Enforcement
 
-In `src/app/api/chat/route.ts` (line ~242):
-1. Query `subscriptions` table for user
-2. If no record exists, auto-create free tier (`plan='free'`, `message_limit=10`)
+In `src/app/api/chat/route.ts`:
+1. Atomically check limit + increment via `increment_message_count` RPC (Supabase function)
+2. If no subscription record exists, auto-creates free tier (`plan='free'`, `message_limit=10`)
 3. If `message_count >= message_limit`, return 403 `{ error: "limit_reached" }`
-4. Increment `message_count` before proceeding with Gemini call
-5. Frontend catches 403 and shows `UpgradeModal`
+4. Frontend catches 403 and shows `UpgradeModal`
 
 ### API Routes
 
@@ -136,11 +135,83 @@ NEXT_PUBLIC_APP_URL
 
 Vercel has separate env var sets: test keys for Development, live keys for Preview/Production.
 
+## Chat API — State Machine (`src/app/api/chat/route.ts`)
+
+### Phase-Based Tool Control
+
+The chat API uses a state machine that controls which tools Gemini can use at each iteration. Each mode has a fixed phase schedule — Gemini cannot choose to search when the phase says "read".
+
+**Phase types:**
+- `search` — only `searchCases` available
+- `read` — only `getCaseDetails` available
+- `both` — both tools available
+- `answer` — no tools, forces final response
+
+**Phase schedules:**
+```
+Fast (3):   search → read → answer
+Normal (6): search → read → read → both → read → answer
+Deep (10):  search → search → read → read → read → both → both → read → read → answer
+```
+
+**Design rules:**
+- The phase before `answer` must always be `read` (not `both`), because searching right before answer is wasteful — those results never get read
+- `both` phases should always be followed by a `read` phase so new search results can be acted on
+
+**Thinking levels:** Fast = LOW, Normal = MEDIUM, Deep = HIGH (Gemini native thinking)
+
+### How the Loop Works (Important for debugging)
+
+The initial Gemini call (outside the loop) uses `phases[0]`. Inside the loop, each iteration:
+1. Executes pending tool calls from the **previous** Gemini response
+2. Determines next Gemini call tools using `phases[iteration]` (not `iteration+1`)
+3. Injects phase guidance and calls Gemini with appropriate tools
+
+The `phases[iteration]` indexing is critical — using `iteration+1` would skip one phase per mode (this was a bug that caused FAST mode to never read any cases).
+
+### Search Pipeline
+
+1. **searchCases** → Pinecone hybrid search (Voyage AI dense embedding 512d + BM25 sparse vector). Returns 10 deduplicated cases per query with 500-char snippets, scores, and HKLII URLs.
+2. **getCaseDetails** → Fetches full judgment from Pinecone (up to 500 chunks per case, no truncation). Chunks are ~600 tokens each (~1000 chars English, ~2000 chars Chinese).
+
+### Score-Ranked READ Suggestions
+
+When entering a READ phase, the system suggests cases ranked by **best search score across all queries** (not insertion order). This prevents bias toward the first search query's results.
+
+Tracking state:
+- `caseScoreMap`: Maps citation → best score seen across all searches. Updated with `max(existing, new)` on each search.
+- `casesRead`: Set of citations that have been read via `getCaseDetails`. Used to filter suggestions to unread cases only.
+- `caseUrlMap`: Maps citation → HKLII URL (built from Pinecone metadata, not Gemini).
+
+**READ guidance:** Top 4 unread cases by score.
+**BOTH guidance:** Top 3 unread cases by score + nudge to prefer reading over searching.
+
+### Search Strategy (in system prompt)
+
+- Searches are **semantic**, not exact-phrase. Quotation marks are stripped by the sparse vector tokenizer (`\b\w+\b` regex) and ignored by Voyage AI embedding.
+- Gemini is instructed to search for concepts using 3-8 unquoted words, like a judge writing a judgment.
+- Each query should attack the problem from a different legal angle (principle, consequence, factual pattern).
+
+### Answer Phase Safeguards
+
+- Citation whitelist injected: Gemini can only cite cases from `caseUrlMap`
+- Blockquotes only allowed for cases read via `getCaseDetails`
+- Cases only seen in search snippets can be mentioned as "potentially relevant" but not quoted
+
+### Pinecone Index Stats
+
+- 1,302,730 vectors, dimension 512
+- Target chunk size: 600 tokens (~1000 chars EN, ~2000 chars CN)
+- Cases range from 2-64 chunks (CFA cases tend to be longest)
+- Even worst case (deep mode, 7 reads of 64-chunk CFA cases) = ~140k tokens = 14% of Gemini's 1M context window. No truncation needed.
+
 ## Chat Modes
 
-- **Fast**: Max 3 tool call iterations, thinking level: low
-- **Normal**: Max 5 iterations (default), thinking level: medium
-- **Deep**: Max 10 iterations, thinking level: high
+| Mode | Phases | Gemini Calls | Typical Searches | Typical Reads | Thinking |
+|------|--------|-------------|-----------------|--------------|----------|
+| Fast | 3 | 2 | 2-3 | 1-2 | Low |
+| Normal | 6 | 5 | 3-4 | 4-6 | Medium |
+| Deep | 10 | 9 | 4-6 | 6-10 | High |
 
 ## Output Language
 
