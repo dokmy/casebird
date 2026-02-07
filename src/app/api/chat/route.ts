@@ -268,13 +268,15 @@ const bothTools: Tool[] = [
 type Phase = "search" | "read" | "both" | "answer";
 
 // Phase schedules per mode — controls exactly which tools Gemini can use at each iteration
+// Rule: the phase before "answer" must always be "read" (not "both"), because
+// searching right before answer is wasteful — those results never get read.
 const PHASE_SCHEDULES: Record<string, Phase[]> = {
   // Fast (3 iterations): search → read → answer
   fast: ["search", "read", "answer"],
-  // Normal (5 iterations): search → read → read → both → answer
-  normal: ["search", "read", "read", "both", "answer"],
-  // Deep (10 iterations): search → search → read → read → read → both → both → read → both → answer
-  deep: ["search", "search", "read", "read", "read", "both", "both", "read", "both", "answer"],
+  // Normal (5 iterations): search → read → read → read → answer
+  normal: ["search", "read", "read", "read", "answer"],
+  // Deep (10 iterations): search → search → read → read → read → both → both → read → read → answer
+  deep: ["search", "search", "read", "read", "read", "both", "both", "read", "read", "answer"],
 };
 
 function getToolsForPhase(phase: Phase): Tool[] | undefined {
