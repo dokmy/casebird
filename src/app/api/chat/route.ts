@@ -685,8 +685,10 @@ export async function POST(request: Request) {
               parts: functionResponseParts,
             });
 
-            // Determine what tools to provide for the NEXT iteration
-            const nextPhase = phases[iteration + 1] || "answer";
+            // Determine what tools to provide for the NEXT Gemini call
+            // phases[iteration] (not iteration+1) because the initial call outside the loop
+            // used phases[0], and this loop iteration processed results from the previous call
+            const nextPhase = phases[iteration] || "answer";
             const nextTools = getToolsForPhase(nextPhase);
 
             // If next phase is "answer", break out and generate final response
@@ -740,7 +742,7 @@ export async function POST(request: Request) {
             sendStage("thinking", `${nextPhaseLabel} phase...`);
             sendEvent("thinking", {
               type: "reasoning",
-              content: `Entering ${nextPhaseLabel} phase (iteration ${iteration + 2}/${phases.length})...`,
+              content: `Entering ${nextPhaseLabel} phase (iteration ${iteration + 1}/${phases.length})...`,
               iteration: iteration + 1,
             });
 
