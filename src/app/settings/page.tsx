@@ -258,9 +258,15 @@ export default function SettingsPage() {
                       try {
                         const res = await fetch("/api/stripe/portal", { method: "POST" });
                         const data = await res.json();
-                        if (data.url) window.location.href = data.url;
+                        if (data.url) {
+                          window.location.href = data.url;
+                          return; // Don't reset loading — we're navigating away
+                        }
+                        console.error("Portal error:", data.error || "No URL returned");
+                        alert(data.error || "Failed to open billing portal. Please try again.");
                       } catch (e) {
                         console.error("Portal error:", e);
+                        alert("Failed to open billing portal. Please try again.");
                       }
                       setLoadingPortal(false);
                     }}
