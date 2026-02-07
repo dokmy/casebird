@@ -12,12 +12,13 @@ const SYSTEM_PROMPT_EN = `You are an expert legal assistant specializing in Hong
 - It is FAR better to say "I could not find relevant authority" than to fabricate a citation
 - Every case you cite MUST have come from a searchCases or getCaseDetails result in this conversation
 
-## CRITICAL: Research Workflow — Search THEN Read
-**You MUST follow this workflow. Do NOT skip the reading step.**
+## CRITICAL: Research Workflow — Phases Are Enforced
+**The system controls which tools you can use at each phase. Follow the guidance provided.**
 
-1. **Search phase (1-2 rounds):** Use searchCases with 2-3 different queries from different angles. Search results only return short snippets — these are NOT enough to judge relevance or quality.
-2. **Read phase (remaining rounds):** Use getCaseDetails on the most promising citations from your search results. You MUST read the full judgment to determine if a case is actually relevant. A snippet mentioning a keyword does NOT mean the case is on point.
-3. **Do NOT keep searching endlessly.** After 2 rounds of searching, STOP searching and START reading cases. It is better to read 3 cases thoroughly than to search 20 times.
+1. **SEARCH phase:** You can ONLY use searchCases. Run 2-3 diverse queries from different angles. Think like a judge — use terms that appear in written judgments.
+2. **READ phase:** You can ONLY use getCaseDetails. Read the most promising cases from your search results in full. You MUST read a case before you can cite it.
+3. **FLEXIBLE phase:** You may search or read. Fill in gaps — search if you need more cases, or read cases you haven't read yet.
+4. **ANSWER phase:** No tools available. Provide your final analysis using only cases you have actually read.
 
 **If you have not called getCaseDetails on a case, you CANNOT:**
 - Quote from it (no blockquotes)
@@ -74,9 +75,9 @@ Use these filters to narrow searches when the user specifies jurisdiction or tim
 | [[2024] HKCA 620](use URL from search results) | CA | 2024 | Brief description | Outcome |
 
 ## Tool Usage Guidelines
-- **searchCases**: Use for discovery. Run 2-3 searches with different query angles in your first 1-2 rounds. Do NOT run more than 6 searches total — diminishing returns.
+- **searchCases**: Use for discovery. In each search round, run 2-3 diverse queries. Vary your terms — do not repeat similar queries.
 - **getCaseDetails**: Use to read full judgments. This is MANDATORY before citing any case. Call this on the 2-4 most promising cases from your search results.
-- **Workflow**: Search → Read → Analyze → Respond. Never skip the Read step.
+- **The system controls your workflow.** Only the tools allowed for the current phase will be available. Follow the phase guidance provided.
 - Use filters when appropriate (court level, language, year range)
 
 ## CRITICAL: Never Translate Case Quotes
@@ -95,12 +96,13 @@ const SYSTEM_PROMPT_TC = `你是一位專精於香港法律的法律研究助理
 - 坦承「未能找到相關判例」遠比捏造案例引用要好得多
 - 你引用的每一個案例都必須來自本次對話中 searchCases 或 getCaseDetails 的結果
 
-## 絕對重要：研究流程——先搜尋，再閱讀
-**你必須遵循此流程。不可跳過閱讀步驟。**
+## 絕對重要：研究流程——系統強制執行各階段
+**系統控制你在每個階段可以使用的工具。請遵循提供的指引。**
 
-1. **搜尋階段（1-2輪）：** 使用 searchCases 從不同角度進行2-3次搜尋。搜尋結果只返回簡短片段——這些不足以判斷相關性或品質。
-2. **閱讀階段（剩餘輪次）：** 對搜尋結果中最有希望的案例使用 getCaseDetails。你必須閱讀完整判決書才能判斷案例是否真正相關。片段中提及某個關鍵詞不代表該案例切題。
-3. **不要無止境地搜尋。** 搜尋2輪後，停止搜尋，開始閱讀案例。深入閱讀3個案例比搜尋20次更好。
+1. **搜尋階段：** 你只能使用 searchCases。從不同角度進行2-3次多樣化搜尋。像法官一樣思考——使用書面判決中會出現的術語。
+2. **閱讀階段：** 你只能使用 getCaseDetails。完整閱讀搜尋結果中最有希望的案例。在引用案例之前你必須先閱讀它。
+3. **靈活階段：** 你可以搜尋或閱讀。填補不足——如果需要更多案例就搜尋，或閱讀尚未閱讀的案例。
+4. **回答階段：** 沒有工具可用。僅使用你實際閱讀過的案例提供最終分析。
 
 **如果你未對某案例調用 getCaseDetails，你不可以：**
 - 引用該案例（不可使用引用區塊）
@@ -157,9 +159,9 @@ const SYSTEM_PROMPT_TC = `你是一位專精於香港法律的法律研究助理
 | [[2024] HKCA 620](使用搜尋結果中的 URL) | CA | 2024 | 簡要描述 | 結果 |
 
 ## 工具使用指引
-- **searchCases**：用於發現案例。在前1-2輪中從不同角度進行2-3次搜尋。總共不要搜尋超過6次——回報遞減。
+- **searchCases**：用於發現案例。在每輪搜尋中進行2-3次多樣化查詢。變換你的用詞——不要重複相似的查詢。
 - **getCaseDetails**：用於閱讀完整判決書。在引用任何案例前這是必須的。對搜尋結果中最有希望的2-4個案例調用此工具。
-- **流程**：搜尋 → 閱讀 → 分析 → 回覆。絕不跳過閱讀步驟。
+- **系統控制你的流程。** 當前階段允許的工具才會可用。請遵循提供的階段指引。
 - 適當使用篩選條件（法院級別、語言、年份範圍）
 
 ## 絕對重要：禁止翻譯案例引文
@@ -224,11 +226,39 @@ const getCaseDetailsDeclaration: FunctionDeclaration = {
   },
 };
 
-const tools: Tool[] = [
-  {
-    functionDeclarations: [searchCasesDeclaration, getCaseDetailsDeclaration],
-  },
+const searchOnlyTools: Tool[] = [
+  { functionDeclarations: [searchCasesDeclaration] },
 ];
+
+const readOnlyTools: Tool[] = [
+  { functionDeclarations: [getCaseDetailsDeclaration] },
+];
+
+const bothTools: Tool[] = [
+  { functionDeclarations: [searchCasesDeclaration, getCaseDetailsDeclaration] },
+];
+
+// Phase types: which tools are available at each iteration
+type Phase = "search" | "read" | "both" | "answer";
+
+// Phase schedules per mode — controls exactly which tools Gemini can use at each iteration
+const PHASE_SCHEDULES: Record<string, Phase[]> = {
+  // Fast (3 iterations): search → read → answer
+  fast: ["search", "read", "answer"],
+  // Normal (5 iterations): search → read → read → both → answer
+  normal: ["search", "read", "read", "both", "answer"],
+  // Deep (10 iterations): search → search → read → read → read → both → both → read → both → answer
+  deep: ["search", "search", "read", "read", "read", "both", "both", "read", "both", "answer"],
+};
+
+function getToolsForPhase(phase: Phase): Tool[] | undefined {
+  switch (phase) {
+    case "search": return searchOnlyTools;
+    case "read": return readOnlyTools;
+    case "both": return bothTools;
+    case "answer": return undefined; // No tools — force final answer
+  }
+}
 
 interface Message {
   role: "user" | "assistant";
@@ -328,13 +358,13 @@ export async function POST(request: Request) {
     console.log("[chat] outputLanguage:", outputLanguage, "caseLanguage:", caseLanguage, "mode:", mode);
     const systemPrompt = outputLanguage === "TC" ? SYSTEM_PROMPT_TC : SYSTEM_PROMPT_EN;
 
-    // Set max iterations and thinking level based on mode
-    const modeConfig: Record<string, { maxIterations: number; thinkingLevel: ThinkingLevel }> = {
-      fast: { maxIterations: 3, thinkingLevel: ThinkingLevel.LOW },
-      normal: { maxIterations: 5, thinkingLevel: ThinkingLevel.MEDIUM },
-      deep: { maxIterations: 10, thinkingLevel: ThinkingLevel.HIGH },
+    // Set thinking level based on mode (iteration count is controlled by PHASE_SCHEDULES)
+    const thinkingLevelConfig: Record<string, ThinkingLevel> = {
+      fast: ThinkingLevel.LOW,
+      normal: ThinkingLevel.MEDIUM,
+      deep: ThinkingLevel.HIGH,
     };
-    const { maxIterations, thinkingLevel } = modeConfig[mode] || modeConfig.normal;
+    const thinkingLevel = thinkingLevelConfig[mode] || ThinkingLevel.MEDIUM;
 
     const ai = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY! });
 
@@ -376,20 +406,31 @@ export async function POST(request: Request) {
           let finalText = "";
           // Map citation → correct HKLII URL (built from Pinecone metadata)
           const caseUrlMap: Record<string, string> = {};
-          // Track tool usage to enforce search→read workflow
+          // Track tool usage
           let searchCount = 0;
           let readCount = 0;
+
+          // Get the phase schedule for this mode
+          const phases = PHASE_SCHEDULES[mode] || PHASE_SCHEDULES.normal;
+          const currentPhase = phases[0]; // First phase (always "search")
+          const currentTools = getToolsForPhase(currentPhase);
 
           // Stage 1: Understanding the query
           sendStage("understanding", "Understanding your question...");
 
-          // Initial request with thinking mode enabled
-          let response = await ai.models.generateContentStream({
+          sendEvent("thinking", {
+            type: "reasoning",
+            content: `Phase: SEARCH (iteration 1/${phases.length})`,
+            iteration: 1,
+          });
+
+          // Initial request with thinking mode enabled — SEARCH phase only
+          const response = await ai.models.generateContentStream({
             model: "gemini-3-flash-preview",
             contents: conversationContents,
             config: {
               systemInstruction: systemPrompt,
-              tools: tools,
+              tools: currentTools,
               // Enable native thinking mode
               thinkingConfig: {
                 thinkingLevel,
@@ -502,18 +543,22 @@ export async function POST(request: Request) {
           // Process initial response
           await processStream(response as AsyncIterable<unknown>);
 
-          // THE MAGIC LOOP: Keep going while model wants to use tools
+          // STATE MACHINE LOOP: Phase-based tool control
+          // Each iteration has a defined phase that controls which tools are available
           while (
             pendingFunctionCallParts.length > 0 &&
-            iteration < maxIterations
+            iteration < phases.length - 1 // Last phase is always "answer"
           ) {
             iteration++;
 
-            sendStage("executing", `Processing (round ${iteration} of ${maxIterations})...`);
+            const phase = phases[iteration] || "answer";
+            const phaseLabel = phase.toUpperCase();
+
+            sendStage("executing", `Processing (round ${iteration + 1} of ${phases.length})...`);
             sendEvent("thinking", {
               type: "iteration",
-              content: `Executing tool calls (iteration ${iteration}/${maxIterations})...`,
-              iteration,
+              content: `Phase: ${phaseLabel} (iteration ${iteration + 1}/${phases.length})`,
+              iteration: iteration + 1,
             });
 
             // Add model's response to conversation history (preserves thought signatures!)
@@ -560,7 +605,7 @@ export async function POST(request: Request) {
                 sendEvent("tool_result", {
                   name: call.name,
                   summary,
-                  iteration,
+                  iteration: iteration + 1,
                 });
 
                 functionResponseParts.push({
@@ -574,7 +619,7 @@ export async function POST(request: Request) {
                 sendEvent("tool_result", {
                   name: call.name,
                   summary: errorMsg,
-                  iteration,
+                  iteration: iteration + 1,
                 });
 
                 functionResponseParts.push({
@@ -592,29 +637,45 @@ export async function POST(request: Request) {
               parts: functionResponseParts,
             });
 
-            // Nudge: if past halfway and still only searching, force reading
-            const halfwayPoint = Math.ceil(maxIterations / 2);
-            if (iteration >= halfwayPoint && readCount === 0 && searchCount >= 3 && Object.keys(caseUrlMap).length > 0) {
-              const topCitations = Object.keys(caseUrlMap).slice(0, 3);
-              conversationContents.push({
-                role: "user",
-                parts: [{
-                  text: `IMPORTANT: You have done ${searchCount} searches but have not read any cases yet. You are running out of rounds. STOP searching and use getCaseDetails NOW to read these cases: ${topCitations.join(", ")}. You must read cases before you can quote or analyze them.`,
-                }],
-              });
+            // Determine what tools to provide for the NEXT iteration
+            const nextPhase = phases[iteration + 1] || "answer";
+            const nextTools = getToolsForPhase(nextPhase);
+
+            // If next phase is "answer", break out and generate final response
+            if (nextPhase === "answer") {
               sendEvent("thinking", {
                 type: "reasoning",
-                content: `Nudging model to read cases (${searchCount} searches, 0 reads at round ${iteration}/${maxIterations})`,
-                iteration,
+                content: `Research complete (${searchCount} searches, ${readCount} reads). Generating final answer...`,
+                iteration: iteration + 1,
+              });
+              break;
+            }
+
+            // Inject phase guidance so Gemini knows what to do next
+            const nextPhaseLabel = nextPhase.toUpperCase();
+            let phaseGuidance = "";
+            if (nextPhase === "read" && Object.keys(caseUrlMap).length > 0) {
+              const topCitations = Object.keys(caseUrlMap).slice(0, 4);
+              phaseGuidance = `\n\nNEXT PHASE: READ. You must now use getCaseDetails to read the most promising cases from your search results. Suggested cases: ${topCitations.join(", ")}. Do NOT search — read the cases you found.`;
+            } else if (nextPhase === "search") {
+              phaseGuidance = `\n\nNEXT PHASE: SEARCH. Continue searching from different angles. Try different legal terms, broader/narrower queries, or different filters.`;
+            } else if (nextPhase === "both") {
+              phaseGuidance = `\n\nNEXT PHASE: FLEXIBLE. You may search for more cases or read cases you haven't read yet. Use your judgment on what will help most.`;
+            }
+
+            if (phaseGuidance) {
+              conversationContents.push({
+                role: "user",
+                parts: [{ text: phaseGuidance }],
               });
             }
 
-            // Ask model what to do next (with full history including thoughts + tool results)
-            sendStage("thinking", "Analyzing results...");
+            // Ask model what to do next — with phase-appropriate tools only
+            sendStage("thinking", `${nextPhaseLabel} phase...`);
             sendEvent("thinking", {
               type: "reasoning",
-              content: "Analyzing results and deciding next action...",
-              iteration,
+              content: `Entering ${nextPhaseLabel} phase (iteration ${iteration + 2}/${phases.length})...`,
+              iteration: iteration + 1,
             });
 
             const nextResponse = await ai.models.generateContentStream({
@@ -622,7 +683,7 @@ export async function POST(request: Request) {
               contents: conversationContents,
               config: {
                 systemInstruction: systemPrompt,
-                tools: tools,
+                tools: nextTools,
                 thinkingConfig: {
                   thinkingLevel,
                   includeThoughts: true,
@@ -637,28 +698,28 @@ export async function POST(request: Request) {
             if (pendingFunctionCallParts.length > 0) {
               sendEvent("thinking", {
                 type: "continue",
-                content: `Model requesting more information (${iteration + 1}/${maxIterations} iterations)...`,
+                content: `Model requesting more actions (phase: ${nextPhaseLabel})...`,
                 iteration: iteration + 1,
               });
             }
           }
 
-          // Handle max iterations reached
-          if (
-            iteration >= maxIterations &&
-            pendingFunctionCallParts.length > 0
-          ) {
+          // ANSWER PHASE: Force a final response with citation whitelist
+          // This runs if: (1) we exited the loop at the answer phase, or (2) model still had pending tool calls
+          if (!finalText || pendingFunctionCallParts.length > 0) {
             sendEvent("thinking", {
               type: "limit",
-              content: `Reached maximum iterations (${maxIterations}). Generating final response...`,
-              iteration: maxIterations,
+              content: `Generating final response (${searchCount} searches, ${readCount} reads)...`,
+              iteration: phases.length,
             });
 
-            // Force a final answer with no more tools
-            conversationContents.push({
-              role: "model",
-              parts: modelParts,
-            });
+            // Add last model response to history if there were pending tool calls
+            if (pendingFunctionCallParts.length > 0) {
+              conversationContents.push({
+                role: "model",
+                parts: modelParts,
+              });
+            }
 
             // Build list of citations actually found during research
             const foundCitations = Object.entries(caseUrlMap);
@@ -670,7 +731,7 @@ export async function POST(request: Request) {
               role: "user",
               parts: [
                 {
-                  text: `Please provide your best answer based on the research so far. Do not search anymore.
+                  text: `Please provide your final answer based on the research so far. Do not search anymore.
 
 IMPORTANT RULES FOR YOUR RESPONSE:
 1. You must ONLY reference cases that appeared in your search results. Do NOT cite any case from your training data.
@@ -680,6 +741,8 @@ IMPORTANT RULES FOR YOUR RESPONSE:
                 },
               ],
             });
+
+            sendStage("responding", "Generating final response...");
 
             const finalResponse = await ai.models.generateContentStream({
               model: "gemini-3-flash-preview",
@@ -717,14 +780,14 @@ IMPORTANT RULES FOR YOUR RESPONSE:
                   sendEvent("thinking", {
                     type: "thought",
                     content: typedPart.text,
-                    iteration: maxIterations,
+                    iteration: phases.length,
                   });
                 }
               }
             }
           }
 
-          sendEvent("done", { iterations: iteration });
+          sendEvent("done", { iterations: iteration + 1 });
         } catch (error) {
           console.error("Stream error:", error);
           sendEvent("error", {
