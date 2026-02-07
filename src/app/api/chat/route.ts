@@ -376,6 +376,9 @@ export async function POST(request: Request) {
           let finalText = "";
           // Map citation → correct HKLII URL (built from Pinecone metadata)
           const caseUrlMap: Record<string, string> = {};
+          // Track tool usage to enforce search→read workflow
+          let searchCount = 0;
+          let readCount = 0;
 
           // Stage 1: Understanding the query
           sendStage("understanding", "Understanding your question...");
@@ -538,6 +541,10 @@ export async function POST(request: Request) {
               ).functionCall;
 
               try {
+                // Track tool usage
+                if (call.name === "searchCases") searchCount++;
+                if (call.name === "getCaseDetails") readCount++;
+
                 const { result, summary, urls } = await executeTool(
                   call.name,
                   call.args || {},
@@ -584,6 +591,23 @@ export async function POST(request: Request) {
               role: "user",
               parts: functionResponseParts,
             });
+
+            // Nudge: if past halfway and still only searching, force reading
+            const halfwayPoint = Math.ceil(maxIterations / 2);
+            if (iteration >= halfwayPoint && readCount === 0 && searchCount >= 3 && Object.keys(caseUrlMap).length > 0) {
+              const topCitations = Object.keys(caseUrlMap).slice(0, 3);
+              conversationContents.push({
+                role: "user",
+                parts: [{
+                  text: `IMPORTANT: You have done ${searchCount} searches but have not read any cases yet. You are running out of rounds. STOP searching and use getCaseDetails NOW to read these cases: ${topCitations.join(", ")}. You must read cases before you can quote or analyze them.`,
+                }],
+              });
+              sendEvent("thinking", {
+                type: "reasoning",
+                content: `Nudging model to read cases (${searchCount} searches, 0 reads at round ${iteration}/${maxIterations})`,
+                iteration,
+              });
+            }
 
             // Ask model what to do next (with full history including thoughts + tool results)
             sendStage("thinking", "Analyzing results...");
