@@ -273,8 +273,8 @@ type Phase = "search" | "read" | "both" | "answer";
 const PHASE_SCHEDULES: Record<string, Phase[]> = {
   // Fast (3 iterations): search → read → answer
   fast: ["search", "read", "answer"],
-  // Normal (5 iterations): search → read → read → read → answer
-  normal: ["search", "read", "read", "read", "answer"],
+  // Normal (6 iterations): search → read → read → both → read → answer
+  normal: ["search", "read", "read", "both", "read", "answer"],
   // Deep (10 iterations): search → search → read → read → read → both → both → read → read → answer
   deep: ["search", "search", "read", "read", "read", "both", "both", "read", "read", "answer"],
 };
