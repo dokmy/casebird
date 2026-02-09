@@ -8,9 +8,12 @@ import { createClient } from "@/lib/supabase/client";
 import { cn } from "@/lib/utils";
 import type { UserRole } from "@/types/chat";
 
+const ROLE_UNLOCK_EMAILS = ["harryhtkwong@gmail.com", "adrien@stepone.agency"];
+
 export default function SettingsPage() {
   const [outputLanguage, setOutputLanguage] = useState<"EN" | "TC">("EN");
   const [userRole, setUserRole] = useState<UserRole>("insurance");
+  const [userEmail, setUserEmail] = useState("");
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
   const [savingRole, setSavingRole] = useState(false);
@@ -33,6 +36,7 @@ export default function SettingsPage() {
         window.location.href = "/";
         return;
       }
+      setUserEmail(user.email || "");
       const [settingsRes, subRes] = await Promise.all([
         supabase
           .from("user_settings")
@@ -119,18 +123,20 @@ export default function SettingsPage() {
             </p>
             <div className="flex gap-3">
               {([
-                { value: "insurance" as const, label: "Insurance", desc: "Defendant-focused analysis", icon: Shield, locked: false },
-                { value: "lawyer" as const, label: "Lawyer", desc: "Balanced legal research", icon: Scale, locked: true },
-              ]).map((option) => (
+                { value: "insurance" as const, label: "Insurance", desc: "Defendant-focused analysis", icon: Shield },
+                { value: "lawyer" as const, label: "Lawyer", desc: "Balanced legal research", icon: Scale },
+              ]).map((option) => {
+                const locked = option.value === "lawyer" && !ROLE_UNLOCK_EMAILS.includes(userEmail);
+                return (
                 <button
                   key={option.value}
-                  disabled={option.locked && userRole !== option.value}
-                  onClick={() => !option.locked && handleRoleChange(option.value)}
+                  disabled={locked && userRole !== option.value}
+                  onClick={() => !locked && handleRoleChange(option.value)}
                   className={cn(
                     "flex-1 p-4 rounded-lg border-2 text-left transition-all",
                     userRole === option.value
                       ? "border-primary bg-primary/5"
-                      : option.locked
+                      : locked
                         ? "border-border opacity-50 cursor-not-allowed"
                         : "border-border hover:border-border/80 hover:bg-accent/30"
                   )}
@@ -142,12 +148,12 @@ export default function SettingsPage() {
                     </span>
                   </div>
                   <div className="font-serif text-xs text-muted-foreground mt-0.5">
-                    {option.locked && userRole !== option.value
+                    {locked && userRole !== option.value
                       ? "Contact admin to switch roles"
                       : option.desc}
                   </div>
                 </button>
-              ))}
+              );})}
             </div>
           </div>
 

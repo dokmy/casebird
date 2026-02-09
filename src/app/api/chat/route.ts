@@ -1,7 +1,7 @@
 import { GoogleGenAI, Type, FunctionDeclaration, Tool, ThinkingLevel } from "@google/genai";
 import { searchCasesRaw, getCaseDetails, getCaseUrl, SearchResult } from "@/lib/pinecone";
 import { createClient } from "@/lib/supabase/server";
-import { SYSTEM_PROMPTS, INSURANCE_COURTS } from "@/lib/prompts";
+import { SYSTEM_PROMPTS, DIRECT_PROMPTS, INSURANCE_COURTS } from "@/lib/prompts";
 
 
 const searchCasesDeclaration: FunctionDeclaration = {
@@ -235,30 +235,24 @@ export async function POST(request: Request) {
           // ────────────────────────────────────────────────────────────
           // STEP 0: TRIAGE — Does this query need research or direct answer?
           // ────────────────────────────────────────────────────────────
-          // Only triage if there's conversation history (follow-up questions).
-          // First message in a conversation always needs research.
-          let needsResearch = true;
+          sendStage("understanding", "Understanding your question...");
 
-          if (history.length > 0) {
-            sendStage("understanding", "Understanding your question...");
-
-            const triageResponse = await ai.models.generateContent({
-              model: "gemini-2.0-flash",
-              contents: conversationContents,
-              config: {
-                systemInstruction: `You are a routing classifier. Given the conversation history and the user's latest message, determine if the user is asking a NEW legal research question that requires searching case law, OR if they are asking a follow-up that can be answered from the existing conversation context (e.g., drafting a letter, summarizing, explaining, comparing cases already discussed, etc.).
+          const triageResponse = await ai.models.generateContent({
+            model: "gemini-2.0-flash",
+            contents: conversationContents,
+            config: {
+              systemInstruction: `You are a routing classifier for a Hong Kong legal research tool. Given the user's message (and any conversation history), determine whether the user needs to SEARCH the case law database, or whether the question can be answered DIRECTLY without research.
 
 Reply with EXACTLY one word:
-- SEARCH — if new case law research is needed
-- DIRECT — if the answer can be generated from conversation context alone`,
-                // Note: gemini-2.0-flash does not support thinkingConfig
-              },
-            });
+- SEARCH — if the user wants to find specific cases, compare quantum/compensation awards, or needs case law evidence
+- DIRECT — if the question is general legal knowledge (e.g., "what is PSLA?"), a follow-up on previous conversation (e.g., drafting a letter, summarizing), or does not require searching for specific cases`,
+              // Note: gemini-2.0-flash does not support thinkingConfig
+            },
+          });
 
-            const triageText = triageResponse.text?.trim().toUpperCase() || "SEARCH";
-            needsResearch = triageText !== "DIRECT";
-            console.log("[chat] triage:", triageText, "needsResearch:", needsResearch);
-          }
+          const triageText = triageResponse.text?.trim().toUpperCase() || "SEARCH";
+          const needsResearch = triageText !== "DIRECT";
+          console.log("[chat] triage:", triageText, "needsResearch:", needsResearch);
 
           // ────────────────────────────────────────────────────────────
           // DIRECT PATH: No research needed — just answer
@@ -266,11 +260,12 @@ Reply with EXACTLY one word:
           if (!needsResearch) {
             sendStage("responding", "Generating response...");
 
+            const directPrompt = DIRECT_PROMPTS[userRole]?.[outputLanguage] || DIRECT_PROMPTS.insurance.EN;
             const directResponse = await ai.models.generateContentStream({
               model: "gemini-3-flash-preview",
               contents: conversationContents,
               config: {
-                systemInstruction: systemPrompt,
+                systemInstruction: directPrompt,
                 thinkingConfig: { thinkingLevel, includeThoughts: true },
               },
             });
@@ -450,7 +445,7 @@ Reply with EXACTLY one word:
 
             // Count how many reads we have available
             const readPhasesRemaining = phases.slice(iteration + 1).filter(p => p === "read").length;
-            const maxReads = Math.max(readPhasesRemaining * 4, 4); // ~4 cases per read phase
+            const maxReads = Math.max(readPhasesRemaining * 3, 3); // ~3 cases per read phase
 
             const filterPrompt = `You have searched for cases and found the following ${allChunks.size} chunks from ${new Set([...allChunks.values()].map(c => c.result.citation)).size} unique cases.
 
@@ -527,7 +522,7 @@ ${chunkSummary}`;
 
             // Determine which cases to read this round
             const casesToReadThisRound: string[] = [];
-            while (readQueueIndex < filterSelectedCitations.length && casesToReadThisRound.length < 4) {
+            while (readQueueIndex < filterSelectedCitations.length && casesToReadThisRound.length < 3) {
               const citation = filterSelectedCitations[readQueueIndex];
               readQueueIndex++;
               if (!casesRead.has(citation)) {
@@ -669,10 +664,10 @@ ${chunkSummary}`;
             iteration: phases.length,
           });
 
-          // Build citation whitelist
+          // Build citation whitelist with explicit URL mapping
           const foundCitations = Object.entries(caseUrlMap);
           const citationList = foundCitations.length > 0
-            ? `\n\nCases you found during research (ONLY cite these):\n${foundCitations.map(([citation, url]) => `- [${citation}](${url})`).join("\n")}`
+            ? `\n\n## CITATION → URL MAPPING (use EXACTLY these URLs)\n${foundCitations.map(([c, u]) => `${c} → ${u}`).join("\n")}\n\nWhen you mention ANY case above, you MUST link it as [Case Name [YEAR] COURT NUMBER](exact URL from mapping). Do NOT construct URLs yourself. Do NOT use any other domain. Copy the URL exactly as shown.`
             : "\n\nYou did not find any relevant cases during research. Do NOT invent or fabricate any case citations.";
 
           conversationContents.push({
@@ -683,8 +678,8 @@ ${chunkSummary}`;
 IMPORTANT RULES FOR YOUR RESPONSE:
 1. You must ONLY reference cases that appeared in your search results. Do NOT cite any case from your training data.
 2. Do NOT use blockquotes (>) to quote any case you did not read with getCaseDetails. If you only saw a search snippet, do NOT fabricate a quote.
-3. If the search results were not relevant, acknowledge this honestly and provide general legal commentary without fabricated citations.
-4. It is acceptable to say "Based on my search, I found the following potentially relevant cases but was unable to read them in full" — this is far better than fabricating quotes.${citationList}`,
+3. **CRITICAL: URLs** — Every case link MUST use the exact URL from the citation mapping below. Do NOT construct your own URLs. Do NOT use domains like law-tech.ai, austlii.edu.au, or any other site. The ONLY valid domain is hklii.hk. Copy the URL exactly from the mapping.
+4. If the search results were not relevant, acknowledge this honestly and provide general legal commentary without fabricated citations.${citationList}`,
             }],
           });
 
