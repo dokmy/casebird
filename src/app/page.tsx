@@ -12,7 +12,7 @@ import { AuthModal } from "@/components/auth/AuthModal";
 import { UpgradeModal } from "@/components/chat/UpgradeModal";
 import { AnimatedBird } from "@/components/ui/animated-bird";
 import { FeatherIcon } from "@/components/ui/feather-icon";
-import { Message, SelectedCase, ThinkingStep, Stage, ResearchMode, CaseLanguage } from "@/types/chat";
+import { Message, SelectedCase, ThinkingStep, Stage, ResearchMode, CaseLanguage, UserRole } from "@/types/chat";
 import { createClient } from "@/lib/supabase/client";
 
 export default function Home() {
@@ -28,6 +28,7 @@ export default function Home() {
   const [showAuthModal, setShowAuthModal] = useState(false);
   const [showUpgradeModal, setShowUpgradeModal] = useState(false);
   const [outputLanguage, setOutputLanguage] = useState<"EN" | "TC">("EN");
+  const [userRole, setUserRole] = useState<UserRole>("insurance");
   const [caseLanguage, setCaseLanguage] = useState<CaseLanguage>("any");
   const [subscription, setSubscription] = useState<{
     plan: string;
@@ -54,7 +55,7 @@ export default function Home() {
             .order("updated_at", { ascending: false }),
           supabase
             .from("user_settings")
-            .select("output_language")
+            .select("output_language, user_role")
             .eq("user_id", user.id)
             .single(),
           supabase
@@ -66,6 +67,9 @@ export default function Home() {
         if (convResult.data) setConversations(convResult.data);
         if (settingsResult.data) {
           setOutputLanguage(settingsResult.data.output_language as "EN" | "TC");
+          if (settingsResult.data.user_role) {
+            setUserRole(settingsResult.data.user_role as UserRole);
+          }
         }
         if (subResult.data) {
           setSubscription(subResult.data);
@@ -221,6 +225,7 @@ export default function Home() {
             message: content,
             mode,
             outputLanguage,
+            userRole,
             caseLanguage: caseLanguage === "any" ? undefined : caseLanguage,
             history: messages.map((m) => ({
               role: m.role,
@@ -419,7 +424,7 @@ export default function Home() {
         setIsLoading(false);
       }
     },
-    [messages, activeConversationId, userId, isAuthenticated, outputLanguage, caseLanguage, supabase]
+    [messages, activeConversationId, userId, isAuthenticated, outputLanguage, userRole, caseLanguage, supabase]
   );
 
   const handleCaseClick = useCallback((url: string, citation: string) => {
@@ -501,7 +506,7 @@ export default function Home() {
 
         {/* Centered welcome + input */}
         <div className="flex-1 flex flex-col items-center justify-center overflow-y-auto px-4 pb-4">
-          <WelcomeScreen onExampleClick={handleExampleClick} outputLanguage={outputLanguage} />
+          <WelcomeScreen onExampleClick={handleExampleClick} outputLanguage={outputLanguage} userRole={userRole} />
           <div className="w-full max-w-2xl mx-auto mt-4">
             <ChatInput onSend={handleSend} isLoading={false} caseLanguage={caseLanguage} onCaseLanguageChange={setCaseLanguage} input={chatInput} onInputChange={setChatInput} />
           </div>
@@ -566,7 +571,7 @@ export default function Home() {
           >
             {messages.length === 0 ? (
               <div className="flex-1 flex items-center justify-center overflow-y-auto px-4">
-                <WelcomeScreen onExampleClick={handleExampleClick} outputLanguage={outputLanguage} />
+                <WelcomeScreen onExampleClick={handleExampleClick} outputLanguage={outputLanguage} userRole={userRole} />
               </div>
             ) : (
               <div className="flex-1 overflow-y-auto" ref={scrollRef}>

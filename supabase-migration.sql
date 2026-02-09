@@ -177,3 +177,6 @@ begin
   return jsonb_build_object('allowed', true, 'plan', sub.plan, 'count', sub.message_count + 1, 'limit', sub.message_limit);
 end;
 $$;
+
+-- Add user_role to user_settings (run separately if table already exists)
+-- alter table public.user_settings add column user_role text not null default 'insurance' check (user_role in ('insurance', 'lawyer'));

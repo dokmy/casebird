@@ -135,83 +135,95 @@ NEXT_PUBLIC_APP_URL
 
 Vercel has separate env var sets: test keys for Development, live keys for Preview/Production.
 
-## Chat API — State Machine (`src/app/api/chat/route.ts`)
+## Chat API — Linear Pipeline (`src/app/api/chat/route.ts`)
 
-### Phase-Based Tool Control
+### Triage Step
 
-The chat API uses a state machine that controls which tools Gemini can use at each iteration. Each mode has a fixed phase schedule — Gemini cannot choose to search when the phase says "read".
+For follow-up messages (conversation history exists), a lightweight `gemini-2.0-flash` call classifies the query:
+- **SEARCH** — New legal research needed → enters full research pipeline
+- **DIRECT** — Can be answered from conversation context (e.g., drafting a letter, summarizing) → single Gemini call with no tools
+
+First messages always go through the research pipeline (no triage).
+
+### Research Pipeline
+
+The pipeline is linear: **search wide → filter smart → read deep → answer**. There is no going back to search after filtering — all searching is front-loaded.
 
 **Phase types:**
-- `search` — only `searchCases` available
-- `read` — only `getCaseDetails` available
-- `both` — both tools available
-- `answer` — no tools, forces final response
+- `search` — only `searchCases` available. Gemini generates queries, system executes them.
+- `filter` — no tools. System presents all accumulated chunks to Gemini, which picks the most relevant cases to read.
+- `read` — only `getCaseDetails` available. System reads cases from filter's selections (~3 per read phase).
+- `answer` — no tools, forces final response with citation whitelist.
 
 **Phase schedules:**
 ```
-Fast (3):   search → read → answer
-Normal (6): search → read → read → both → read → answer
-Deep (10):  search → search → read → read → read → both → both → read → read → answer
+Fast (4):   search → filter → read → answer
+Normal (6): search → search → filter → read → read → answer
+Deep (8):   search → search → filter → read → read → read → read → answer
 ```
-
-**Design rules:**
-- The phase before `answer` must always be `read` (not `both`), because searching right before answer is wasteful — those results never get read
-- `both` phases should always be followed by a `read` phase so new search results can be acted on
 
 **Thinking levels:** Fast = LOW, Normal = MEDIUM, Deep = HIGH (Gemini native thinking)
 
-### How the Loop Works (Important for debugging)
+### How the Pipeline Works
 
-The initial Gemini call (outside the loop) uses `phases[0]`. Inside the loop, each iteration:
-1. Executes pending tool calls from the **previous** Gemini response
-2. Determines next Gemini call tools using `phases[iteration]` (not `iteration+1`)
-3. Injects phase guidance and calls Gemini with appropriate tools
+**Search phases** run sequentially. Each round:
+1. Gemini generates search queries (3-5 per round, in both EN and Chinese)
+2. System executes all queries via `searchCasesRaw` (returns raw chunks, not case-level deduplicated)
+3. Chunks accumulate in `allChunks` Map, keyed by `citation|chunkIndex` (deduplicates identical chunks across queries, but keeps different chunks from the same case)
+4. Second+ search rounds tell Gemini what was already found to avoid redundant queries
 
-The `phases[iteration]` indexing is critical — using `iteration+1` would skip one phase per mode (this was a bug that caused FAST mode to never read any cases).
+**Filter phase** runs once:
+1. All accumulated chunks are presented to Gemini, sorted by score
+2. Gemini outputs a numbered list of citations to read (no explanations — reasoning happens in native thinking)
+3. System parses citations via regex, validates against `caseUrlMap`, caps at `maxReads` (~3 × number of read phases)
+4. Result: `filterSelectedCitations` — ordered list of cases to read
 
-### Search Pipeline
+**Read phases** consume the filter's selections:
+1. Each read phase reads ~3 cases from `filterSelectedCitations` in order
+2. `caseReadCache` prevents duplicate reads of the same case
+3. Cases are injected into conversation as simulated `getCaseDetails` tool calls/responses
+4. Gemini can request additional reads (via `getCaseDetails` tool call) during read phases
+5. If all selected cases are read before all read phases complete, remaining phases are skipped
 
-1. **searchCases** → Pinecone hybrid search (Voyage AI dense embedding 512d + BM25 sparse vector). Returns 10 deduplicated cases per query with 500-char snippets, scores, and HKLII URLs.
-2. **getCaseDetails** → Fetches full judgment from Pinecone (up to 500 chunks per case, no truncation). Chunks are ~600 tokens each (~1000 chars English, ~2000 chars Chinese).
+**Answer phase:**
+1. Citation whitelist injected: only cases from `caseUrlMap`
+2. Blockquotes only for cases read via `getCaseDetails`
+3. Streaming response with `ThinkingLevel.LOW` (even in deep mode — research thinking already happened)
 
-### Score-Ranked READ Suggestions
+### Search Pipeline (Pinecone)
 
-When entering a READ phase, the system suggests cases ranked by **best search score across all queries** (not insertion order). This prevents bias toward the first search query's results.
-
-Tracking state:
-- `caseScoreMap`: Maps citation → best score seen across all searches. Updated with `max(existing, new)` on each search.
-- `casesRead`: Set of citations that have been read via `getCaseDetails`. Used to filter suggestions to unread cases only.
-- `caseUrlMap`: Maps citation → HKLII URL (built from Pinecone metadata, not Gemini).
-
-**READ guidance:** Top 4 unread cases by score.
-**BOTH guidance:** Top 3 unread cases by score + nudge to prefer reading over searching.
+- **`searchCasesRaw`** → Pinecone hybrid search (Voyage AI dense 512d + BM25 sparse). Returns raw chunks without case-level dedup. Default 15 results per query.
+- **`searchCases`** → Wraps `searchCasesRaw` with case-level dedup (picks best chunk per case). Used only if backward compatibility needed.
+- **`getCaseDetails`** → Fetches full judgment from Pinecone (up to 500 chunks per case, no truncation). Chunks are ~600 tokens each.
 
 ### Search Strategy (in system prompt)
 
 - Searches are **semantic**, not exact-phrase. Quotation marks are stripped by the sparse vector tokenizer (`\b\w+\b` regex) and ignored by Voyage AI embedding.
 - Gemini is instructed to search for concepts using 3-8 unquoted words, like a judge writing a judgment.
 - Each query should attack the problem from a different legal angle (principle, consequence, factual pattern).
+- **Bilingual search**: Every search round must include both English and Chinese queries to maximize coverage of HK case law.
 
-### Answer Phase Safeguards
+### Role-Based Behavior
 
-- Citation whitelist injected: Gemini can only cite cases from `caseUrlMap`
-- Blockquotes only allowed for cases read via `getCaseDetails`
-- Cases only seen in search snippets can be mentioned as "potentially relevant" but not quoted
+- **System prompts**: 4 variants in `src/lib/prompts.ts` — `SYSTEM_PROMPTS[userRole][outputLanguage]`
+  - Insurance: quantum-focused, comparison tables, defendant perspective
+  - Lawyer: balanced legal research
+- **Court filter**: Insurance role restricts searches to PI-relevant courts (`INSURANCE_COURTS`: hkcfi, hkdc, hkca, hkcfa, hklat). Lawyer has no restriction.
 
 ### Pinecone Index Stats
 
 - 1,302,730 vectors, dimension 512
 - Target chunk size: 600 tokens (~1000 chars EN, ~2000 chars CN)
 - Cases range from 2-64 chunks (CFA cases tend to be longest)
-- Even worst case (deep mode, 7 reads of 64-chunk CFA cases) = ~140k tokens = 14% of Gemini's 1M context window. No truncation needed.
+- Even worst case (deep mode, 4 reads of 64-chunk CFA cases) = ~80k tokens = 8% of Gemini's 1M context window. No truncation needed.
 
 ## Chat Modes
 
-| Mode | Phases | Gemini Calls | Typical Searches | Typical Reads | Thinking |
-|------|--------|-------------|-----------------|--------------|----------|
-| Fast | 3 | 2 | 2-3 | 1-2 | Low |
-| Normal | 6 | 5 | 3-4 | 4-6 | Medium |
-| Deep | 10 | 9 | 4-6 | 6-10 | High |
+| Mode | Phases | Search Rounds | Filter | Read Rounds | Typical Cases Read | Thinking |
+|------|--------|--------------|--------|------------|-------------------|----------|
+| Fast | 4 | 1 | 1 | 1 | 2-3 | Low |
+| Normal | 6 | 2 | 1 | 2 | 4-6 | Medium |
+| Deep | 8 | 2 | 1 | 4 | 8-12 | High |
 
 ## Output Language
 

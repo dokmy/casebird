@@ -18,6 +18,7 @@ export interface SearchOptions {
   language?: "EN" | "TC";
   yearFrom?: number;
   yearTo?: number;
+  allowedCourts?: string[];
 }
 
 interface PineconeMatch {
@@ -66,11 +67,41 @@ export async function searchCases(
   query: string,
   options: SearchOptions = {}
 ): Promise<SearchResult[]> {
-  const { numResults = 10, court, language, yearFrom, yearTo } = options;
+  const numResults = options.numResults || 10;
+
+  const results = await searchCasesRaw(query, { ...options, numResults: numResults * 3 });
+
+  // Deduplicate by case citation, keeping highest scoring chunk per case
+  const seenCitations = new Set<string>();
+  const deduped: SearchResult[] = [];
+
+  for (const r of results) {
+    if (!seenCitations.has(r.citation) && deduped.length < numResults) {
+      seenCitations.add(r.citation);
+      deduped.push(r);
+    }
+  }
+
+  return deduped;
+}
+
+/**
+ * Returns raw chunk-level results WITHOUT deduplicating by case.
+ * Used by the filter phase so Gemini can see multiple chunks from the same case.
+ */
+export async function searchCasesRaw(
+  query: string,
+  options: SearchOptions = {}
+): Promise<SearchResult[]> {
+  const { numResults = 30, court, language, yearFrom, yearTo, allowedCourts } = options;
 
   // Build filter
   const filterConditions: object[] = [];
-  if (court) filterConditions.push({ court_code: court });
+  if (court) {
+    filterConditions.push({ court_code: court });
+  } else if (allowedCourts && allowedCourts.length > 0) {
+    filterConditions.push({ court_code: { $in: allowedCourts } });
+  }
   if (language) filterConditions.push({ language });
   if (yearFrom) filterConditions.push({ year: { $gte: yearFrom } });
   if (yearTo) filterConditions.push({ year: { $lte: yearTo } });
@@ -86,38 +117,30 @@ export async function searchCases(
   const denseVector = await getQueryEmbedding(query);
   const sparseVector = generateSparseVector(query);
 
-  // Query Pinecone with hybrid search
+  // Fall back to dense-only search if sparse vector is empty (pure-CJK queries)
+  // The BM25 tokenizer uses \b\w+\b which doesn't match CJK characters
+  const hasSparseTokens = sparseVector.indices.length > 0;
+
+  // Query Pinecone with hybrid search (or dense-only if no sparse tokens)
   const result = await queryPinecone({
     vector: denseVector,
-    sparseVector: sparseVector,
-    topK: numResults * 3, // Get more to deduplicate by case
+    ...(hasSparseTokens ? { sparseVector } : {}),
+    topK: numResults,
     includeMetadata: true,
     filter,
   });
 
-  // Deduplicate by case citation, keeping highest scoring chunk per case
-  const seenCitations = new Set<string>();
-  const results: SearchResult[] = [];
-
-  for (const match of result.matches) {
-    const citation = match.metadata.neutral_citation;
-    if (!seenCitations.has(citation) && results.length < numResults) {
-      seenCitations.add(citation);
-      results.push({
-        citation,
-        court: match.metadata.court_code,
-        year: match.metadata.year,
-        language: match.metadata.language,
-        text: match.metadata.text,
-        score: match.score,
-        chunkIndex: match.metadata.chunk_index,
-        paragraphStart: match.metadata.paragraph_start,
-        paragraphEnd: match.metadata.paragraph_end,
-      });
-    }
-  }
-
-  return results;
+  return result.matches.map((match) => ({
+    citation: match.metadata.neutral_citation,
+    court: match.metadata.court_code,
+    year: match.metadata.year,
+    language: match.metadata.language,
+    text: match.metadata.text,
+    score: match.score,
+    chunkIndex: match.metadata.chunk_index,
+    paragraphStart: match.metadata.paragraph_start,
+    paragraphEnd: match.metadata.paragraph_end,
+  }));
 }
 
 export async function getCaseDetails(citation: string): Promise<string> {

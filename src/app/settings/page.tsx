@@ -2,15 +2,18 @@
 
 import { useState, useEffect } from "react";
 import Link from "next/link";
-import { ArrowLeft, Loader2, Zap, Crown } from "lucide-react";
+import { ArrowLeft, Loader2, Zap, Crown, Scale, Shield } from "lucide-react";
 import { FeatherIcon } from "@/components/ui/feather-icon";
 import { createClient } from "@/lib/supabase/client";
 import { cn } from "@/lib/utils";
+import type { UserRole } from "@/types/chat";
 
 export default function SettingsPage() {
   const [outputLanguage, setOutputLanguage] = useState<"EN" | "TC">("EN");
+  const [userRole, setUserRole] = useState<UserRole>("insurance");
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
+  const [savingRole, setSavingRole] = useState(false);
   const [subscription, setSubscription] = useState<{
     plan: string;
     status: string;
@@ -33,7 +36,7 @@ export default function SettingsPage() {
       const [settingsRes, subRes] = await Promise.all([
         supabase
           .from("user_settings")
-          .select("output_language")
+          .select("output_language, user_role")
           .eq("user_id", user.id)
           .single(),
         supabase
@@ -44,6 +47,9 @@ export default function SettingsPage() {
       ]);
       if (settingsRes.data) {
         setOutputLanguage(settingsRes.data.output_language as "EN" | "TC");
+        if (settingsRes.data.user_role) {
+          setUserRole(settingsRes.data.user_role as UserRole);
+        }
       }
       if (subRes.data) {
         setSubscription(subRes.data);
@@ -63,6 +69,18 @@ export default function SettingsPage() {
         .upsert({ user_id: user.id, output_language: lang }, { onConflict: "user_id" });
     }
     setSaving(false);
+  };
+
+  const handleRoleChange = async (role: UserRole) => {
+    setUserRole(role);
+    setSavingRole(true);
+    const { data: { user } } = await supabase.auth.getUser();
+    if (user) {
+      await supabase
+        .from("user_settings")
+        .upsert({ user_id: user.id, user_role: role }, { onConflict: "user_id" });
+    }
+    setSavingRole(false);
   };
 
   if (loading) {
@@ -90,9 +108,51 @@ export default function SettingsPage() {
           </h1>
         </div>
 
-        {/* Output Language */}
         <div className="space-y-6">
+          {/* User Role */}
           <div>
+            <h2 className="text-sm font-serif font-medium text-foreground mb-1">
+              Role
+            </h2>
+            <p className="text-xs font-serif text-muted-foreground mb-4">
+              Casebird tailors its research and analysis to your perspective.
+            </p>
+            <div className="flex gap-3">
+              {([
+                { value: "insurance" as const, label: "Insurance", desc: "Defendant-focused analysis", icon: Shield, locked: false },
+                { value: "lawyer" as const, label: "Lawyer", desc: "Balanced legal research", icon: Scale, locked: true },
+              ]).map((option) => (
+                <button
+                  key={option.value}
+                  disabled={option.locked && userRole !== option.value}
+                  onClick={() => !option.locked && handleRoleChange(option.value)}
+                  className={cn(
+                    "flex-1 p-4 rounded-lg border-2 text-left transition-all",
+                    userRole === option.value
+                      ? "border-primary bg-primary/5"
+                      : option.locked
+                        ? "border-border opacity-50 cursor-not-allowed"
+                        : "border-border hover:border-border/80 hover:bg-accent/30"
+                  )}
+                >
+                  <div className="flex items-center gap-2">
+                    <option.icon className="w-4 h-4 text-muted-foreground" />
+                    <span className="font-serif text-sm font-medium text-foreground">
+                      {option.label}
+                    </span>
+                  </div>
+                  <div className="font-serif text-xs text-muted-foreground mt-0.5">
+                    {option.locked && userRole !== option.value
+                      ? "Contact admin to switch roles"
+                      : option.desc}
+                  </div>
+                </button>
+              ))}
+            </div>
+          </div>
+
+          {/* Output Language */}
+          <div className="pt-6 border-t border-border">
             <h2 className="text-sm font-serif font-medium text-foreground mb-1">
               AI Output Language
             </h2>
