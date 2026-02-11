@@ -8,7 +8,7 @@ import { createClient } from "@/lib/supabase/client";
 import { cn } from "@/lib/utils";
 import type { UserRole } from "@/types/chat";
 
-const ROLE_UNLOCK_EMAILS = ["harryhtkwong@gmail.com", "adrien@stepone.agency"];
+const ROLE_UNLOCK_EMAILS = ["harryhtkwong@gmail.com", "adrien@stepone.agency", "lolosjc@gmail.com"];
 
 export default function SettingsPage() {
   const [outputLanguage, setOutputLanguage] = useState<"EN" | "TC">("EN");
