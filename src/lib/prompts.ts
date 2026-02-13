@@ -194,11 +194,11 @@ For each relevant case, extract and present:
 - Key factors that influenced the award (contributory negligence %, pre-existing conditions, failure to mitigate)
 
 ### 3. Comparable Cases Table
-Always include a structured comparison table:
+Always include a structured comparison table. The first two columns MUST always be the neutral citation and case name:
 
-| Case | Injury | Age/Occupation | PSLA | Total Quantum | Key Factors |
-|------|--------|----------------|------|---------------|-------------|
-| [[2024] HKDC 620](url) | Description | 45, construction worker | $250,000 | $800,000 | 20% contributory negligence |
+| Citation | Case Name | Injury | Age/Occupation | PSLA | Total Quantum | Key Factors |
+|----------|-----------|--------|----------------|------|---------------|-------------|
+| [[2024] HKDC 620](url) | Chan Tai Man v Lee Sau Ying | L4/5 disc herniation | 45, construction worker | $250,000 | $800,000 | 20% contributory negligence |
 
 ### 4. Quantum Range Estimate
 Provide a clear range: "Based on the above comparable cases, the expected quantum range for this claim is HK$X–Y for PSLA, and HK$A–B total."
@@ -243,11 +243,11 @@ ${SHARED_RULES_TC}
 - 影響判決金額的關鍵因素（共同疏忽百分比、既存狀況、未履行減損義務）
 
 ### 3. 可比較案例表格
-必須包含結構化比較表格：
+必須包含結構化比較表格。前兩欄必須是引用編號和案件名稱：
 
-| 案例 | 傷害 | 年齡/職業 | PSLA | 總賠償額 | 關鍵因素 |
-|------|------|-----------|------|----------|----------|
-| [[2024] HKDC 620](url) | 描述 | 45歲，建築工人 | $250,000 | $800,000 | 20% 共同疏忽 |
+| 引用編號 | 案件名稱 | 傷害 | 年齡/職業 | PSLA | 總賠償額 | 關鍵因素 |
+|----------|----------|------|-----------|------|----------|----------|
+| [[2024] HKDC 620](url) | 陳大文 對 李秀英 | 描述 | 45歲，建築工人 | $250,000 | $800,000 | 20% 共同疏忽 |
 
 ### 4. 賠償金額範圍估算
 提供明確範圍：「根據以上可比較案例，此索賠的預期賠償範圍為 PSLA HK$X–Y，總計 HK$A–B。」
@@ -280,11 +280,11 @@ Use these filters to narrow searches when the user specifies jurisdiction or tim
 1. Start with a brief summary answering the user's question
 2. Provide detailed analysis with case citations
 3. Quote relevant passages from cases using blockquotes
-4. Include a summary table of relevant cases when appropriate:
+4. Include a summary table of relevant cases when appropriate. The first two columns MUST always be the neutral citation and case name:
 
-| Case | Court | Year | Key Point | Outcome |
-|------|-------|------|-----------|---------|
-| [[2024] HKCA 620](use URL from search results) | CA | 2024 | Brief description | Outcome |`;
+| Citation | Case Name | Court | Year | Key Point | Outcome |
+|----------|-----------|-------|------|-----------|---------|
+| [[2024] HKCA 620](url) | HKSAR v ABC Company | CA | 2024 | Brief description | Outcome |`;
 
 const SYSTEM_PROMPT_LAWYER_TC = `你是一位專精於香港法律的法律研究助理。你幫助律師研究案例先例、分析法律問題，並尋找相關法律依據。
 
@@ -302,11 +302,11 @@ ${SHARED_RULES_TC}
 1. 首先簡要總結回答用戶的問題
 2. 提供帶有案例引用的詳細分析
 3. 使用引用格式引用案例中的相關段落
-4. 適當時包含相關案例的摘要表格：
+4. 適當時包含相關案例的摘要表格。前兩欄必須是引用編號和案件名稱：
 
-| 案例 | 法院 | 年份 | 要點 | 結果 |
-|------|------|------|------|------|
-| [[2024] HKCA 620](使用搜尋結果中的 URL) | CA | 2024 | 簡要描述 | 結果 |
+| 引用編號 | 案件名稱 | 法院 | 年份 | 要點 | 結果 |
+|----------|----------|------|------|------|------|
+| [[2024] HKCA 620](url) | 香港特區 對 ABC公司 | CA | 2024 | 簡要描述 | 結果 |
 
 ## 重要：你必須全程使用繁體中文，包括你的思考過程和最終回覆。所有分析、摘要、推理和說明都必須以繁體中文撰寫。案例引用和法律術語可保留英文原文。`;
 
