@@ -1,6 +1,7 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useCallback } from "react";
+import { useCaseViewer } from "./CaseViewerContext";
 
 interface LegislationTextProps {
   textEn?: string;
@@ -9,6 +10,24 @@ interface LegislationTextProps {
 
 export function LegislationText({ textEn, textZh }: LegislationTextProps) {
   const [lang, setLang] = useState<"en" | "zh">(textEn ? "en" : "zh");
+  const { openCase } = useCaseViewer();
+
+  const handleClick = useCallback(
+    (e: React.MouseEvent<HTMLDivElement>) => {
+      const target = e.target as HTMLElement;
+      const anchor = target.closest("a");
+      if (!anchor) return;
+
+      const href = anchor.getAttribute("href") || "";
+      if (href.includes("hklii.hk")) {
+        e.preventDefault();
+        // Extract a label from the link text or URL path
+        const label = anchor.textContent?.trim() || href.split("/").pop() || "Section";
+        openCase(href, label);
+      }
+    },
+    [openCase]
+  );
 
   const html = lang === "en" ? textEn : textZh;
   if (!html) return null;
@@ -62,6 +81,7 @@ export function LegislationText({ textEn, textZh }: LegislationTextProps) {
       <div
         className="legislation-text px-5 pb-5 font-serif text-[13px] text-foreground/85 leading-relaxed max-h-[60vh] overflow-y-auto"
         dangerouslySetInnerHTML={{ __html: html }}
+        onClick={handleClick}
       />
     </div>
   );
