@@ -60,7 +60,7 @@ export function LegislationText({ textEn, textZh }: LegislationTextProps) {
         )}
       </div>
       <div
-        className="legislation-text px-5 pb-5 font-serif text-[13px] text-foreground/85 leading-relaxed"
+        className="legislation-text px-5 pb-5 font-serif text-[13px] text-foreground/85 leading-relaxed max-h-[60vh] overflow-y-auto"
         dangerouslySetInnerHTML={{ __html: html }}
       />
     </div>
