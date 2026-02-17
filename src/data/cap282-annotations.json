@@ -11,9 +11,24 @@
   },
   "generatedAt": "2026-02-17T12:00:00.000Z",
   "sections": [
-    { "section": "2", "titleEn": "Meaning of employee", "titleZh": "僱員的涵義", "cases": [] },
-    { "section": "3", "titleEn": "Interpretation", "titleZh": "釋義", "cases": [] },
-    { "section": "4", "titleEn": "Application to certain employees", "titleZh": "對某些僱員的適用範圍", "cases": [] },
+    {
+      "section": "2",
+      "titleEn": "Meaning of employee",
+      "titleZh": "僱員的涵義",
+      "cases": []
+    },
+    {
+      "section": "3",
+      "titleEn": "Interpretation",
+      "titleZh": "釋義",
+      "cases": []
+    },
+    {
+      "section": "4",
+      "titleEn": "Application to certain employees",
+      "titleZh": "對某些僱員的適用範圍",
+      "cases": []
+    },
     {
       "section": "5",
       "titleEn": "Employer's liability for compensation for death or incapacity resulting from accident",
@@ -24,35 +39,40 @@
           "caseName": "Sit Wing Yi Sibly v Berton Industrial Ltd",
           "court": "hkcfa",
           "year": 2013,
-          "annotation": "The leading CFA authority on \"personal injury by accident\" in s.5(1). The CFA held that \"accident\" and \"injury\" must be distinct -- accident is the cause, injury is the effect. The s.5(4)(a) deeming presumption does not assist on the anterior question of whether the injury was \"by accident.\" Employee died at work of unknown cause; claim dismissed."
+          "annotation": "The leading CFA authority on \"personal injury by accident\" in s.5(1). The CFA held that \"accident\" and \"injury\" must be distinct -- accident is the cause, injury is the effect. The s.5(4)(a) deeming presumption does not assist on the anterior question of whether the injury was \"by accident.\" Employee died at work of unknown cause; claim dismissed.",
+          "language": "EN"
         },
         {
           "citation": "[2007] HKCFA 19",
           "caseName": "Poon Chau Nam v Yim Siu Cheung",
           "court": "hkcfa",
           "year": 2007,
-          "annotation": "CFA adopted a multi-factor test for who qualifies as an \"employee\" under the ECO for s.5 purposes. The core issue was whether a casual worker was an employee (held yes). Relevant to s.5 in defining who can claim under the provision."
+          "annotation": "CFA adopted a multi-factor test for who qualifies as an \"employee\" under the ECO for s.5 purposes. The core issue was whether a casual worker was an employee (held yes). Relevant to s.5 in defining who can claim under the provision.",
+          "language": "EN"
         },
         {
           "citation": "[2022] HKDC 902",
           "caseName": "Feng Ying Pui v China State-Shui On Joint Venture",
           "court": "hkdc",
           "year": 2022,
-          "annotation": "The most comprehensive modern application of s.5 principles. Synthesizes the CFA's Sit Wing Yi framework with English authorities (Faulds, Scullion) into a two-step test: (1) identify an external \"accident\" event distinct from the injury, and (2) show the accident caused or contributed to the injury. Stroke claim failed because a stroke is internal, not an external \"accident.\""
+          "annotation": "The most comprehensive modern application of s.5 principles. Synthesizes the CFA's Sit Wing Yi framework with English authorities (Faulds, Scullion) into a two-step test: (1) identify an external \"accident\" event distinct from the injury, and (2) show the accident caused or contributed to the injury. Stroke claim failed because a stroke is internal, not an external \"accident.\"",
+          "language": "TC"
         },
         {
           "citation": "[1984] HKDC 5",
           "caseName": "Yuen Wai Ling v Ocean Shipping & Enterprises Ltd",
           "court": "hkdc",
           "year": 1984,
-          "annotation": "Early case applying s.5 to a seaman who contracted malaria on a voyage and died. The court found contracting malaria constituted an \"accident\" arising in the course of employment. Applied the s.5(4)(a) deeming provision. A foundational case on what constitutes an \"accident\" in occupational disease contexts."
+          "annotation": "Early case applying s.5 to a seaman who contracted malaria on a voyage and died. The court found contracting malaria constituted an \"accident\" arising in the course of employment. Applied the s.5(4)(a) deeming provision. A foundational case on what constitutes an \"accident\" in occupational disease contexts.",
+          "language": "EN"
         },
         {
           "citation": "[1984] HKDC 41",
           "caseName": "Fong Fung Ying v Attorney General",
           "court": "hkdc",
           "year": 1984,
-          "annotation": "Government worker stabbed in a lavatory while returning from an unauthorized tea break. Analyzed the s.5(4)(a) presumption in detail. The accident occurred during working hours and on premises, engaging the statutory presumption, but the stabbing did not arise out of employment. Important for the interplay between the \"in the course of\" and \"arising out of\" limbs of s.5."
+          "annotation": "Government worker stabbed in a lavatory while returning from an unauthorized tea break. Analyzed the s.5(4)(a) presumption in detail. The accident occurred during working hours and on premises, engaging the statutory presumption, but the stabbing did not arise out of employment. Important for the interplay between the \"in the course of\" and \"arising out of\" limbs of s.5.",
+          "language": "EN"
         }
       ]
     },
@@ -66,39 +86,49 @@
           "caseName": "Yardway Motors Ltd v Tam Siu Lun",
           "court": "hkca",
           "year": 2005,
-          "annotation": "Court of Appeal decision analyzing the interplay between s.6 (fatal compensation to family members) and s.25 (employer's right of recovery against third parties). Extensively discusses the 2000 amendment to s.6 which removed the requirement to prove financial dependency for close relatives."
+          "annotation": "Court of Appeal decision analyzing the interplay between s.6 (fatal compensation to family members) and s.25 (employer's right of recovery against third parties). Extensively discusses the 2000 amendment to s.6 which removed the requirement to prove financial dependency for close relatives.",
+          "language": "EN"
         },
         {
           "citation": "[2004] HKDC 27",
           "caseName": "Chan Ho v 999 H.K. Petroleum Co Ltd",
           "court": "hkdc",
           "year": 2004,
-          "annotation": "Employee killed on an oil barge. After finding the death arose out of and in the course of employment, the court applied s.6(1)(b) (deceased aged 52, 60 months' earnings) and s.6(5) (funeral expenses). Good illustration of s.6 quantum calculation: $14,433 x 60 = $865,980 plus $35,000 funeral."
+          "annotation": "Employee killed on an oil barge. After finding the death arose out of and in the course of employment, the court applied s.6(1)(b) (deceased aged 52, 60 months' earnings) and s.6(5) (funeral expenses). Good illustration of s.6 quantum calculation: $14,433 x 60 = $865,980 plus $35,000 funeral.",
+          "language": "EN"
         },
         {
           "citation": "[2025] HKDC 1598",
           "caseName": "Chang Chiu Lin v Hui Kui Shing t/a Wah Cheong Engineering",
           "court": "hkdc",
           "year": 2025,
-          "annotation": "Recent fatal case where a scaffolding worker fell from height. The court quotes s.6(1)(b) verbatim including the age-bracket multiplier (40-55 = 60 months) and the Schedule 6 cap. Key issue was determining the deceased's monthly earnings for a casual worker."
+          "annotation": "Recent fatal case where a scaffolding worker fell from height. The court quotes s.6(1)(b) verbatim including the age-bracket multiplier (40-55 = 60 months) and the Schedule 6 cap. Key issue was determining the deceased's monthly earnings for a casual worker.",
+          "language": "TC"
         },
         {
           "citation": "[2013] HKDC 1113",
           "caseName": "Wong Ka Yan v Great Contracting (HK) Ltd",
           "court": "hkdc",
           "year": 2013,
-          "annotation": "Electrician electrocuted at Discovery Bay. Court applied s.6(1)(b) and s.6(5) funeral expenses ($61,878). Also discusses s.6A on distribution of compensation among family members. Key issue was calculating monthly earnings for a casual worker."
+          "annotation": "Electrician electrocuted at Discovery Bay. Court applied s.6(1)(b) and s.6(5) funeral expenses ($61,878). Also discusses s.6A on distribution of compensation among family members. Key issue was calculating monthly earnings for a casual worker.",
+          "language": "TC"
         },
         {
           "citation": "[2008] HKDC 273",
           "caseName": "Choi Sin Fun & Ng Chi Ho v Chartered Environmentalist Ltd",
           "court": "hkdc",
           "year": 2008,
-          "annotation": "32-year-old electrician died from electric shock. Court applied s.6(1)(a) (under 40, so 84 months' earnings). Compensation $776,160 under s.6(1)(a) plus $35,000 funeral under s.6(5). Also addressed principal contractor joint liability."
+          "annotation": "32-year-old electrician died from electric shock. Court applied s.6(1)(a) (under 40, so 84 months' earnings). Compensation $776,160 under s.6(1)(a) plus $35,000 funeral under s.6(5). Also addressed principal contractor joint liability.",
+          "language": "EN"
         }
       ]
     },
-    { "section": "6A", "titleEn": "Apportionment of compensation", "titleZh": "補償的分配", "cases": [] },
+    {
+      "section": "6A",
+      "titleEn": "Apportionment of compensation",
+      "titleZh": "補償的分配",
+      "cases": []
+    },
     {
       "section": "7",
       "titleEn": "Compensation in case of permanent total incapacity",
@@ -109,28 +139,32 @@
           "caseName": "LKK Trans Ltd v Wong Hoi Chung",
           "court": "hkcfa",
           "year": 2006,
-          "annotation": "CFA held that s.10(5) (deeming provision for incapacity lasting 24+ months) operates only to deem the permanence of the incapacity, NOT causation. Courts can still apportion permanent incapacity between work-related and non-work-related causes under ss.7/9. Provides an authoritative overview of the entire ECO compensation structure."
+          "annotation": "CFA held that s.10(5) (deeming provision for incapacity lasting 24+ months) operates only to deem the permanence of the incapacity, NOT causation. Courts can still apportion permanent incapacity between work-related and non-work-related causes under ss.7/9. Provides an authoritative overview of the entire ECO compensation structure.",
+          "language": "EN"
         },
         {
           "citation": "[1983] HKDC 3",
           "caseName": "Tsang Lin v Tong Ling Shipping & Enterprises Co Ltd",
           "court": "hkdc",
           "year": 1983,
-          "annotation": "A direct s.7 claim for permanent total incapacity. Seaman hit by a hawser pipe suffered neck subluxation. Established that compensation must be assessed on loss of earning capacity, not merely physical/functional impairment from medical evidence. For unscheduled injuries, loss should be assessed \"as far as possible, in conformity with\" the First Schedule percentages."
+          "annotation": "A direct s.7 claim for permanent total incapacity. Seaman hit by a hawser pipe suffered neck subluxation. Established that compensation must be assessed on loss of earning capacity, not merely physical/functional impairment from medical evidence. For unscheduled injuries, loss should be assessed \"as far as possible, in conformity with\" the First Schedule percentages.",
+          "language": "EN"
         },
         {
           "citation": "[2021] HKDC 1023",
           "caseName": "Yeung Chung Chun v Poon Tak Fung",
           "court": "hkdc",
           "year": 2021,
-          "annotation": "Clear worked example of how s.7 is used in s.9 calculations. S.9 compensation = Assessment Board's percentage x s.7 amount. Applies s.7(1)(c) for employee aged 56+ (48 months multiplier) with Schedule 6 specified amount of $28,360."
+          "annotation": "Clear worked example of how s.7 is used in s.9 calculations. S.9 compensation = Assessment Board's percentage x s.7 amount. Applies s.7(1)(c) for employee aged 56+ (48 months multiplier) with Schedule 6 specified amount of $28,360.",
+          "language": "TC"
         },
         {
           "citation": "[2003] HKDC 25",
           "caseName": "Fan Kwok Keung v Team Work Event Promotion Ltd",
           "court": "hkdc",
           "year": 2003,
-          "annotation": "Uses s.7(1)(b) as basis for s.9 partial incapacity calculation. Demonstrates the s.7 multiplier (72 months for age 40-55) and Sixth Schedule salary cap ($21,000). Calculation: $12,540 x 72 x 21% = $189,600.80."
+          "annotation": "Uses s.7(1)(b) as basis for s.9 partial incapacity calculation. Demonstrates the s.7 multiplier (72 months for age 40-55) and Sixth Schedule salary cap ($21,000). Calculation: $12,540 x 72 x 21% = $189,600.80.",
+          "language": "EN"
         }
       ]
     },
@@ -144,35 +178,40 @@
           "caseName": "Tsang Kwong Tong v Tennille Decoration & Design Ltd",
           "court": "hkca",
           "year": 2006,
-          "annotation": "Leading Court of Appeal authority on s.9(1A). Detailed analysis of when \"special circumstances\" warrant a higher percentage than the First Schedule. Upheld 18% loss of earning capacity for a decoration worker. Explains that doctors' impairment assessments are not determinative; the court must compare earnings capacity with and without injury."
+          "annotation": "Leading Court of Appeal authority on s.9(1A). Detailed analysis of when \"special circumstances\" warrant a higher percentage than the First Schedule. Upheld 18% loss of earning capacity for a decoration worker. Explains that doctors' impairment assessments are not determinative; the court must compare earnings capacity with and without injury.",
+          "language": "EN"
         },
         {
           "citation": "[1984] HKCA 199",
           "caseName": "Lau Ho Wah v Yau Chi Biu",
           "court": "hkca",
           "year": 1984,
-          "annotation": "Court of Appeal authority: s.9 claim for permanent partial incapacity is unsustainable where the injury is not in the First Schedule AND the applicant earns at the same or higher rate post-accident. Sets the baseline principle for non-scheduled injuries."
+          "annotation": "Court of Appeal authority: s.9 claim for permanent partial incapacity is unsustainable where the injury is not in the First Schedule AND the applicant earns at the same or higher rate post-accident. Sets the baseline principle for non-scheduled injuries.",
+          "language": "EN"
         },
         {
           "citation": "[1992] HKDC 10",
           "caseName": "Fu Kwong Woon v Chau Woon & Yau Lee Construction",
           "court": "hkdc",
           "year": 1992,
-          "annotation": "Foundational District Court decision on s.9(1A). When determining loss of earning capacity percentage, the court should have regard to earnings in pre/post-accident occupations as at the date of assessment, not at the date of accident. Assessed 60% loss given age, limited education, and wage differential between steel-binding and watchman work."
+          "annotation": "Foundational District Court decision on s.9(1A). When determining loss of earning capacity percentage, the court should have regard to earnings in pre/post-accident occupations as at the date of assessment, not at the date of accident. Assessed 60% loss given age, limited education, and wage differential between steel-binding and watchman work.",
+          "language": "EN"
         },
         {
           "citation": "[2001] HKDC 17",
           "caseName": "Chan Kam Wing v Esprit Container Transportation",
           "court": "hkdc",
           "year": 2001,
-          "annotation": "Applies s.9(1A) to a container truck driver. The Board assessed 27% but the applicant argued special circumstances warranted more. Judge Andrew Cheung analyzed the evidentiary requirements for invoking s.9(1A), including that the Board's assessment must be \"substantially less\" than actual loss."
+          "annotation": "Applies s.9(1A) to a container truck driver. The Board assessed 27% but the applicant argued special circumstances warranted more. Judge Andrew Cheung analyzed the evidentiary requirements for invoking s.9(1A), including that the Board's assessment must be \"substantially less\" than actual loss.",
+          "language": "EN"
         },
         {
           "citation": "[2003] HKDC 25",
           "caseName": "Fan Kwok Keung v Team Work Event Promotion Ltd",
           "court": "hkdc",
           "year": 2003,
-          "annotation": "Clear application distinguishing s.9(1)(a) (First Schedule injuries) from s.9(1)(b) (court-assessed). Leg injury fell under s.9(1)(b); court assessed 15% loss of earning capacity. Emphasizes medical opinion is useful but the court makes its own conclusion."
+          "annotation": "Clear application distinguishing s.9(1)(a) (First Schedule injuries) from s.9(1)(b) (court-assessed). Leg injury fell under s.9(1)(b); court assessed 15% loss of earning capacity. Emphasizes medical opinion is useful but the court makes its own conclusion.",
+          "language": "EN"
         }
       ]
     },
@@ -186,35 +225,40 @@
           "caseName": "Choy Wai Chung v Chun Wo Construction & Engineering",
           "court": "hkca",
           "year": 2000,
-          "annotation": "Leading Court of Appeal authority on s.9/s.10 overlap and s.10(5) cap. Rogers VP quotes s.10(1) in full and traces the 1969 legislative history. Key issue: whether an employee with permanent partial incapacity can also claim the full 3-year s.10(5) period."
+          "annotation": "Leading Court of Appeal authority on s.9/s.10 overlap and s.10(5) cap. Rogers VP quotes s.10(1) in full and traces the 1969 legislative history. Key issue: whether an employee with permanent partial incapacity can also claim the full 3-year s.10(5) period.",
+          "language": "EN"
         },
         {
           "citation": "[2011] HKCA 347",
           "caseName": "Hui Ching Mun v Depo Security Ltd",
           "court": "hkca",
           "year": 2011,
-          "annotation": "Court of Appeal. Rejects argument that temporary incapacity must last 2 years. Clarifies s.10(5) sets a maximum cap (24 months, extendable to 36), not a minimum entitlement. Also addresses s.10(6) and monthly earnings calculation."
+          "annotation": "Court of Appeal. Rejects argument that temporary incapacity must last 2 years. Clarifies s.10(5) sets a maximum cap (24 months, extendable to 36), not a minimum entitlement. Also addresses s.10(6) and monthly earnings calculation.",
+          "language": "TC"
         },
         {
           "citation": "[2009] HKCA 344",
           "caseName": "Chinese language appeal on s.10 quantum",
           "court": "hkca",
           "year": 2009,
-          "annotation": "Court of Appeal case where the sole issue was s.10 quantum. Disputes about whether the applicant worked during certified sick leave and the proper four-fifths differential calculation. Useful for post-accident earnings evidence reducing s.10 compensation."
+          "annotation": "Court of Appeal case where the sole issue was s.10 quantum. Disputes about whether the applicant worked during certified sick leave and the proper four-fifths differential calculation. Useful for post-accident earnings evidence reducing s.10 compensation.",
+          "language": "TC"
         },
         {
           "citation": "[2024] HKDC 266",
           "caseName": "Tsui Leung Chiu v H & A Design & Contracting",
           "court": "hkdc",
           "year": 2024,
-          "annotation": "Recent, clearly-written judgment quoting s.10(1)/(2) in full. Cites Pak Sai Ming v Law Sze Man [2015] 1 HKLRD 1120: s.10(2) creates a rebuttable presumption of temporary incapacity during certified sick leave, with the burden on the employer to rebut. Standard calculation: $39,000 x 387/30 x 4/5 = $402,480."
+          "annotation": "Recent, clearly-written judgment quoting s.10(1)/(2) in full. Cites Pak Sai Ming v Law Sze Man [2015] 1 HKLRD 1120: s.10(2) creates a rebuttable presumption of temporary incapacity during certified sick leave, with the burden on the employer to rebut. Standard calculation: $39,000 x 387/30 x 4/5 = $402,480.",
+          "language": "EN"
         },
         {
           "citation": "[1978] HKDC 23",
           "caseName": "Yip Kwai v Chung Leung",
           "court": "hkdc",
           "year": 1978,
-          "annotation": "Early case applying s.10(1), s.10(2), and s.10(6). Court set off a Labour Tribunal wrongful dismissal wages award against the first month's s.10 compensation, demonstrating the anti-double-recovery provision in s.10(6)."
+          "annotation": "Early case applying s.10(1), s.10(2), and s.10(6). Court set off a Labour Tribunal wrongful dismissal wages award against the first month's s.10 compensation, demonstrating the anti-double-recovery provision in s.10(6).",
+          "language": "EN"
         }
       ]
     },
@@ -228,35 +272,40 @@
           "caseName": "Hung Chuen Lung v JC Construction & Ors",
           "court": "hkdc",
           "year": 2024,
-          "annotation": "The court calculated s.10A compensation by applying the Schedule 3 daily cap of HK$300. The applicant's private clinic visits cost HK$850/visit but the statutory cap reduced the total to HK$7,135. After deducting HK$1,820 already paid by the respondent, the s.10A award was HK$5,315. Illustrates how Schedule 3 caps override actual expenses."
+          "annotation": "The court calculated s.10A compensation by applying the Schedule 3 daily cap of HK$300. The applicant's private clinic visits cost HK$850/visit but the statutory cap reduced the total to HK$7,135. After deducting HK$1,820 already paid by the respondent, the s.10A award was HK$5,315. Illustrates how Schedule 3 caps override actual expenses.",
+          "language": "TC"
         },
         {
           "citation": "[2024] HKDC 1117",
           "caseName": "Kwok Ka Lai Ricky v Excellent Transportation (H.K.) Ltd",
           "court": "hkdc",
           "year": 2024,
-          "annotation": "Detailed line-by-line audit of s.10A medical expense claims. The court scrutinised individual HA hospital bills against the daily HK$300 cap, identified a duplicate HK$320 charge across two bills for the same treatment, and deducted it. Final s.10A award: HK$4,245."
+          "annotation": "Detailed line-by-line audit of s.10A medical expense claims. The court scrutinised individual HA hospital bills against the daily HK$300 cap, identified a duplicate HK$320 charge across two bills for the same treatment, and deducted it. Final s.10A award: HK$4,245.",
+          "language": "TC"
         },
         {
           "citation": "[2021] HKDC 386",
           "caseName": "Ho Wing Lok v Li Kam Wah & Employees Compensation Assistance Fund Board",
           "court": "hkdc",
           "year": 2021,
-          "annotation": "Fatal/serious injury case (total compensation HK$2,171,254). The employer had already paid HK$12,694 in medical expenses. The court noted daily amounts did not exceed the HK$200 cap (the rate at the time) and awarded full reimbursement under s.10A. Shows s.10A operating alongside a large s.7 fatal award."
+          "annotation": "Fatal/serious injury case (total compensation HK$2,171,254). The employer had already paid HK$12,694 in medical expenses. The court noted daily amounts did not exceed the HK$200 cap (the rate at the time) and awarded full reimbursement under s.10A. Shows s.10A operating alongside a large s.7 fatal award.",
+          "language": "TC"
         },
         {
           "citation": "[2017] HKDC 1019",
           "caseName": "Tsang Kwan Fat v Ever Talent Corporation Ltd t/a Famous Café",
           "court": "hkdc",
           "year": 2017,
-          "annotation": "The applicant spent HK$3,250 on outpatient medical expenses. The court applied the Schedule 3 non-inpatient rate of HK$200/day, reducing the s.10A claim to HK$2,400. Explicitly demonstrates the court substituting the statutory daily rate cap for higher actual expenses."
+          "annotation": "The applicant spent HK$3,250 on outpatient medical expenses. The court applied the Schedule 3 non-inpatient rate of HK$200/day, reducing the s.10A claim to HK$2,400. Explicitly demonstrates the court substituting the statutory daily rate cap for higher actual expenses.",
+          "language": "TC"
         },
         {
           "citation": "[2003] HKDC 25",
           "caseName": "Fan Kwok Keung v Team Work Event Promotion Ltd",
           "court": "hkdc",
           "year": 2003,
-          "annotation": "The applicant added the s.10A medical expenses claim by amendment at the quantum trial stage with the respondent absent. The court allowed the late amendment, finding no prejudice. Useful for the procedural point that s.10A claims can be added by amendment even at trial."
+          "annotation": "The applicant added the s.10A medical expenses claim by amendment at the quantum trial stage with the respondent absent. The court allowed the late amendment, finding no prejudice. Useful for the procedural point that s.10A claims can be added by amendment even at trial.",
+          "language": "EN"
         }
       ]
     },
@@ -270,35 +319,40 @@
           "caseName": "Or Wing Ming v Ho Bing Chi t/a Tin Kei Decoration Engineering Co",
           "court": "hkca",
           "year": 2008,
-          "annotation": "Leading Court of Appeal authority on s.11(1)(b) \"lesser period\" for employees who worked less than one month. Held that s.11(1)(b) can apply even when employment is less than one month, adopting a flexible approach. One of a pair of HKCA decisions (with Lai Cheung Kwong v Lo King Sum) that establish the framework for short-employment earnings calculation."
+          "annotation": "Leading Court of Appeal authority on s.11(1)(b) \"lesser period\" for employees who worked less than one month. Held that s.11(1)(b) can apply even when employment is less than one month, adopting a flexible approach. One of a pair of HKCA decisions (with Lai Cheung Kwong v Lo King Sum) that establish the framework for short-employment earnings calculation.",
+          "language": "EN"
         },
         {
           "citation": "[2021] HKDC 682",
           "caseName": "Ma Siu Fai v Ko Chim Yuen t/a Lee Loi Decoration Design",
           "court": "hkdc",
           "year": 2021,
-          "annotation": "Worker employed only 31 days before accident. Sets out full text of s.11(1) and s.11(2), applies the Or Wing Ming / Lai Cheung Kwong framework, and decides between the s.11(1)(b) \"lesser period\" approach and the s.11(2) \"comparable earnings\" approach. Step-by-step walkthrough of the three approaches under s.11."
+          "annotation": "Worker employed only 31 days before accident. Sets out full text of s.11(1) and s.11(2), applies the Or Wing Ming / Lai Cheung Kwong framework, and decides between the s.11(1)(b) \"lesser period\" approach and the s.11(2) \"comparable earnings\" approach. Step-by-step walkthrough of the three approaches under s.11.",
+          "language": "EN"
         },
         {
           "citation": "[2025] HKDC 1283",
           "caseName": "Lee Chi Ching Owen v Mountain Industrial Development Co Ltd",
           "court": "hkdc",
           "year": 2025,
-          "annotation": "Recent 2025 judgment applying s.11(2) where the applicant had been employed less than one month. Quotes s.11(1)(b) and s.11(2) in full, reviews Or Wing Ming and Lai Cheung Kwong, and explains s.11(2) is designed to overcome the difficulty of computing earnings when employment is very short."
+          "annotation": "Recent 2025 judgment applying s.11(2) where the applicant had been employed less than one month. Quotes s.11(1)(b) and s.11(2) in full, reviews Or Wing Ming and Lai Cheung Kwong, and explains s.11(2) is designed to overcome the difficulty of computing earnings when employment is very short.",
+          "language": "EN"
         },
         {
           "citation": "[2013] HKDC 154",
           "caseName": "Chen Yong v Chiu Yuk Lin & Leung Tak Meng t/a Luen Lik Engineering Co",
           "court": "hkdc",
           "year": 2013,
-          "annotation": "Assessment of compensation where the court had to choose between s.11(1)(b) and s.11(2). Discusses the Lai Cheung Kwong / Or Wing Ming principles and that the \"lesser period\" under s.11(1)(b) could be construed as less than one month. Detailed reasoning on when each sub-section should be preferred."
+          "annotation": "Assessment of compensation where the court had to choose between s.11(1)(b) and s.11(2). Discusses the Lai Cheung Kwong / Or Wing Ming principles and that the \"lesser period\" under s.11(1)(b) could be construed as less than one month. Detailed reasoning on when each sub-section should be preferred.",
+          "language": "EN"
         },
         {
           "citation": "[2024] HKDC 1555",
           "caseName": "Chow Tak Yeung v Sil Wain Engineering Co Ltd",
           "court": "hkdc",
           "year": 2024,
-          "annotation": "Casual worker employed only 7 days before accident. Quotes s.11(1), (2), and (5) in full. Both parties agreed s.11(2) should apply but differed on the comparator: applicant's own 12-month average income vs. government-published average daily wages for construction workers. Illustrates s.11(2)'s \"person of similar earning capacity\" test."
+          "annotation": "Casual worker employed only 7 days before accident. Quotes s.11(1), (2), and (5) in full. Both parties agreed s.11(2) should apply but differed on the comparator: applicant's own 12-month average income vs. government-published average daily wages for construction workers. Illustrates s.11(2)'s \"person of similar earning capacity\" test.",
+          "language": "EN"
         }
       ]
     },
@@ -312,34 +366,53 @@
           "caseName": "Yau Lai Yi v Yoshinoya Fast Food (HK) Ltd",
           "court": "hkdc",
           "year": 2018,
-          "annotation": "The most substantive case on s.14. Extensively analyzes the interaction between the \"primary time bar\" under s.14(1) (24 months from accident) and the \"secondary time bar\" under s.18(2) (6 months from Form 7). Discusses the \"two routes, one regime\" framework from Chung Lung Shun v Adams Parking. Key case for the interplay between s.14 and the assessment board regime."
+          "annotation": "The most substantive case on s.14. Extensively analyzes the interaction between the \"primary time bar\" under s.14(1) (24 months from accident) and the \"secondary time bar\" under s.18(2) (6 months from Form 7). Discusses the \"two routes, one regime\" framework from Chung Lung Shun v Adams Parking. Key case for the interplay between s.14 and the assessment board regime.",
+          "language": "EN"
         },
         {
           "citation": "[2002] HKDC 217",
           "caseName": "Wong Kwai Lung v Man Yuen Construction Engineering Co Ltd",
           "court": "hkdc",
           "year": 2002,
-          "annotation": "Extension of time under s.14(4) where the claim was filed over 6 months late. Discusses the s.14(1) 24-month time bar, the s.14(4) \"reasonable excuse\" discretion, and references Chan Siu Ling v Tonyear Investment. Useful for analysis of when delay can be excused."
+          "annotation": "Extension of time under s.14(4) where the claim was filed over 6 months late. Discusses the s.14(1) 24-month time bar, the s.14(4) \"reasonable excuse\" discretion, and references Chan Siu Ling v Tonyear Investment. Useful for analysis of when delay can be excused.",
+          "language": "EN"
         },
         {
           "citation": "[2003] HKDC 289",
           "caseName": "Cheung Hok Kuen v Winner Hydraulics Co Ltd",
           "court": "hkdc",
           "year": 2003,
-          "annotation": "Quotes s.14(1), s.14(2) (form of notice), and s.14(4) in full. The employer disputed whether proper notice was given. Despite the applicant's failure to file a timely injury report, the court accepted the claim under s.14(4) because the employer had filed a Form 2 (accident report) within three months."
+          "annotation": "Quotes s.14(1), s.14(2) (form of notice), and s.14(4) in full. The employer disputed whether proper notice was given. Despite the applicant's failure to file a timely injury report, the court accepted the claim under s.14(4) because the employer had filed a Form 2 (accident report) within three months.",
+          "language": "TC"
         },
         {
           "citation": "[2015] HKDC 38",
           "caseName": "Ng Yim Kuen v Chan Sai Wai",
           "court": "hkdc",
           "year": 2015,
-          "annotation": "Strike-out application where the claim was filed 17 years after the alleged accident. Quotes s.14(1) and s.14(4) in full and discusses the principle that longer delays require stronger proof of success prospects. The application was struck out because the applicant provided no reasonable excuse and sued the wrong party."
+          "annotation": "Strike-out application where the claim was filed 17 years after the alleged accident. Quotes s.14(1) and s.14(4) in full and discusses the principle that longer delays require stronger proof of success prospects. The application was struck out because the applicant provided no reasonable excuse and sued the wrong party.",
+          "language": "TC"
         }
       ]
     },
-    { "section": "15", "titleEn": "Employer to report the injury to or death of an employee and method of notification", "titleZh": "由僱主呈報僱員傷亡以及通知方法", "cases": [] },
-    { "section": "16", "titleEn": "Medical examination and treatment", "titleZh": "身體檢查及治療", "cases": [] },
-    { "section": "16A", "titleEn": "Determination of claims in respect of injuries", "titleZh": "有關損傷的申索的裁定", "cases": [] },
+    {
+      "section": "15",
+      "titleEn": "Employer to report the injury to or death of an employee and method of notification",
+      "titleZh": "由僱主呈報僱員傷亡以及通知方法",
+      "cases": []
+    },
+    {
+      "section": "16",
+      "titleEn": "Medical examination and treatment",
+      "titleZh": "身體檢查及治療",
+      "cases": []
+    },
+    {
+      "section": "16A",
+      "titleEn": "Determination of claims in respect of injuries",
+      "titleZh": "有關損傷的申索的裁定",
+      "cases": []
+    },
     {
       "section": "16F",
       "titleEn": "Certificates of assessment",
@@ -350,28 +423,32 @@
           "caseName": "Ngan Yu Chiu v New World First Bus Services Ltd",
           "court": "hkca",
           "year": 2007,
-          "annotation": "Court of Appeal considered the interaction between s.16F certificates and s.48 anti-dismissal protection. The employer received the s.16F certificate and constructively dismissed the claimant the next day. Addressed whether termination immediately upon receipt of a s.16F certificate contravenes s.48 where the employee had lodged a s.16G objection."
+          "annotation": "Court of Appeal considered the interaction between s.16F certificates and s.48 anti-dismissal protection. The employer received the s.16F certificate and constructively dismissed the claimant the next day. Addressed whether termination immediately upon receipt of a s.16F certificate contravenes s.48 where the employee had lodged a s.16G objection.",
+          "language": "EN"
         },
         {
           "citation": "[2009] HKCFI 843",
           "caseName": "Ngan Yu Chiu v New World First Bus Services Ltd",
           "court": "hkcfi",
           "year": 2009,
-          "annotation": "Subsequent assessment of compensation from the same dispute. Traces the procedural chain from s.16F certificate issuance, through s.16G review (which confirmed 2% LOEC), to the implications for computing unreasonable dismissal compensation under s.32P of the Employment Ordinance."
+          "annotation": "Subsequent assessment of compensation from the same dispute. Traces the procedural chain from s.16F certificate issuance, through s.16G review (which confirmed 2% LOEC), to the implications for computing unreasonable dismissal compensation under s.32P of the Employment Ordinance.",
+          "language": "EN"
         },
         {
           "citation": "[2008] HKDC 578",
           "caseName": "Gurdial Singh v Yat Fai Construction & Engineering Co Ltd",
           "court": "hkdc",
           "year": 2008,
-          "annotation": "Relied on the principle from Ng Ming Chong v MTR Corp that an OAB assessment pursuant to s.16F becomes binding on the court once the appeal period expires without challenge. The expiry of the appeal period against the Form 7 was treated as a material change of circumstances justifying withdrawal of payments into court."
+          "annotation": "Relied on the principle from Ng Ming Chong v MTR Corp that an OAB assessment pursuant to s.16F becomes binding on the court once the appeal period expires without challenge. The expiry of the appeal period against the Form 7 was treated as a material change of circumstances justifying withdrawal of payments into court.",
+          "language": "EN"
         },
         {
           "citation": "[2021] HKDC 805",
           "caseName": "Yip Kam Chun v Wellgain International Industrial Ltd",
           "court": "hkdc",
           "year": 2021,
-          "annotation": "Detailed exposition of the statutory assessment framework. Explains how the OAB issues Form 7 pursuant to s.16F, and Form 9 upon review pursuant to s.16G(3). Under s.16H, these assessments constitute conclusive evidence in the absence of an appeal."
+          "annotation": "Detailed exposition of the statutory assessment framework. Explains how the OAB issues Form 7 pursuant to s.16F, and Form 9 upon review pursuant to s.16G(3). Under s.16H, these assessments constitute conclusive evidence in the absence of an appeal.",
+          "language": "EN"
         }
       ]
     },
@@ -385,28 +462,32 @@
           "caseName": "Chung Sau Ling v Million Join Ltd (Ju Bo Seafood Restaurant)",
           "court": "hkca",
           "year": 2003,
-          "annotation": "Employer sought to appeal out of time against a Form 9 (certificate of review of assessment) issued under s.16G, where the LOEC was 33%. The Court of Appeal held that when seeking a time extension under s.18, the applicant must explain the reason for delay, its length, prejudice to the other party, and the merits."
+          "annotation": "Employer sought to appeal out of time against a Form 9 (certificate of review of assessment) issued under s.16G, where the LOEC was 33%. The Court of Appeal held that when seeking a time extension under s.18, the applicant must explain the reason for delay, its length, prejudice to the other party, and the merits.",
+          "language": "TC"
         },
         {
           "citation": "[2007] HKCA 504",
           "caseName": "Ngan Yu Chiu v New World First Bus Services Ltd",
           "court": "hkca",
           "year": 2007,
-          "annotation": "The Court of Appeal noted the significance of the s.16G objection in the context of anti-dismissal protection. The employer had notice of the claimant's s.16G objection before the constructive dismissal. The s.48 prohibition on termination continues until the Board issues its s.16G(3) certificate."
+          "annotation": "The Court of Appeal noted the significance of the s.16G objection in the context of anti-dismissal protection. The employer had notice of the claimant's s.16G objection before the constructive dismissal. The s.48 prohibition on termination continues until the Board issues its s.16G(3) certificate.",
+          "language": "EN"
         },
         {
           "citation": "[2021] HKDC 805",
           "caseName": "Yip Kam Chun v Wellgain International Industrial Ltd",
           "court": "hkdc",
           "year": 2021,
-          "annotation": "Explains the full statutory chain: OAB issues Form 7 under s.16F; if objection lodged, the Board conducts review and issues Form 9 under s.16G(3). The Form 9 replaces Form 7 as the operative assessment for computing compensation. Form 9 is conclusive evidence under s.16H absent appeal."
+          "annotation": "Explains the full statutory chain: OAB issues Form 7 under s.16F; if objection lodged, the Board conducts review and issues Form 9 under s.16G(3). The Form 9 replaces Form 7 as the operative assessment for computing compensation. Form 9 is conclusive evidence under s.16H absent appeal.",
+          "language": "EN"
         },
         {
           "citation": "[2000] HKDC 6",
           "caseName": "Ma Po-yuk v Regent Broad Ltd",
           "court": "hkdc",
           "year": 2000,
-          "annotation": "Applicant assessed at 5% LOEC, applied for review under s.16G. The 5% was affirmed. Illustrates the procedural consequence of failing to amend existing court proceedings to include an appeal against the Form 9 -- the solicitors neglected to amend, and the 6-month appeal period under s.18 lapsed. Extension granted."
+          "annotation": "Applicant assessed at 5% LOEC, applied for review under s.16G. The 5% was affirmed. Illustrates the procedural consequence of failing to amend existing court proceedings to include an appeal against the Form 9 -- the solicitors neglected to amend, and the 6-month appeal period under s.18 lapsed. Extension granted.",
+          "language": "EN"
         }
       ]
     },
@@ -420,35 +501,40 @@
           "caseName": "Tsang Kwong Tong v Tennille Decoration & Design Ltd",
           "court": "hkca",
           "year": 2006,
-          "annotation": "Key authority on the correct test for s.18 appeals. Kwan J held the trial judge erred by applying the s.16B cancellation test. The correct test: because the OAB hears no evidence, keeps no record, and gives no reasons, an appeal under s.18 is in the nature of a re-hearing where the court makes its own assessment."
+          "annotation": "Key authority on the correct test for s.18 appeals. Kwan J held the trial judge erred by applying the s.16B cancellation test. The correct test: because the OAB hears no evidence, keeps no record, and gives no reasons, an appeal under s.18 is in the nature of a re-hearing where the court makes its own assessment.",
+          "language": "EN"
         },
         {
           "citation": "[1996] HKCA 550",
           "caseName": "Liu Ah Sai v Yiu Lian Dockyards Ltd",
           "court": "hkca",
           "year": 1996,
-          "annotation": "Establishes the test for cancellation of a Commissioner's certificate under s.16B(1). Also confirms the \"two routes, one regime\" framework where s.18 appeal and s.16B cancellation serve distinct functions."
+          "annotation": "Establishes the test for cancellation of a Commissioner's certificate under s.16B(1). Also confirms the \"two routes, one regime\" framework where s.18 appeal and s.16B cancellation serve distinct functions.",
+          "language": "EN"
         },
         {
           "citation": "[2018] HKDC 1591",
           "caseName": "Yau Lai Yi v Yoshinoya Fast Food (HK) Ltd",
           "court": "hkdc",
           "year": 2018,
-          "annotation": "Comprehensive analysis of the time-bar regime. Distinguishes between the \"primary time bar\" (24 months under s.14(1)) and the \"secondary time bar\" (6 months under s.18(2) from Form 7/Form 9). Once a certificate is issued, the s.18(2) secondary bar replaces the primary bar."
+          "annotation": "Comprehensive analysis of the time-bar regime. Distinguishes between the \"primary time bar\" (24 months under s.14(1)) and the \"secondary time bar\" (6 months under s.18(2) from Form 7/Form 9). Once a certificate is issued, the s.18(2) secondary bar replaces the primary bar.",
+          "language": "EN"
         },
         {
           "citation": "[2023] HKDC 1159",
           "caseName": "Li Tsan Fai v WLF Logistics (Hong Kong) Ltd",
           "court": "hkdc",
           "year": 2023,
-          "annotation": "Delivery driver with catastrophic brain and spinal cord injuries appealed under s.18 against the OAB's review assessment. Following Chan Kit v Sam Wo Industrial Manufactory, the court conducts a re-assessment on all evidence. Accepted 100% LOEC (vs. the Board's lower assessment) and awarded 3 years' sick leave."
+          "annotation": "Delivery driver with catastrophic brain and spinal cord injuries appealed under s.18 against the OAB's review assessment. Following Chan Kit v Sam Wo Industrial Manufactory, the court conducts a re-assessment on all evidence. Accepted 100% LOEC (vs. the Board's lower assessment) and awarded 3 years' sick leave.",
+          "language": "TC"
         },
         {
           "citation": "[1999] HKDC 3",
           "caseName": "Yu Hao Jan v Wan Yuen Kong t/a Luen Hop Metal Co",
           "court": "hkdc",
           "year": 1999,
-          "annotation": "Addressed whether s.18 requires \"reasonable excuse\" for late appeals. Unlike s.14, s.18 contains no express requirement -- only that the court may extend time \"if it thinks fit.\" Nevertheless, citing the Court of Appeal's emphasis on adhering to prescribed time limits, the court held it must still be satisfied there is some reasonable excuse."
+          "annotation": "Addressed whether s.18 requires \"reasonable excuse\" for late appeals. Unlike s.14, s.18 contains no express requirement -- only that the court may extend time \"if it thinks fit.\" Nevertheless, citing the Court of Appeal's emphasis on adhering to prescribed time limits, the court held it must still be satisfied there is some reasonable excuse.",
+          "language": "EN"
         }
       ]
     },
@@ -462,35 +548,40 @@
           "caseName": "Mak Wing Fai v Chevalier (HK) Ltd & WM Construction Ltd",
           "court": "hkca",
           "year": 1999,
-          "annotation": "Leading authority on the s.24(2) indemnity mechanism. The principal contractor was held liable under s.24(1) and successfully claimed indemnity (including legal costs) against the sub-contractor employer under s.24(2). Confirmed that an indemnity notice under s.24(7) is not a prerequisite -- the right arises directly from the statute."
+          "annotation": "Leading authority on the s.24(2) indemnity mechanism. The principal contractor was held liable under s.24(1) and successfully claimed indemnity (including legal costs) against the sub-contractor employer under s.24(2). Confirmed that an indemnity notice under s.24(7) is not a prerequisite -- the right arises directly from the statute.",
+          "language": "EN"
         },
         {
           "citation": "[2000] HKCA 343",
           "caseName": "B + B Construction Ltd v Sun Alliance and London Insurance plc",
           "court": "hkca",
           "year": 2000,
-          "annotation": "Insurance coverage dispute where the principal contractor sought indemnity from its insurer for sums paid under s.24. The Court of Appeal analyzed the interplay between s.24 liability and insurance cover, holding that policy wording covering \"his contractors\" must be read in light of the statutory obligation under s.24."
+          "annotation": "Insurance coverage dispute where the principal contractor sought indemnity from its insurer for sums paid under s.24. The Court of Appeal analyzed the interplay between s.24 liability and insurance cover, holding that policy wording covering \"his contractors\" must be read in light of the statutory obligation under s.24.",
+          "language": "EN"
         },
         {
           "citation": "[2015] HKCFI 1941",
           "caseName": "Ng Tat Kuen v Tam Che Fu & DSC Holdings Ltd",
           "court": "hkcfi",
           "year": 2015,
-          "annotation": "Applied the Hip Hing Construction test for \"principal contractor\" under s.24(1): whether the work sub-contracted was work the principal had undertaken to execute for its client. DSC Holdings (not a construction company) was found to be a principal contractor because it had contracted out transportation/delivery work forming part of its business."
+          "annotation": "Applied the Hip Hing Construction test for \"principal contractor\" under s.24(1): whether the work sub-contracted was work the principal had undertaken to execute for its client. DSC Holdings (not a construction company) was found to be a principal contractor because it had contracted out transportation/delivery work forming part of its business.",
+          "language": "EN"
         },
         {
           "citation": "[2004] HKDC 91",
           "caseName": "Kwok Hing-yuen v Goodpoint Engineering Ltd & Otis Elevator Co",
           "court": "hkdc",
           "year": 2004,
-          "annotation": "Key case on whether there can be multiple principal contractors under s.24. In a chain of sub-contracting, the court held that any entity in the chain that contracts work out can be a \"principal contractor,\" meaning multiple entities can simultaneously be liable under s.24(1)."
+          "annotation": "Key case on whether there can be multiple principal contractors under s.24. In a chain of sub-contracting, the court held that any entity in the chain that contracts work out can be a \"principal contractor,\" meaning multiple entities can simultaneously be liable under s.24(1).",
+          "language": "EN"
         },
         {
           "citation": "[1985] HKDC 12",
           "caseName": "Cheung Hung-yuk v Chiu Chan & Ors",
           "court": "hkdc",
           "year": 1985,
-          "annotation": "Early authority on the procedural aspects of s.24. Confirmed that the District Court has jurisdiction to entertain indemnity claims between layers of sub-contractors under s.24(2), and that third-party proceedings under s.24(7) extend to the indemnity mechanism."
+          "annotation": "Early authority on the procedural aspects of s.24. Confirmed that the District Court has jurisdiction to entertain indemnity claims between layers of sub-contractors under s.24(2), and that third-party proceedings under s.24(7) extend to the indemnity mechanism.",
+          "language": "EN"
         }
       ]
     },
@@ -504,35 +595,40 @@
           "caseName": "Yardway Motors Ltd v Tam Siu Lun",
           "court": "hkca",
           "year": 2005,
-          "annotation": "Leading Court of Appeal authority on s.25(1)(b). Even where the employer was partly at fault, s.25(1)(b) does not bar recovery entirely -- the employer can seek contribution via the Civil Liability (Contribution) Ordinance from the third party. Resolved the long-standing question of whether a negligent employer could recover any portion of compensation from a co-tortfeasor."
+          "annotation": "Leading Court of Appeal authority on s.25(1)(b). Even where the employer was partly at fault, s.25(1)(b) does not bar recovery entirely -- the employer can seek contribution via the Civil Liability (Contribution) Ordinance from the third party. Resolved the long-standing question of whether a negligent employer could recover any portion of compensation from a co-tortfeasor.",
+          "language": "EN"
         },
         {
           "citation": "[2003] HKCFI 395",
           "caseName": "Yardway Motors Ltd v Tam Siu Lun",
           "court": "hkcfi",
           "year": 2003,
-          "annotation": "First-instance decision appealed in [2005] HKCA 65. Provides a thorough review of the English authorities on whether a negligent employer can claim indemnity under s.25 from a third party. Extensive analysis of the interplay between s.25 and Cap 377."
+          "annotation": "First-instance decision appealed in [2005] HKCA 65. Provides a thorough review of the English authorities on whether a negligent employer can claim indemnity under s.25 from a third party. Extensive analysis of the interplay between s.25 and Cap 377.",
+          "language": "EN"
         },
         {
           "citation": "[2014] HKCFI 2236",
           "caseName": "Bushra Bibi v Method Building & Engineering Works Ltd",
           "court": "hkcfi",
           "year": 2014,
-          "annotation": "Fatal scaffolding accident. The employer sought contribution from a third defendant for employees' compensation paid, relying on s.25(1) and Yardway Motors. Also addresses the interaction of s.25 and s.26 in contribution proceedings -- specifically how s.26(1) deduction interacts with percentage-based contribution orders."
+          "annotation": "Fatal scaffolding accident. The employer sought contribution from a third defendant for employees' compensation paid, relying on s.25(1) and Yardway Motors. Also addresses the interaction of s.25 and s.26 in contribution proceedings -- specifically how s.26(1) deduction interacts with percentage-based contribution orders.",
+          "language": "EN"
         },
         {
           "citation": "[2024] HKDC 950",
           "caseName": "Chevalier (HK) Ltd v Chan Wing Ching",
           "court": "hkdc",
           "year": 2024,
-          "annotation": "Recent employer's s.25(1)(b) claim against a negligent motorist. Confirms that \"any sum\" under s.25(1)(b) includes not only compensation paid but also legal costs incurred in EC proceedings, following Wah Kwong Construction v Wong Man Yip. Recovery of $90,578.70 compensation plus $60,000 legal costs."
+          "annotation": "Recent employer's s.25(1)(b) claim against a negligent motorist. Confirms that \"any sum\" under s.25(1)(b) includes not only compensation paid but also legal costs incurred in EC proceedings, following Wah Kwong Construction v Wong Man Yip. Recovery of $90,578.70 compensation plus $60,000 legal costs.",
+          "language": "EN"
         },
         {
           "citation": "[2024] HKDC 1016",
           "caseName": "QBE Hongkong & Shanghai Insurance Ltd v Au Kam Shun",
           "court": "hkdc",
           "year": 2024,
-          "annotation": "Insurer (having paid employees' compensation on behalf of the employer) exercised the s.25(1)(b) right of action against the negligent third-party driver and vehicle owner. Notable as an example of the insurer stepping into the employer's shoes to exercise the s.25 right."
+          "annotation": "Insurer (having paid employees' compensation on behalf of the employer) exercised the s.25(1)(b) right of action against the negligent third-party driver and vehicle owner. Notable as an example of the insurer stepping into the employer's shoes to exercise the s.25 right.",
+          "language": "EN"
         }
       ]
     },
@@ -546,32 +642,41 @@
           "caseName": "Bushra Bibi v Method Building & Engineering Works Ltd",
           "court": "hkcfi",
           "year": 2014,
-          "annotation": "Quotes s.26(1) in full and confirms employees' compensation must be deducted from common law damages. Grapples with whether the s.26 deduction should be made before or after percentage-based apportionment of liability in multi-defendant contribution proceedings."
+          "annotation": "Quotes s.26(1) in full and confirms employees' compensation must be deducted from common law damages. Grapples with whether the s.26 deduction should be made before or after percentage-based apportionment of liability in multi-defendant contribution proceedings.",
+          "language": "EN"
         },
         {
           "citation": "[2012] HKCFI 515",
           "caseName": "Andrew William Maxwell v Keliston Marine (Far East) Ltd",
           "court": "hkcfi",
           "year": 2012,
-          "annotation": "The s.26 proviso applies to \"any\" damages -- even if only PSLA is awarded at common law, it must be reduced by the full amount of EC compensation paid. Also held that an EC payment into court was relevant to costs in parallel common law proceedings because s.26(1) financially interlinks both sets of proceedings."
+          "annotation": "The s.26 proviso applies to \"any\" damages -- even if only PSLA is awarded at common law, it must be reduced by the full amount of EC compensation paid. Also held that an EC payment into court was relevant to costs in parallel common law proceedings because s.26(1) financially interlinks both sets of proceedings.",
+          "language": "EN"
         },
         {
           "citation": "[1997] HKCFI 839",
           "caseName": "Tsang Yik On v Kat Ching",
           "court": "hkcfi",
           "year": 1997,
-          "annotation": "Extends the anti-double-recovery principle beyond employer-defendant scenarios. Although s.26(1) refers to \"liabilities of the employer,\" the deduction requirement is not confined to proceedings against the employer, citing Lai Tat Wah v Franki Contractors. Court deducted $433,090 EC compensation from common law damages against a co-worker tortfeasor."
+          "annotation": "Extends the anti-double-recovery principle beyond employer-defendant scenarios. Although s.26(1) refers to \"liabilities of the employer,\" the deduction requirement is not confined to proceedings against the employer, citing Lai Tat Wah v Franki Contractors. Court deducted $433,090 EC compensation from common law damages against a co-worker tortfeasor.",
+          "language": "EN"
         },
         {
           "citation": "[2012] HKCFI 506",
           "caseName": "Lo Siu Wa v Nuovo Design Ltd",
           "court": "hkcfi",
           "year": 2012,
-          "annotation": "Straightforward application of s.26(1) deduction. Carpenter injured in workplace accident; employer wound up and did not participate. The plaintiff's EC compensation of $545,488.33 was deducted from common law damages. A clean example of standard s.26(1) operation."
+          "annotation": "Straightforward application of s.26(1) deduction. Carpenter injured in workplace accident; employer wound up and did not participate. The plaintiff's EC compensation of $545,488.33 was deducted from common law damages. A clean example of standard s.26(1) operation.",
+          "language": "EN"
         }
       ]
     },
-    { "section": "31", "titleEn": "Contracting out", "titleZh": "訂立本條例不適用的條款", "cases": [] },
+    {
+      "section": "31",
+      "titleEn": "Contracting out",
+      "titleZh": "訂立本條例不適用的條款",
+      "cases": []
+    },
     {
       "section": "32",
       "titleEn": "Compensation in the case of occupational disease",
@@ -582,33 +687,47 @@
           "caseName": "Cho Kong Lai v Lai King Nursing Home",
           "court": "hkca",
           "year": 2002,
-          "annotation": "Leading appellate case on the interaction between s.32 (occupational disease compensation) and s.34 (presumption). Nursing home worker developed wrist tendonitis. The court held that where the employment involves \"manual labour,\" the s.34 statutory presumption shifts the burden to the employer to rebut the causal link. Key authority on the s.32/s.34 framework."
+          "annotation": "Leading appellate case on the interaction between s.32 (occupational disease compensation) and s.34 (presumption). Nursing home worker developed wrist tendonitis. The court held that where the employment involves \"manual labour,\" the s.34 statutory presumption shifts the burden to the employer to rebut the causal link. Key authority on the s.32/s.34 framework.",
+          "language": "TC"
         },
         {
           "citation": "[2025] HKDC 2131",
           "caseName": "Kwan Yim Kwan v Luk Hap Pharmaceutical Co Ltd",
           "court": "hkdc",
           "year": 2025,
-          "annotation": "Clarifies that an occupational disease claim under s.32 can only succeed if the disease is listed in Schedule 2. The applicant's shoulder tendinitis was not in Schedule 2 (Items A4/A8 cover hand/forearm, not shoulder). Confirms the strict requirement that the disease must match Schedule 2 categories."
+          "annotation": "Clarifies that an occupational disease claim under s.32 can only succeed if the disease is listed in Schedule 2. The applicant's shoulder tendinitis was not in Schedule 2 (Items A4/A8 cover hand/forearm, not shoulder). Confirms the strict requirement that the disease must match Schedule 2 categories.",
+          "language": "TC"
         },
         {
           "citation": "[2020] HKDC 317",
           "caseName": "Mark Laren Rivett v Trevi Construction Co Ltd",
           "court": "hkdc",
           "year": 2020,
-          "annotation": "Occupational disease case involving allergic contact dermatitis. While liability under s.32 was conceded, the decision discusses the meaning of \"due to the nature of\" employment under s.32 and references the UK's equivalent legislation for comparative analysis."
+          "annotation": "Occupational disease case involving allergic contact dermatitis. While liability under s.32 was conceded, the decision discusses the meaning of \"due to the nature of\" employment under s.32 and references the UK's equivalent legislation for comparative analysis.",
+          "language": "EN"
         },
         {
           "citation": "[2001] HKDC 83",
           "caseName": "Sin Sau-wan Sandra v Sopex (Hong Kong) Ltd",
           "court": "hkdc",
           "year": 2001,
-          "annotation": "Claim under s.32 for Schedule 2, Item A8 (traumatic inflammation of tendons due to manual labour). Confirms s.32 as the statutory basis for occupational disease claims and illustrates the practical operation of Schedule 2 categorization."
+          "annotation": "Claim under s.32 for Schedule 2, Item A8 (traumatic inflammation of tendons due to manual labour). Confirms s.32 as the statutory basis for occupational disease claims and illustrates the practical operation of Schedule 2 categorization.",
+          "language": "EN"
         }
       ]
     },
-    { "section": "34", "titleEn": "Presumption as to cause of occupational disease", "titleZh": "關於職業病病因的推定", "cases": [] },
-    { "section": "36", "titleEn": "Saving in case of diseases other than occupational diseases", "titleZh": "關於非職業病的疾病的保留條文", "cases": [] },
+    {
+      "section": "34",
+      "titleEn": "Presumption as to cause of occupational disease",
+      "titleZh": "關於職業病病因的推定",
+      "cases": []
+    },
+    {
+      "section": "36",
+      "titleEn": "Saving in case of diseases other than occupational diseases",
+      "titleZh": "關於非職業病的疾病的保留條文",
+      "cases": []
+    },
     {
       "section": "36B",
       "titleEn": "Employer's liability to pay for the cost of supplying and fitting prosthesis or surgical appliance",
@@ -619,7 +738,8 @@
           "caseName": "Gurung Hari Prasad v Hang Yue Engineering Ltd",
           "court": "hkdc",
           "year": 2010,
-          "annotation": "Applicant sought to amend his EC application to add claims under s.36B and s.36I (Part IIIA, prosthesis and surgical appliances) for teeth injuries. The court refused -- the applicant had not complied with s.36D/s.36E procedural requirements, had not filed a dental expert report, and the parties had agreed no further interlocutory applications. The only case in the index directly addressing a s.36B claim."
+          "annotation": "Applicant sought to amend his EC application to add claims under s.36B and s.36I (Part IIIA, prosthesis and surgical appliances) for teeth injuries. The court refused -- the applicant had not complied with s.36D/s.36E procedural requirements, had not filed a dental expert report, and the parties had agreed no further interlocutory applications. The only case in the index directly addressing a s.36B claim.",
+          "language": "EN"
         }
       ]
     },
@@ -633,40 +753,55 @@
           "caseName": "Lo Siu Wa v Employees Compensation Assistance Fund Board & AXA",
           "court": "hkca",
           "year": 2017,
-          "annotation": "Court of Appeal examined the scope of compulsory insurance under s.40(1). Considered whether a policy was issued \"in relation to\" the injured employee where the employee's actual job duties did not match the policy schedule. The crucial words in s.40(1) and s.43(1) are that the policy must be \"in relation to the employee in question.\""
+          "annotation": "Court of Appeal examined the scope of compulsory insurance under s.40(1). Considered whether a policy was issued \"in relation to\" the injured employee where the employee's actual job duties did not match the policy schedule. The crucial words in s.40(1) and s.43(1) are that the policy must be \"in relation to the employee in question.\"",
+          "language": "EN"
         },
         {
           "citation": "[2008] HKCFI 572",
           "caseName": "HKSAR v Chow Hau Man",
           "court": "hkcfi",
           "year": 2008,
-          "annotation": "Appeal against criminal conviction for employing a worker without compulsory insurance under ss.40(1) and 40(2). The central issue was whether the injured person was an employee or independent contractor. Illustrates how courts determine employment status in the context of s.40 criminal prosecutions."
+          "annotation": "Appeal against criminal conviction for employing a worker without compulsory insurance under ss.40(1) and 40(2). The central issue was whether the injured person was an employee or independent contractor. Illustrates how courts determine employment status in the context of s.40 criminal prosecutions.",
+          "language": "EN"
         },
         {
           "citation": "[1988] HKCFI 239",
           "caseName": "R v Molesworth Limited",
           "court": "hkcfi",
           "year": 1988,
-          "annotation": "Criminal appeal against conviction under ss.40(1) and 40(2) for employing an assistant kung fu instructor without employees' compensation insurance. The key question was whether a worker engaged under a \"Contract for Employee Paid on Film Basis\" was an employee."
+          "annotation": "Criminal appeal against conviction under ss.40(1) and 40(2) for employing an assistant kung fu instructor without employees' compensation insurance. The key question was whether a worker engaged under a \"Contract for Employee Paid on Film Basis\" was an employee.",
+          "language": "EN"
         },
         {
           "citation": "[2019] HKCFI 1191",
           "caseName": "Ng Tat Kuen v Tam Che Fu & Ors",
           "court": "hkcfi",
           "year": 2019,
-          "annotation": "Bharwaney J made significant obiter remarks about the systemic failure to enforce s.40, noting that while police actively prosecute uninsured motorists, he was unaware of a single prosecution of an uninsured employer by the Labour Department despite s.40(2) making it a criminal offence."
+          "annotation": "Bharwaney J made significant obiter remarks about the systemic failure to enforce s.40, noting that while police actively prosecute uninsured motorists, he was unaware of a single prosecution of an uninsured employer by the Labour Department despite s.40(2) making it a criminal offence.",
+          "language": "EN"
         },
         {
           "citation": "[2015] HKDC 1279",
           "caseName": "Everbest Port Services Ltd v Employees Compensation Assistance Fund Board",
           "court": "hkdc",
           "year": 2015,
-          "annotation": "Appeal against surcharge notices totalling HK$21,315,000 for multiple s.40(1) contraventions. Detailed analysis of the surcharge regime triggered by s.40(1) breaches, including how the number of surcharges relates to the number of contraventions rather than the replacement policy length."
+          "annotation": "Appeal against surcharge notices totalling HK$21,315,000 for multiple s.40(1) contraventions. Detailed analysis of the surcharge regime triggered by s.40(1) breaches, including how the number of surcharges relates to the number of contraventions rather than the replacement policy length.",
+          "language": "EN"
         }
       ]
     },
-    { "section": "40A", "titleEn": "Mandatory information in policy", "titleZh": "載於保險單內的強制性資料", "cases": [] },
-    { "section": "42", "titleEn": "Insurer's liability", "titleZh": "保險人的法律責任", "cases": [] },
+    {
+      "section": "40A",
+      "titleEn": "Mandatory information in policy",
+      "titleZh": "載於保險單內的強制性資料",
+      "cases": []
+    },
+    {
+      "section": "42",
+      "titleEn": "Insurer's liability",
+      "titleZh": "保險人的法律責任",
+      "cases": []
+    },
     {
       "section": "44",
       "titleEn": "Right of injured party to proceed against insurer",
@@ -677,32 +812,41 @@
           "caseName": "King Tak On v Kar Bun Metal Manufactory & East West Insurance Corp Ltd",
           "court": "hkca",
           "year": 1986,
-          "annotation": "Leading Court of Appeal authority on s.44. Establishes: (1) where a Part IV policy is in force, sections 42/43/44 confer an absolute right to recover directly from the insurer; (2) the s.44 right is separate and distinct from the employer's contractual right and is not defeasible on the same grounds; (3) the s.44 right is enforceable in the District Court as \"compensation\" within s.3."
+          "annotation": "Leading Court of Appeal authority on s.44. Establishes: (1) where a Part IV policy is in force, sections 42/43/44 confer an absolute right to recover directly from the insurer; (2) the s.44 right is separate and distinct from the employer's contractual right and is not defeasible on the same grounds; (3) the s.44 right is enforceable in the District Court as \"compensation\" within s.3.",
+          "language": "EN"
         },
         {
           "citation": "[1988] HKCA 296",
           "caseName": "Wong Po Wah v Pacific Insurance Co Ltd",
           "court": "hkca",
           "year": 1988,
-          "annotation": "Insurer had already paid the employer but the employer failed to pass the money to the injured employee. Held: (1) the 24-month s.14(1) time limit does not apply to a s.44 claim against the insurer; (2) an employee may recover under s.44 even where the insurer has already paid the employer under s.43. Made observations about how insurers should protect themselves."
+          "annotation": "Insurer had already paid the employer but the employer failed to pass the money to the injured employee. Held: (1) the 24-month s.14(1) time limit does not apply to a s.44 claim against the insurer; (2) an employee may recover under s.44 even where the insurer has already paid the employer under s.43. Made observations about how insurers should protect themselves.",
+          "language": "EN"
         },
         {
           "citation": "[1998] HKCA 401",
           "caseName": "Pang Wai Chung v The Tai Ping Insurance Co Ltd",
           "court": "hkca",
           "year": 1998,
-          "annotation": "Court of Appeal authority on limitation in s.44 claims. Time begins to run from quantification of damages, not the date of accident. The s.44 right is akin to an indemnity claim, so limitation only runs from when the employer's liability is established by judgment or agreement. Crucial for understanding limitation periods in direct actions against insurers."
+          "annotation": "Court of Appeal authority on limitation in s.44 claims. Time begins to run from quantification of damages, not the date of accident. The s.44 right is akin to an indemnity claim, so limitation only runs from when the employer's liability is established by judgment or agreement. Crucial for understanding limitation periods in direct actions against insurers.",
+          "language": "EN"
         },
         {
           "citation": "[1985] HKCFI 199",
           "caseName": "Re Singapore Insurance Co Ltd & Ors",
           "court": "hkcfi",
           "year": 1985,
-          "annotation": "Winding-up of five insurance companies. Held: employees are entitled to prove in liquidation by virtue of s.44; s.43 creates a right distinct from s.44 -- under s.44 the claimant is \"deemed to be a party to the policy\" with rights arising from the contract, whereas s.43 rights do not. Foundational case on employee claims in insurer insolvency."
+          "annotation": "Winding-up of five insurance companies. Held: employees are entitled to prove in liquidation by virtue of s.44; s.43 creates a right distinct from s.44 -- under s.44 the claimant is \"deemed to be a party to the policy\" with rights arising from the contract, whereas s.43 rights do not. Foundational case on employee claims in insurer insolvency.",
+          "language": "EN"
         }
       ]
     },
-    { "section": "46", "titleEn": "Compensation not to be assigned, charged or attached", "titleZh": "補償不能予以轉讓、押記或扣押", "cases": [] },
+    {
+      "section": "46",
+      "titleEn": "Compensation not to be assigned, charged or attached",
+      "titleZh": "補償不能予以轉讓、押記或扣押",
+      "cases": []
+    },
     {
       "section": "48",
       "titleEn": "Contract of service not to be terminated during incapacity",
@@ -713,21 +857,24 @@
           "caseName": "Ngan Yu Chiu v New World First Bus Services Ltd",
           "court": "hkca",
           "year": 2007,
-          "annotation": "Leading appellate authority on s.48(1)(iii). Bus driver dismissed after s.16F certificate issued but before s.16G reassessment was complete. Held: the s.48 prohibition continues until the Special Assessment Board issues its s.16G(3) certificate. Breach carries criminal liability under s.48(2) and civil liability under s.32P(1) of the Employment Ordinance."
+          "annotation": "Leading appellate authority on s.48(1)(iii). Bus driver dismissed after s.16F certificate issued but before s.16G reassessment was complete. Held: the s.48 prohibition continues until the Special Assessment Board issues its s.16G(3) certificate. Breach carries criminal liability under s.48(2) and civil liability under s.32P(1) of the Employment Ordinance.",
+          "language": "EN"
         },
         {
           "citation": "[2009] HKCFI 843",
           "caseName": "Ngan Yu Chiu v New World First Bus Services Ltd",
           "court": "hkcfi",
           "year": 2009,
-          "annotation": "Follow-up to [2007] HKCA 504. After the Court of Appeal remitted the case, the CFI addressed the quantum of s.32P compensation for wrongful dismissal in contravention of s.48. Confirmed the termination was unlawful and unreasonable, done without the Commissioner's consent while the employee was still incapacitated."
+          "annotation": "Follow-up to [2007] HKCA 504. After the Court of Appeal remitted the case, the CFI addressed the quantum of s.32P compensation for wrongful dismissal in contravention of s.48. Confirmed the termination was unlawful and unreasonable, done without the Commissioner's consent while the employee was still incapacitated.",
+          "language": "EN"
         },
         {
           "citation": "[2016] HKDC 881",
           "caseName": "Chung Chun Fai v Hong Yip Service Co Ltd",
           "court": "hkdc",
           "year": 2016,
-          "annotation": "Series of related decisions dealing with consolidation of multiple employees' compensation and civil claims. Extensively reproduces the text of s.48 and discusses the relationship between s.48 and s.32P of the Employment Ordinance. Key issue: whether the employer violated s.48 by dismissing the employee during his sick leave period."
+          "annotation": "Series of related decisions dealing with consolidation of multiple employees' compensation and civil claims. Extensively reproduces the text of s.48 and discusses the relationship between s.48 and s.32P of the Employment Ordinance. Key issue: whether the employer violated s.48 by dismissing the employee during his sick leave period.",
+          "language": "TC"
         }
       ]
     }

@@ -17,13 +17,15 @@ interface CaseItem {
   caseName?: string;
   court: string;
   year: number;
+  language?: string;
   annotation: string;
 }
 
-function getCaseUrl(citation: string, court: string, year: number): string {
+function getCaseUrl(citation: string, court: string, year: number, language?: string): string {
+  const lang = language?.toUpperCase() === "TC" ? "tc" : "en";
   const numberMatch = citation.match(/(\d+)\s*$/);
   if (numberMatch) {
-    return `https://www.hklii.hk/en/cases/${court.toLowerCase()}/${year}/${numberMatch[1]}`;
+    return `https://www.hklii.hk/${lang}/cases/${court.toLowerCase()}/${year}/${numberMatch[1]}`;
   }
   return "";
 }
@@ -36,7 +38,7 @@ export function AnnotatedCaseList({ cases }: AnnotatedCaseListProps) {
   const { openCase } = useCaseViewer();
 
   const handleCaseClick = (caseItem: CaseItem) => {
-    const url = getCaseUrl(caseItem.citation, caseItem.court, caseItem.year);
+    const url = getCaseUrl(caseItem.citation, caseItem.court, caseItem.year, caseItem.language);
     if (url) {
       openCase(url, caseItem.citation);
     }
