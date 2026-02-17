@@ -2,24 +2,24 @@ import Link from "next/link";
 import { Metadata } from "next";
 import { FeatherIcon } from "@/components/ui/feather-icon";
 import { WarningBanner } from "@/components/ui/warning-banner";
-import annotationsData from "@/data/cap57-annotations.json";
+import annotationsData from "@/data/cap282-annotations.json";
 
 export const metadata: Metadata = {
-  title: "Cap 57 — Employment Ordinance (僱傭條例) | Annotated Case Law | Casebird",
+  title: "Cap 282 — Employees' Compensation Ordinance (僱員補償條例) | Annotated Case Law | Casebird",
   description:
-    "Free annotated guide to Hong Kong's Employment Ordinance (Cap. 57 / 僱傭條例). Section-by-section case law analysis covering dismissal, wages, severance, long service payment, and more.",
+    "Free annotated guide to Hong Kong's Employees' Compensation Ordinance (Cap. 282 / 僱員補償條例). Section-by-section case law analysis covering work injury, fatal cases, incapacity, insurance, and more.",
   keywords: [
-    "cap 57",
-    "employment ordinance",
-    "僱傭條例",
-    "hong kong employment law",
-    "employment ordinance cap 57",
+    "cap 282",
+    "employees compensation ordinance",
+    "僱員補償條例",
+    "hong kong work injury",
+    "employees compensation cap 282",
     "hong kong labour law",
-    "勞工法例",
+    "工傷補償",
     "annotated ordinance",
   ],
   alternates: {
-    canonical: "https://casebird.ai/cap/57",
+    canonical: "https://casebird.ai/cap/282",
   },
 };
 
@@ -37,11 +37,11 @@ const COURT_LABELS: Record<string, string> = {
 function groupByPart(
   sections: typeof annotationsData.sections
 ): Map<string, typeof annotationsData.sections> {
-  const { CAP57_SECTIONS } = require("@/data/cap57-sections");
+  const { CAP282_SECTIONS } = require("@/data/cap282-sections");
   const groups = new Map<string, typeof annotationsData.sections>();
 
   for (const section of sections) {
-    const def = CAP57_SECTIONS.find(
+    const def = CAP282_SECTIONS.find(
       (s: { section: string }) => s.section === section.section
     );
     const partKey = def
@@ -54,7 +54,7 @@ function groupByPart(
   return groups;
 }
 
-export default function Cap57Page() {
+export default function Cap282Page() {
   const { sections, metadata: capMeta } = annotationsData;
   const totalCases = sections.reduce((sum, s) => sum + s.cases.length, 0);
   const sectionsWithCases = sections.filter((s) => s.cases.length > 0).length;
@@ -81,13 +81,13 @@ export default function Cap57Page() {
             </Link>
           </div>
           <h1 className="text-3xl font-serif font-semibold text-foreground">
-            Cap. 57 — Employment Ordinance
+            Cap. 282 — Employees&apos; Compensation Ordinance
           </h1>
           <p className="text-2xl font-serif text-muted-foreground mt-1">
-            僱傭條例
+            僱員補償條例
           </p>
           <p className="font-serif text-sm text-muted-foreground mt-3">
-            Enacted 1968 &middot; Last amended {capMeta.lastAmended} &middot;{" "}
+            Enacted 1953 &middot; Last amended {capMeta.lastAmended} &middot;{" "}
             {totalCases} annotated cases across {sectionsWithCases} sections
           </p>
         </div>
@@ -97,13 +97,14 @@ export default function Cap57Page() {
         {/* Introduction */}
         <div className="font-serif text-foreground leading-relaxed mb-10">
           <p className="mb-4">
-            The Employment Ordinance (Cap. 57) is the principal legislation
-            governing employment conditions in Hong Kong. Since its enactment in
-            1968, it has been extensively amended to provide comprehensive
-            protections for employees, covering contracts of employment, wages,
-            rest days, holidays, sickness allowance, maternity protection,
-            severance payments, long service payments, and employment protection
-            against unreasonable dismissal.
+            The Employees&apos; Compensation Ordinance (Cap. 282) is the
+            principal legislation governing compensation for work-related
+            injuries and occupational diseases in Hong Kong. It establishes a
+            no-fault statutory compensation scheme under which employers are
+            liable to compensate employees who suffer personal injury by accident
+            arising out of and in the course of employment, covering fatal cases,
+            permanent incapacity, temporary incapacity, medical expenses, and
+            occupational diseases.
           </p>
           <p className="text-sm text-muted-foreground">
             This annotated guide links key sections of the Ordinance to relevant
@@ -141,7 +142,7 @@ export default function Cap57Page() {
                 {partSections.map((section) => (
                   <Link
                     key={section.section}
-                    href={`/cap/57/s/${section.section}`}
+                    href={`/cap/282/s/${section.section}`}
                     className="flex items-center justify-between py-3 px-2 hover:bg-muted/50 rounded transition-colors group"
                   >
                     <div className="flex-1 min-w-0">
@@ -192,7 +193,7 @@ export default function Cap57Page() {
         {/* CTA */}
         <div className="mt-12 p-6 bg-muted/30 rounded-lg border border-border text-center">
           <p className="font-serif text-foreground mb-3">
-            Need deeper research on the Employment Ordinance?
+            Need deeper research on the Employees&apos; Compensation Ordinance?
           </p>
           <Link
             href="/"

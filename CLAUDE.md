@@ -5,7 +5,7 @@ Hong Kong legal research assistant. Users ask legal questions, the AI searches c
 ## Tech Stack
 
 - **Framework**: Next.js (App Router, TypeScript)
-- **AI**: Google Gemini (`@google/genai`)
+- **AI**: Google Gemini 3 Flash (`gemini-3-flash-preview`) for ALL Gemini calls — chat pipeline, triage, scripts, everything. Do NOT use older models (2.0-flash, 2.5-flash) unless explicitly asked.
 - **Vector Search**: Pinecone (hybrid semantic + keyword search for HK case law)
 - **Embeddings**: Voyage AI
 - **Database**: Supabase (PostgreSQL + Auth + RLS)
@@ -232,3 +232,168 @@ Users can set output language to English or Traditional Chinese (繁體中文) i
 ## Case Language Filter
 
 Conversations can filter case search by language: `any`, `EN`, or `TC`. Stored per conversation in `conversations.case_language`.
+
+## Annotated Ordinance Pages (SEO)
+
+Static, SEO-optimized pages that annotate Hong Kong ordinance sections with relevant case law from the Pinecone index. Each section gets 3-5 genuinely useful cases with 2-3 sentence annotations.
+
+### Completed Ordinances
+
+- **Cap 57 (Employment Ordinance)** — 86 cases across 23 annotated sections, 4 sections confirmed empty
+
+### Files
+
+```
+src/data/cap57-sections.ts          # Section definitions (number, title, Part, search queries, summary)
+src/data/cap57-annotations.json     # Case annotations (86 cases, 27 sections)
+scripts/search-section.ts           # Reusable Pinecone search tool
+```
+
+### The Search Script
+
+```bash
+npx tsx scripts/search-section.ts <section> <sectionRegex> <query1> <query2> ...
+```
+
+What it does:
+1. Runs each query through `searchCasesRaw()` (Pinecone hybrid search, 30 results per query)
+2. Deduplicates chunks across queries
+3. Filters chunks using TWO regexes: ordinance regex (e.g., "cap 57", "僱傭條例") AND section-specific regex
+4. Groups filtered chunks by case citation, reports matches with scores and text snippets
+5. Fetches full judgments for top cases via `getCaseDetails()` (zero vector + metadata filter, topK=500)
+
+The script surfaces candidates — it does NOT assess relevance. That's the human/Claude job.
+
+### Research Process (Per Section)
+
+**Step 1: Design search queries (3-5 per section)**
+
+Use legal concept keywords, not just section numbers. Always include both EN and CN queries.
+
+- Good: `"section 9 employment ordinance unreasonable dismissal constructive dismissal cap 57"`
+- Bad: `"section 9 employment ordinance"` (too broad)
+
+**Step 2: Run the search script**
+
+```bash
+npx tsx scripts/search-section.ts "9" "s\\.?\\s*9|section\\s*9|第\\s*9\\s*條" \
+  "section 9 employment ordinance unreasonable dismissal" \
+  "constructive dismissal employer breach cap 57" \
+  "僱傭條例第9條 不合理解僱"
+```
+
+**Step 3: Read full judgments and assess relevance**
+
+For each candidate: Would a lawyer researching this specific section find this case helpful?
+- YES if the case interprets, applies, or analyses the section's legal requirements
+- NO if the section is merely cited in passing or the match is from a different ordinance
+
+**Step 4: Write annotations**
+
+2-3 sentences covering: factual context, specific legal issue, principle established. Each annotation should tell a lawyer something beyond just reading the citation.
+
+**Step 5: Write to JSON**
+
+```json
+{
+  "citation": "[2006] HKCA 271",
+  "caseName": "Lui Lin Kam & Others v Nice Creation Development Ltd",
+  "court": "hkca",
+  "year": 2006,
+  "annotation": "The leading authority on..."
+}
+```
+
+### Lessons Learned
+
+**Section numbering pitfalls:**
+- s.6A doesn't exist in Cap 57 — "continuous contract" lives in s.3 + First Schedule. We keep "6A" as user-facing label since that's what people search for.
+- s.63 is really s.63C — s.63 itself is blank; s.63C is the operative criminal offence provision.
+- s.70 is "Contracting out", not "General penalties." Always verify titles against elegislation.gov.hk.
+
+**Regex design:**
+- Always escape dots: `s\\.9` not `s.9`
+- Use alternation for bilingual matching: `s\\.?\\s*9|section\\s*9|第\\s*9\\s*條`
+- Watch for partial matches: searching for `s.4` also matches `s.41`, `s.42`, etc.
+
+**Sections that produce no cases:**
+- Some sections genuinely have no reportable cases (Labour Tribunal decisions not indexed, litigation happens under a different ordinance). This is expected.
+
+**Court hierarchy for annotation priority:**
+1. CFA (Court of Final Appeal) — always include if available
+2. CA (Court of Appeal) — leading appellate authority
+3. CFI (Court of First Instance) — good for detailed analysis
+4. DC (District Court) — only if no higher court alternative
+5. Prefer cases addressing different legal issues within the section over multiple cases on same point
+
+**Parallelization:** Spawn multiple search agents simultaneously (one per section). Cap 57 used 15+ parallel agents to cover all sections in ~5 minutes.
+
+### HKLII API (Source of Truth for Ordinance Structure)
+
+HKLII provides JSON APIs for fetching ordinance metadata and section structure. **Always use these APIs when building ordinance skeletons** — do NOT rely on memory or web search for section numbers/titles.
+
+**API Endpoints:**
+
+1. **`getcap`** — Basic ordinance metadata (title, number, path)
+   ```
+   https://www.hklii.hk/api/getcap?lang=en&cap=282&abbr=ord
+   → { "title": "Employees' Compensation Ordinance", "num": "282", ... }
+   ```
+
+2. **`getrelatedcaps`** — Related subsidiary legislation
+   ```
+   https://www.hklii.hk/api/getrelatedcaps?num_int=282&lang=en&abbr=reg
+   → [{ "title": "Employees' Compensation Regulations", "num": "282A" }, ...]
+   ```
+
+3. **`getcapversions`** — All historical versions with IDs (use latest `id` for TOC)
+   ```
+   https://www.hklii.hk/api/getcapversions?lang=en&cap=282
+   → [{ "id": 52034, "title": "...", "date": "2026-01-01" }, ...]
+   ```
+   For Chinese: use `lang=tc` (returns different version IDs, e.g., EN id=52034, ZH id=52035)
+
+4. **`getcapversiontoc`** — Full table of contents with section numbers, titles, and Parts (**most useful**)
+   ```
+   https://www.hklii.hk/api/getcapversiontoc?id=52034
+   ```
+   Returns array of objects, each with:
+   - `section_type`: `"P"` (Part), `"S"` (Section), `"LT"` (Long Title), `"Sch"` (Schedule)
+   - `prov_num`: e.g., `"Part I"`, `"Section 5A"`, etc.
+   - `title`: Section/Part title in the language of the version
+   - `subpath`: e.g., `"s5A"`, `"P1"` — useful for URL construction
+
+**Workflow for building an ordinance skeleton:**
+
+```bash
+# 1. Get the latest English and Chinese version IDs
+curl -s 'https://www.hklii.hk/api/getcapversions?lang=en&cap=282' | python3 -c "import json,sys; d=json.load(sys.stdin); print(d[0]['id'])"
+# → 52034
+
+curl -s 'https://www.hklii.hk/api/getcapversions?lang=tc&cap=282' | python3 -c "import json,sys; d=json.load(sys.stdin); print(d[0]['id'])"
+# → 52035
+
+# 2. Fetch TOC and extract sections with titles
+curl -s 'https://www.hklii.hk/api/getcapversiontoc?id=52034' | python3 -c "
+import json, sys
+data = json.load(sys.stdin)
+for item in data:
+    if item.get('section_type') == 'S':
+        print(f\"s.{item['prov_num']:15s} | {item['title']}\")
+"
+
+# 3. Do the same for Chinese
+curl -s 'https://www.hklii.hk/api/getcapversiontoc?id=52035' | python3 -c "..."
+```
+
+Then combine EN + ZH titles to build `cap{N}-sections.ts`. Filter out repealed sections (title contains "(Repealed)").
+
+### Extending to Other Ordinances
+
+To annotate a new ordinance (e.g., Cap 123):
+1. **Fetch section structure from HKLII API** (see above) — this is the source of truth for section numbers, titles, and Part groupings
+2. Create `src/data/cap123-sections.ts` — define sections with titles (from HKLII), Parts, search queries, and summaries
+3. Create `src/data/cap123-annotations.json` — empty cases array per section
+4. Update or copy `scripts/search-section.ts` — the Cap 57 regex is hardcoded; parameterize or create a copy
+5. Run searches per section, spawning parallel agents
+6. Build pages — same Next.js page structure as Cap 57 (`/cap/123/s/[section]`)

@@ -3,8 +3,8 @@ import { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { FeatherIcon } from "@/components/ui/feather-icon";
 import { WarningBanner } from "@/components/ui/warning-banner";
-import annotationsData from "@/data/cap57-annotations.json";
-import { CAP57_SECTIONS } from "@/data/cap57-sections";
+import annotationsData from "@/data/cap282-annotations.json";
+import { CAP282_SECTIONS } from "@/data/cap282-sections";
 
 const COURT_LABELS: Record<string, string> = {
   hkcfa: "Court of Final Appeal",
@@ -38,7 +38,7 @@ export async function generateStaticParams() {
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { section: sectionId } = await params;
-  const sectionDef = CAP57_SECTIONS.find((s) => s.section === sectionId);
+  const sectionDef = CAP282_SECTIONS.find((s) => s.section === sectionId);
   const sectionData = annotationsData.sections.find(
     (s) => s.section === sectionId
   );
@@ -46,25 +46,25 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   if (!sectionDef || !sectionData) return {};
 
   return {
-    title: `Section ${sectionId} — ${sectionDef.titleEn} | Cap 57 Employment Ordinance | Casebird`,
+    title: `Section ${sectionId} — ${sectionDef.titleEn} | Cap 282 Employees' Compensation Ordinance | Casebird`,
     description: `${sectionDef.summary} Annotated with ${sectionData.cases.length} Hong Kong court decisions.`,
     keywords: [
-      `section ${sectionId} employment ordinance`,
-      `cap 57 section ${sectionId}`,
+      `section ${sectionId} employees compensation ordinance`,
+      `cap 282 section ${sectionId}`,
       sectionDef.titleEn.toLowerCase(),
       sectionDef.titleZh,
-      "僱傭條例",
-      "hong kong employment law",
+      "僱員補償條例",
+      "hong kong work injury",
     ],
     alternates: {
-      canonical: `https://casebird.ai/cap/57/s/${sectionId}`,
+      canonical: `https://casebird.ai/cap/282/s/${sectionId}`,
     },
   };
 }
 
 export default async function SectionPage({ params }: Props) {
   const { section: sectionId } = await params;
-  const sectionDef = CAP57_SECTIONS.find((s) => s.section === sectionId);
+  const sectionDef = CAP282_SECTIONS.find((s) => s.section === sectionId);
   const sectionData = annotationsData.sections.find(
     (s) => s.section === sectionId
   );
@@ -103,10 +103,10 @@ export default async function SectionPage({ params }: Props) {
             </Link>
             <span>/</span>
             <Link
-              href="/cap/57"
+              href="/cap/282"
               className="hover:text-foreground transition-colors"
             >
-              Cap. 57
+              Cap. 282
             </Link>
           </div>
           <h1 className="text-3xl font-serif font-semibold text-foreground">
@@ -135,7 +135,7 @@ export default async function SectionPage({ params }: Props) {
             <p className="font-serif text-xs text-muted-foreground mt-2">
               Full text:{" "}
               <a
-                href={`https://www.elegislation.gov.hk/hk/cap57!en-zh-Hant-HK?INDEX_CS=N&xpid=ID_1438402821129_004`}
+                href="https://www.elegislation.gov.hk/hk/cap282"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="text-primary hover:underline"
@@ -181,9 +181,11 @@ export default async function SectionPage({ params }: Props) {
                         <span className="text-xs text-muted-foreground">
                           {caseItem.year}
                         </span>
-                        <span className="text-xs text-muted-foreground">
-                          {caseItem.language === "TC" ? "中文" : "English"}
-                        </span>
+                        {caseItem.language && (
+                          <span className="text-xs text-muted-foreground">
+                            {caseItem.language === "TC" ? "中文" : "English"}
+                          </span>
+                        )}
                       </div>
                     </div>
                   </div>
@@ -207,7 +209,7 @@ export default async function SectionPage({ params }: Props) {
         <div className="mt-10 flex justify-between items-center pt-6 border-t border-border">
           {prevSection ? (
             <Link
-              href={`/cap/57/s/${prevSection.section}`}
+              href={`/cap/282/s/${prevSection.section}`}
               className="font-serif text-sm text-muted-foreground hover:text-foreground transition-colors"
             >
               &larr; s.{prevSection.section} {prevSection.titleEn}
@@ -217,7 +219,7 @@ export default async function SectionPage({ params }: Props) {
           )}
           {nextSection ? (
             <Link
-              href={`/cap/57/s/${nextSection.section}`}
+              href={`/cap/282/s/${nextSection.section}`}
               className="font-serif text-sm text-muted-foreground hover:text-foreground transition-colors text-right"
             >
               s.{nextSection.section} {nextSection.titleEn} &rarr;
@@ -230,8 +232,8 @@ export default async function SectionPage({ params }: Props) {
         {/* CTA */}
         <div className="mt-8 p-6 bg-muted/30 rounded-lg border border-border text-center">
           <p className="font-serif text-foreground mb-3">
-            Need more cases about Section {sectionId} of the Employment
-            Ordinance?
+            Need more cases about Section {sectionId} of the Employees&apos;
+            Compensation Ordinance?
           </p>
           <Link
             href="/"
