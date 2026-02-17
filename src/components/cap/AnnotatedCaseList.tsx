@@ -1,7 +1,6 @@
 "use client";
 
-import { useState } from "react";
-import { CaseViewer } from "@/components/chat/CaseViewer";
+import { useCaseViewer } from "./CaseViewerContext";
 
 const COURT_SHORT: Record<string, string> = {
   hkcfa: "CFA",
@@ -34,15 +33,12 @@ interface AnnotatedCaseListProps {
 }
 
 export function AnnotatedCaseList({ cases }: AnnotatedCaseListProps) {
-  const [selectedCase, setSelectedCase] = useState<{
-    url: string;
-    citation: string;
-  } | null>(null);
+  const { openCase } = useCaseViewer();
 
   const handleCaseClick = (caseItem: CaseItem) => {
     const url = getCaseUrl(caseItem.citation, caseItem.court, caseItem.year);
     if (url) {
-      setSelectedCase({ url, citation: caseItem.citation });
+      openCase(url, caseItem.citation);
     }
   };
 
@@ -87,29 +83,6 @@ export function AnnotatedCaseList({ cases }: AnnotatedCaseListProps) {
           </article>
         ))}
       </div>
-
-      {/* Desktop side panel — fixed overlay, doesn't affect page layout */}
-      {selectedCase && (
-        <div className="hidden md:block fixed top-0 right-0 w-1/2 h-full z-40 shadow-xl">
-          <CaseViewer
-            url={selectedCase.url}
-            citation={selectedCase.citation}
-            onClose={() => setSelectedCase(null)}
-          />
-        </div>
-      )}
-
-      {/* Mobile bottom sheet */}
-      {selectedCase && (
-        <div className="md:hidden">
-          <CaseViewer
-            url={selectedCase.url}
-            citation={selectedCase.citation}
-            onClose={() => setSelectedCase(null)}
-            mobile
-          />
-        </div>
-      )}
     </>
   );
 }
