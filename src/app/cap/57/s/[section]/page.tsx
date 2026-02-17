@@ -3,28 +3,9 @@ import { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { FeatherIcon } from "@/components/ui/feather-icon";
 import { WarningBanner } from "@/components/ui/warning-banner";
+import { AnnotatedCaseList } from "@/components/cap/AnnotatedCaseList";
 import annotationsData from "@/data/cap57-annotations.json";
 import { CAP57_SECTIONS } from "@/data/cap57-sections";
-
-const COURT_LABELS: Record<string, string> = {
-  hkcfa: "Court of Final Appeal",
-  hkca: "Court of Appeal",
-  hkcfi: "Court of First Instance",
-  hkdc: "District Court",
-  hkfc: "Family Court",
-  hklat: "Lands Tribunal",
-  hklt: "Labour Tribunal",
-};
-
-const COURT_SHORT: Record<string, string> = {
-  hkcfa: "CFA",
-  hkca: "CA",
-  hkcfi: "CFI",
-  hkdc: "DC",
-  hkfc: "FC",
-  hklat: "LAT",
-  hklt: "LT",
-};
 
 type Props = {
   params: Promise<{ section: string }>;
@@ -148,44 +129,7 @@ export default async function SectionPage({ params }: Props) {
 
         {/* Cases */}
         {sectionData.cases.length > 0 ? (
-          <div>
-            <h2 className="text-lg font-serif font-semibold text-foreground mb-4">
-              Key Cases ({sectionData.cases.length})
-            </h2>
-            <div className="space-y-6">
-              {sectionData.cases.map((caseItem, i) => (
-                <article
-                  key={caseItem.citation}
-                  className="border border-border rounded-lg p-5"
-                >
-                  <div className="flex items-start justify-between gap-3 mb-3">
-                    <div>
-                      <span className="font-serif font-semibold text-primary">
-                        {caseItem.citation}
-                      </span>
-                      {caseItem.caseName && (
-                        <p className="font-serif text-base font-medium text-foreground mt-1 italic">
-                          {caseItem.caseName}
-                        </p>
-                      )}
-                      <div className="flex items-center gap-2 mt-1">
-                        <span className="text-xs font-mono bg-muted px-1.5 py-0.5 rounded">
-                          {COURT_SHORT[caseItem.court] ||
-                            caseItem.court.toUpperCase()}
-                        </span>
-                        <span className="text-xs text-muted-foreground">
-                          {caseItem.year}
-                        </span>
-                      </div>
-                    </div>
-                  </div>
-                  <p className="font-serif text-sm text-foreground leading-relaxed">
-                    {caseItem.annotation}
-                  </p>
-                </article>
-              ))}
-            </div>
-          </div>
+          <AnnotatedCaseList cases={sectionData.cases} />
         ) : (
           <div className="text-center py-12 text-muted-foreground font-serif">
             <p>
