@@ -163,9 +163,9 @@ export default async function SectionPage({ params }: Props) {
                       <span className="font-serif font-semibold text-primary">
                         {caseItem.citation}
                       </span>
-                      {"caseName" in caseItem && caseItem.caseName && (
+                      {caseItem.caseName && (
                         <p className="font-serif text-base font-medium text-foreground mt-1 italic">
-                          {String(caseItem.caseName)}
+                          {caseItem.caseName}
                         </p>
                       )}
                       <div className="flex items-center gap-2 mt-1">
@@ -176,11 +176,6 @@ export default async function SectionPage({ params }: Props) {
                         <span className="text-xs text-muted-foreground">
                           {caseItem.year}
                         </span>
-                        {"language" in caseItem && caseItem.language && (
-                          <span className="text-xs text-muted-foreground">
-                            {String(caseItem.language) === "TC" ? "中文" : "English"}
-                          </span>
-                        )}
                       </div>
                     </div>
                   </div>
