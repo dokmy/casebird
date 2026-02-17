@@ -221,3 +221,29 @@
 .animate-bird-happy {
   animation: birdHappy 0.5s ease-in-out infinite;
 }
+
+/* Legislation text styles */
+.legislation-text .leg-subsection {
+  margin-bottom: 0.75rem;
+  padding-left: 1.5rem;
+  position: relative;
+}
+
+.legislation-text .leg-paragraph {
+  margin-bottom: 0.5rem;
+  padding-left: 1.5rem;
+}
+
+.legislation-text .leg-subparagraph {
+  margin-bottom: 0.25rem;
+  padding-left: 1.5rem;
+}
+
+.legislation-text a {
+  color: var(--primary);
+  text-decoration: none;
+}
+
+.legislation-text a:hover {
+  text-decoration: underline;
+}

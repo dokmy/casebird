@@ -4,6 +4,7 @@ import { notFound } from "next/navigation";
 import { FeatherIcon } from "@/components/ui/feather-icon";
 import { WarningBanner } from "@/components/ui/warning-banner";
 import { AnnotatedCaseList } from "@/components/cap/AnnotatedCaseList";
+import { LegislationText } from "@/components/cap/LegislationText";
 import annotationsData from "@/data/cap282-annotations.json";
 import { CAP282_SECTIONS } from "@/data/cap282-sections";
 
@@ -107,25 +108,11 @@ export default async function SectionPage({ params }: Props) {
 
         <WarningBanner />
 
-        {/* Summary */}
-        {sectionDef.summary && (
-          <div className="mb-8 p-4 bg-muted/30 border border-border rounded-lg">
-            <p className="font-serif text-foreground leading-relaxed text-sm">
-              {sectionDef.summary}
-            </p>
-            <p className="font-serif text-xs text-muted-foreground mt-2">
-              Full text:{" "}
-              <a
-                href="https://www.elegislation.gov.hk/hk/cap282"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-primary hover:underline"
-              >
-                e-Legislation
-              </a>
-            </p>
-          </div>
-        )}
+        {/* Legislation Text */}
+        <LegislationText
+          textEn={sectionData.sectionTextEn}
+          textZh={sectionData.sectionTextZh}
+        />
 
         {/* Cases */}
         {sectionData.cases.length > 0 ? (
