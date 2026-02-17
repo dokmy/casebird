@@ -14,11 +14,26 @@ export function LegislationText({ textEn, textZh }: LegislationTextProps) {
   if (!html) return null;
 
   return (
-    <div className="mb-8">
-      <div className="flex items-center justify-between mb-3">
-        <h2 className="text-lg font-serif font-semibold text-foreground">
-          Legislation Text
-        </h2>
+    <div className="mb-8 border-l-4 border-primary/30 bg-card rounded-r-lg shadow-sm">
+      <div className="flex items-center justify-between px-5 pt-4 pb-2">
+        <div className="flex items-center gap-2">
+          <svg
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth={1.5}
+            className="w-4 h-4 text-primary/60"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              d="M12 6.042A8.967 8.967 0 006 3.75c-1.052 0-2.062.18-3 .512v14.25A8.987 8.987 0 016 18c2.305 0 4.408.867 6 2.292m0-14.25a8.966 8.966 0 016-2.292c1.052 0 2.062.18 3 .512v14.25A8.987 8.987 0 0018 18a8.967 8.967 0 00-6 2.292m0-14.25v14.25"
+            />
+          </svg>
+          <span className="text-xs font-mono uppercase tracking-wider text-muted-foreground">
+            Statutory Text
+          </span>
+        </div>
         {textEn && textZh && (
           <div className="flex gap-1 text-xs font-mono">
             <button
@@ -45,7 +60,7 @@ export function LegislationText({ textEn, textZh }: LegislationTextProps) {
         )}
       </div>
       <div
-        className="legislation-text border border-border rounded-lg p-5 bg-muted/20 font-serif text-sm text-foreground leading-relaxed"
+        className="legislation-text px-5 pb-5 font-serif text-[13px] text-foreground/85 leading-relaxed"
         dangerouslySetInnerHTML={{ __html: html }}
       />
     </div>
