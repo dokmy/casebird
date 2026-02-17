@@ -47,51 +47,48 @@ export function AnnotatedCaseList({ cases }: AnnotatedCaseListProps) {
   };
 
   return (
-    <div className={selectedCase ? "flex gap-0" : ""}>
-      {/* Case list */}
-      <div className={selectedCase ? "w-full md:w-1/2 md:pr-4" : "w-full"}>
-        <h2 className="text-lg font-serif font-semibold text-foreground mb-4">
-          Key Cases ({cases.length})
-        </h2>
-        <div className="space-y-6">
-          {cases.map((caseItem) => (
-            <article
-              key={caseItem.citation}
-              className="border border-border rounded-lg p-5"
-            >
-              <div className="flex items-start justify-between gap-3 mb-3">
-                <div>
-                  <button
-                    onClick={() => handleCaseClick(caseItem)}
-                    className="font-serif font-semibold text-primary hover:underline text-left cursor-pointer"
-                  >
-                    {caseItem.citation}
-                  </button>
-                  {caseItem.caseName && (
-                    <p className="font-serif text-base font-medium text-foreground mt-1 italic">
-                      {caseItem.caseName}
-                    </p>
-                  )}
-                  <div className="flex items-center gap-2 mt-1">
-                    <span className="text-xs font-mono bg-muted px-1.5 py-0.5 rounded">
-                      {COURT_SHORT[caseItem.court] ||
-                        caseItem.court.toUpperCase()}
-                    </span>
-                    <span className="text-xs text-muted-foreground">
-                      {caseItem.year}
-                    </span>
-                  </div>
+    <>
+      <h2 className="text-lg font-serif font-semibold text-foreground mb-4">
+        Key Cases ({cases.length})
+      </h2>
+      <div className="space-y-6">
+        {cases.map((caseItem) => (
+          <article
+            key={caseItem.citation}
+            className="border border-border rounded-lg p-5"
+          >
+            <div className="flex items-start justify-between gap-3 mb-3">
+              <div>
+                <button
+                  onClick={() => handleCaseClick(caseItem)}
+                  className="font-serif font-semibold text-primary hover:underline text-left cursor-pointer"
+                >
+                  {caseItem.citation}
+                </button>
+                {caseItem.caseName && (
+                  <p className="font-serif text-base font-medium text-foreground mt-1 italic">
+                    {caseItem.caseName}
+                  </p>
+                )}
+                <div className="flex items-center gap-2 mt-1">
+                  <span className="text-xs font-mono bg-muted px-1.5 py-0.5 rounded">
+                    {COURT_SHORT[caseItem.court] ||
+                      caseItem.court.toUpperCase()}
+                  </span>
+                  <span className="text-xs text-muted-foreground">
+                    {caseItem.year}
+                  </span>
                 </div>
               </div>
-              <p className="font-serif text-sm text-foreground leading-relaxed">
-                {caseItem.annotation}
-              </p>
-            </article>
-          ))}
-        </div>
+            </div>
+            <p className="font-serif text-sm text-foreground leading-relaxed">
+              {caseItem.annotation}
+            </p>
+          </article>
+        ))}
       </div>
 
-      {/* Desktop side panel */}
+      {/* Desktop side panel — fixed overlay, doesn't affect page layout */}
       {selectedCase && (
         <div className="hidden md:block fixed top-0 right-0 w-1/2 h-full z-40 shadow-xl">
           <CaseViewer
@@ -113,6 +110,6 @@ export function AnnotatedCaseList({ cases }: AnnotatedCaseListProps) {
           />
         </div>
       )}
-    </div>
+    </>
   );
 }
