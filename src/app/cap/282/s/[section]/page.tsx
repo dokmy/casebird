@@ -160,14 +160,9 @@ export default async function SectionPage({ params }: Props) {
                 >
                   <div className="flex items-start justify-between gap-3 mb-3">
                     <div>
-                      <a
-                        href={caseItem.url || "#"}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="font-serif font-semibold text-primary hover:underline"
-                      >
+                      <span className="font-serif font-semibold text-primary">
                         {caseItem.citation}
-                      </a>
+                      </span>
                       {"caseName" in caseItem && caseItem.caseName && (
                         <p className="font-serif text-base font-medium text-foreground mt-1 italic">
                           {String(caseItem.caseName)}
@@ -181,9 +176,9 @@ export default async function SectionPage({ params }: Props) {
                         <span className="text-xs text-muted-foreground">
                           {caseItem.year}
                         </span>
-                        {caseItem.language && (
+                        {"language" in caseItem && caseItem.language && (
                           <span className="text-xs text-muted-foreground">
-                            {caseItem.language === "TC" ? "中文" : "English"}
+                            {String(caseItem.language) === "TC" ? "中文" : "English"}
                           </span>
                         )}
                       </div>
