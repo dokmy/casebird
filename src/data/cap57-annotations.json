@@ -1,0 +1,786 @@
+{
+  "metadata": {
+    "capNumber": 57,
+    "titleEn": "Employment Ordinance",
+    "titleZh": "僱傭條例",
+    "shortCitation": "Cap. 57",
+    "enactedYear": 1968,
+    "lastAmended": "2024",
+    "elegislationUrl": "https://www.elegislation.gov.hk/hk/cap57",
+    "hkliiUrl": "https://www.hklii.hk/eng/hk/legis/ord/57/"
+  },
+  "generatedAt": "2026-02-17T06:38:15.083Z",
+  "sections": [
+    {
+      "section": "2",
+      "titleEn": "Interpretation",
+      "titleZh": "釋義",
+      "cases": []
+    },
+    {
+      "section": "4",
+      "titleEn": "Application",
+      "titleZh": "適用範圍",
+      "cases": []
+    },
+    {
+      "section": "6",
+      "titleEn": "Contracts of employment",
+      "titleZh": "僱傭合約",
+      "cases": [
+        {
+          "citation": "[2000] HKCFI 859",
+          "court": "hkcfi",
+          "year": 2000,
+          "language": "EN",
+          "score": 2.748,
+          "relevantText": "27.\n\nThe parties have not referred to the 2 Hong Kong cases on the meaning of s. 7(1) of\n\nCap. 57\n\n:-\n\n(a)\n\nYip Wan Chiu v. Magnificent Industrial Ltd\n\n[1974] HKLR 183\n\n;\n\n(b)\n\nArcher v. Hong Kong Channel Ltd\n\n[1998] 4 HKC 637\n\n.\n\n28.\n\nIn\n\nYip Wan Chiu\n\n, the (then) Full Court was unanimous in their dismissal of the appeal. However, there was a divergence of opinion as to the true meaning of s. 6(1) of\n\nCap. 57\n\n(which, for present purposes, is the equivalent of the current s. 7(1) of\n\nCap. 57\n\n",
+          "annotation": "This case references the Employment Ordinance and discusses a prior case, *Yip Wan Chiu v. Magnificent Industrial Ltd*, which interpreted the then-Section 6(1) (now Section 7(1)) as requiring a \"binding agreement\" reached through \"offer and acceptance\" for an employer to satisfy obligations by paying wages in lieu of notice. The court in *Yip Wan Chiu* held that the option to pay wages in lieu of notice requires mutual agreement between employer and employee.",
+          "url": "https://www.hklii.hk/en/cases/hkcfi/2000/859"
+        }
+      ]
+    },
+    {
+      "section": "6A",
+      "titleEn": "Continuous contract",
+      "titleZh": "連續性合約",
+      "cases": [
+        {
+          "citation": "[2015] HKDC 532",
+          "court": "hkdc",
+          "year": 2015,
+          "language": "EN",
+          "score": 3.143,
+          "relevantText": "55.\n\nTaking a step back and applying the principle of totality, I order 4 months of the sentence in charges 1, 2 and 4 to be served consecutively to the sentence in charge 3, the balance to be served concurrently, making a total of 36 months’ imprisonment for the four charges.\n\n56.\n\nI order 2 months of the sentence in each of charge 5 and 6 be served consecutively to the rest of the sentences, the balance concurrently.\n\n57.\n\nIn other words, the defendant is sentenced to a total 40 months’ impris",
+          "annotation": "This case references the Drug Addiction Treatment Centres Ordinance, Cap. 244, Section 6A(1)(b), not the Employment Ordinance, Cap. 57, Section 6A. The court applied Section 6A(1)(b) of Cap. 244 to determine that a previous detention order ceased to have effect because the defendant received a sentence of imprisonment for more than 9 months. This outcome is specific to the Drug Addiction Treatment Centres Ordinance.",
+          "url": "https://www.hklii.hk/en/cases/hkdc/2015/532"
+        },
+        {
+          "citation": "[2004] HKCFI 165",
+          "court": "hkcfi",
+          "year": 2004,
+          "language": "EN",
+          "score": 2.972,
+          "relevantText": "6.\n\nIn any event when the matter came back on 10 March 2004 before the magistrate at Eastern Magistracy he adopted the recommendation in the report before him and imposed a DATC order. That meant the appellant was subject to concurrent sentences. One was a sentence of two months' imprisonment, the other was an order that he be detained in a DATC.\n\n7.\n\nMr Lo for the appellant complains that the imposition of a DATC order in those circumstances was wrong in principle. That is his sole ground of ap",
+          "annotation": "This case references the Drug Addiction Treatment Centre Ordinance, Section 6A, which allows for the interruption of a DATC order to serve a subsequent imprisonment sentence of nine months or less. The court uses this section as a point of comparison to highlight the lack of a similar provision allowing a DATC order to be delayed for a pre-existing imprisonment sentence. The appeal was allowed, finding the concurrent sentences were wrong in principle.",
+          "url": "https://www.hklii.hk/en/cases/hkcfi/2004/165"
+        },
+        {
+          "citation": "[1985] HKCFI 568",
+          "court": "hkcfi",
+          "year": 1985,
+          "language": "EN",
+          "score": 2.902,
+          "relevantText": "HCCL000057/1984\n\nC.L. 1984, No.57\n\nHead-note\n\nCommercial law -\n\nVoyage charter-party\n\n-\n\n\"CENTROCON\"-style arbitration clause for any disputes arising under the charter\n\n-\n\nClaim-barring provision unless claim in writing and arbitrator appointed within 12 months of final discharge of cargo.\n\nFreight claim by owner -\n\nEffect of admission by charterer of owner's claim after expiration of time bar\n\n-\n\nOwner then seeking to recover freight by writ\n\n-\n\nS. 6A of Arbitration Ordinance,\n\nCap. 341\n\n-\n\nno",
+          "annotation": "This case references the Arbitration Ordinance (Cap. 341), specifically Section 6A regarding non-domestic arbitration, and not Section 6A of the Employment Ordinance (Cap. 57). The case concerns a dispute over freight charges under a voyage charter party and whether the matter should be stayed in favour of arbitration. The court considered issues of waiver and estoppel in relation to the arbitration clause.",
+          "url": "https://www.hklii.hk/en/cases/hkcfi/1985/568"
+        }
+      ]
+    },
+    {
+      "section": "7",
+      "titleEn": "Termination of contract of employment",
+      "titleZh": "終止僱傭合約",
+      "cases": [
+        {
+          "citation": "[2000] HKCFI 859",
+          "court": "hkcfi",
+          "year": 2000,
+          "language": "EN",
+          "score": 3.14,
+          "relevantText": "30.\n\nSince no argument has been raised on the applicability of s. 7(1) of\n\nCap. 57\n\n(as a matter of law), it is strictly unnecessary to consider this point. However, I shall make the following observations for the sake of completeness:-\n\n(a) the natural and ordinary meaning of s. 7(1) of\n\nCap. 57\n\nsupports the dissenting view in\n\nYip Wan Chiu.\n\nThe draftsman used the phrase \"either party\" therein rather than \"parties\" to a contract of employment;\n\n(b) the reasoning adopted by the majority view i",
+          "annotation": "This case interprets Section 7(1) of the Employment Ordinance (Cap. 57) as pertaining to the unilateral termination of employment contracts by either party. The court suggests that the dissenting view in *Yip Wan Chiu* is more consistent with the wording and purpose of Sections 7, 8, and 33(4B) of the Ordinance, emphasizing the individual right of either party to terminate the contract.",
+          "url": "https://www.hklii.hk/en/cases/hkcfi/2000/859"
+        }
+      ]
+    },
+    {
+      "section": "8",
+      "titleEn": "Summary dismissal",
+      "titleZh": "即時解僱",
+      "cases": [
+        {
+          "citation": "[2000] HKCFI 859",
+          "court": "hkcfi",
+          "year": 2000,
+          "language": "EN",
+          "score": 2.918,
+          "relevantText": "30.\n\nSince no argument has been raised on the applicability of s. 7(1) of\n\nCap. 57\n\n(as a matter of law), it is strictly unnecessary to consider this point. However, I shall make the following observations for the sake of completeness:-\n\n(a) the natural and ordinary meaning of s. 7(1) of\n\nCap. 57\n\nsupports the dissenting view in\n\nYip Wan Chiu.\n\nThe draftsman used the phrase \"either party\" therein rather than \"parties\" to a contract of employment;\n\n(b) the reasoning adopted by the majority view i",
+          "annotation": "This case interprets Section 8 of the Employment Ordinance (Cap. 57) in relation to the concept of \"waiver\" by \"either party\" to a contract. The court suggests that the phrase \"either party\" in Section 8, concerning the waiver of notice, should be interpreted consistently with its use in Section 7(1), implying that a single party can effect a waiver. The outcome relevant to Section 8 is the clarification of who can enact a waiver under the section.",
+          "url": "https://www.hklii.hk/en/cases/hkcfi/2000/859"
+        },
+        {
+          "citation": "[1981] HKDC 45",
+          "court": "hkdc",
+          "year": 1981,
+          "language": "EN",
+          "score": 2.899,
+          "relevantText": "15.\n\nWhether such a breach gives an employee a remedy in the form of\n\nunliquidated\n\ndamages or a claim for a\n\nliquidated\n\nsum is, in my view, still an open question. I incline to the view that the legislature, by enacting section 8A of\n\nCap 57\n\n, intended to confer upon a dismissed employee an option of claiming a liquidated sum in accordance with the ordinance, justiciable only in the Labour Tribunal, or pursuing a claim for unliquidated damages before the ordinary courts. (Many of the conceptu",
+          "annotation": "This case interprets Section 8A (not Section 8) of the Employment Ordinance (Cap. 57) as providing a dismissed employee with an option to claim either a liquidated sum in the Labour Tribunal or unliquidated damages in ordinary courts. The court acknowledges the complexities of this option but ultimately agrees with the presiding officer's decision to apply Section 8A(1) in quantifying the award.",
+          "url": "https://www.hklii.hk/en/cases/hkdc/1981/45"
+        }
+      ]
+    },
+    {
+      "section": "9",
+      "titleEn": "Termination of contract by employee",
+      "titleZh": "僱員終止合約",
+      "cases": [
+        {
+          "citation": "[2006] HKCFI 61",
+          "court": "hkcfi",
+          "year": 2006,
+          "language": "EN",
+          "score": 2.82,
+          "relevantText": "18.\n\nBased on the above legal principles and on the facts found by the Tribunal: see paras. 6 and 9(a) to 9(h) above, the only valid conclusion (or, using the wordings of s. 35(2)(a),\n\nCap. 25\n\n, the only inference of fact) which can be made is:\n\n(a) insofar as the old edition clause 17.5 was intended to ensure an employee’s capacity for work was not affected by outside work, or not to compete with the applicant’s business (or otherwise to act in breach of an employees’ duty of good faith and ho",
+          "annotation": "This case affirms the Labour Tribunal's decision that the employee's summary dismissal did not fall under Section 9 of the Employment Ordinance. The court found that any breach of contract by the employee was technical and did not cause real harm to the employer, thus not justifying termination under Section 9. The judgment suggests a high threshold for justifying summary dismissal under this section.",
+          "url": "https://www.hklii.hk/en/cases/hkcfi/2006/61"
+        },
+        {
+          "citation": "[1986] HKCFI 211",
+          "court": "hkcfi",
+          "year": 1986,
+          "language": "EN",
+          "score": 2.794,
+          "relevantText": "HCLA000043/1986\n\nLabour Tribunal Appeal\n\nNo. 43 of 1986\n\n--------------------\n\nHeadnote\n\n--------------------\n\nEmployment Ordinance\n\nCap. 57\n\n. The true reason or motive behind an otherwise lawful dismissal has relevance only in relation to whether or not the presumption under Sec. 31Q (presumption of dismissal by reason of redundancy has been rebutted but before that arises a claimant must show that his dismissal was not in accordance with Section 9 (wilfully disobeying a lawful or reasonable o",
+          "annotation": "This case interprets Section 9 of the Employment Ordinance as providing grounds for lawful dismissal if an employee wilfully disobeys a lawful or reasonable order or habitually neglects their duties. The court found that the employees' continued lateness, despite warnings, justified dismissal under Section 9, preventing the presumption of dismissal due to redundancy under Section 31Q from arising. The employer was entitled to terminate the contract due to ongoing breaches, even with prior forbearance.",
+          "url": "https://www.hklii.hk/en/cases/hkcfi/1986/211"
+        }
+      ]
+    },
+    {
+      "section": "10",
+      "titleEn": "Notice of termination required",
+      "titleZh": "所需的終止僱傭合約通知",
+      "cases": [
+        {
+          "citation": "[2018] HKCFI 92",
+          "court": "hkcfi",
+          "year": 2018,
+          "language": "EN",
+          "score": 3.686,
+          "relevantText": "22.\n\nI should mention, as an aside, that the plaintiff’s application for long service payment might not have been a valid application. The function of Form 1 is to enable the employee toterminate his contract of employment without notice or payment in lieu under section 10(aa) of the Employment Ordinance,\n\nCap. 57\n\n. Long service payment is payable when the employee terminates his contract in the circumstances specified in section 10(aa). In this case, it was pleaded in her Revised Statement of ",
+          "annotation": "This case clarifies that Section 10(aa) of the Employment Ordinance allows an employee to terminate their contract without notice or payment in lieu to qualify for long service payment under Section 31R. However, the court suggests that Section 10(aa) requires a subsisting employment contract at the time of termination, potentially disqualifying the plaintiff due to a significant gap between her last working day and the notice.",
+          "url": "https://www.hklii.hk/en/cases/hkcfi/2018/92"
+        },
+        {
+          "citation": "[2003] HKCFI 94",
+          "court": "hkcfi",
+          "year": 2003,
+          "language": "EN",
+          "score": 3.501,
+          "relevantText": "9.\n\nIn October 2000, the petitioner and seven other claimants in the Labour Tribunal proceedings were engaged by the Company to work on a site at Tokwawan. The main contractor was China State Construction Engineering Corporation (\"the Main Contractor\"). On 11 October 2000, the petitioner stopped working for the Company because his wages were not paid. His co-workers had also stopped working at around that time. On 23 October 2000, a solicitors firm acting for the petitioner and his co-workers wr",
+          "annotation": "This case concerns the application of Section 10A (not Section 10) of the Employment Ordinance, regarding termination of contract due to wage arrears. The court examined whether the employees validly terminated their contracts under Section 10A by giving notice after wages were not paid, and whether subsequent payment of arrears nullified the termination. The employees' claim for wages in lieu of notice, annual leave pay, severance pay or long service payment hinged on the validity of this termination.",
+          "url": "https://www.hklii.hk/en/cases/hkcfi/2003/94"
+        }
+      ]
+    },
+    {
+      "section": "10A",
+      "titleEn": "Payment in lieu of notice",
+      "titleZh": "代通知金",
+      "cases": [
+        {
+          "citation": "[2003] HKCFI 94",
+          "court": "hkcfi",
+          "year": 2003,
+          "language": "EN",
+          "score": 3.891,
+          "relevantText": "9.\n\nIn October 2000, the petitioner and seven other claimants in the Labour Tribunal proceedings were engaged by the Company to work on a site at Tokwawan. The main contractor was China State Construction Engineering Corporation (\"the Main Contractor\"). On 11 October 2000, the petitioner stopped working for the Company because his wages were not paid. His co-workers had also stopped working at around that time. On 23 October 2000, a solicitors firm acting for the petitioner and his co-workers wr",
+          "annotation": "This case discusses Section 10A of the Employment Ordinance in the context of employees terminating their employment contracts due to unpaid wages. The employees invoked Section 10A to terminate their contracts and claim entitlements, but the employer argued that the subsequent payment of arrears by the main contractor negated the employees' right to terminate under this section. The outcome of the case regarding the application of Section 10A is not explicitly stated in this excerpt.",
+          "url": "https://www.hklii.hk/en/cases/hkcfi/2003/94"
+        },
+        {
+          "citation": "[2004] HKCFI 40",
+          "court": "hkcfi",
+          "year": 2004,
+          "language": "EN",
+          "score": 3.256,
+          "relevantText": "4.\n\nThe Tribunal found, having heard evidence from the witnesses called by both sides, including some fellow drivers called by the Defendant who testified to the existence of such an agreement, that no such agreement existed. In any event, the Tribunal held that on the facts, the \"wage period\" in question was 1 month, and therefore according to section 23 of the Employment Ordinance (\n\nCap. 57\n\n), wages \"shall become due on the expiry of the last day of the wage period and shall be paid as soon ",
+          "annotation": "This case affirms that an employee is entitled to exercise their right under Section 10A of the Employment Ordinance to terminate their employment contract if wages are not paid in accordance with Section 23. The court upheld the Tribunal's decision that the employee was justified in terminating the contract due to delayed wage payments.",
+          "url": "https://www.hklii.hk/en/cases/hkcfi/2004/40"
+        },
+        {
+          "citation": "[2002] HKCFI 567",
+          "court": "hkcfi",
+          "year": 2002,
+          "language": "EN",
+          "score": 3.021,
+          "relevantText": "HCA000252/2000\n\nHCA252/2000\n\nIN THE HIGH COURT OF THE\n\nHONG KONG SPECIAL ADMINISTRATIVE REGION\n\nCOURT OF FIRST INSTANCE\n\nACTION NO.252 OF 2000\n\n-----------------------\n\nBETWEEN\n\nWAN SHU PUI\n\n1st Plaintiff\n\nLEE YUK BING\n\n2nd Plaintiff\n\nMOK LAI YI\n\n3rd Plaintiff\n\nAND\n\nAU YUK LUN trading as ANTHONY Y.L. AU & CO.\n\n1st Defendant\n\nBRILLIANT WAY COMPANY LIMITED\n\n2nd Defendant\n\n-----------------------\n\nCoram: Deputy High Court Judge Muttrie in Chambers\n\nDate of Hearing: 6 June 2002\n\nDate of Judgment: 27",
+          "annotation": "This case concerns an employee who terminated her employment contract under Section 10A of the Employment Ordinance (Cap. 57) due to the employer's default in salary payments. The court considered the employee's claim for payment pursuant to Section 10A, which represents payment in lieu of notice.",
+          "url": "https://www.hklii.hk/en/cases/hkcfi/2002/567"
+        },
+        {
+          "citation": "[2024] HKDC 1311",
+          "court": "hkdc",
+          "year": 2024,
+          "language": "EN",
+          "score": 3.007,
+          "relevantText": "57.\n\nHaving considered all the relevant indicia of this case as well as the parties’ respective evidence, I am of the view that, as a matter of overall impression, the relationship between the applicant and the respondent is one of employment and the Declaration is to be wholly disregarded. The applicant is therefore entitled to claim compensation against the respondent under the ECO.\n\nCOMPENSATION UNDER SECTION 9 OF THE ECO\n\n58.\n\nPursuant to section 7(1)(b), in the case of an employee of over 4",
+          "annotation": "This case applies Section 10A of the Employment Ordinance regarding medical expenses for employees injured at work. The court awards compensation based on the statutory rate of $300 per day for outpatient medical treatment, as outlined in the Third Schedule of the ECO.",
+          "url": "https://www.hklii.hk/en/cases/hkdc/2024/1311"
+        },
+        {
+          "citation": "[2021] HKCFI 2441",
+          "court": "hkcfi",
+          "year": 2021,
+          "language": "EN",
+          "score": 1.583,
+          "relevantText": "179.\n\nIn the notices of termination issued by the Employees to the Company, they all relied on section 10A of the EO to terminate their employment with the Company. Section 10A of the EO provides that an employee may terminate his contract of employment without notice or payment in lieu of notice if any wages are not paid within one month from the due date and the contract shall be deemed to be terminated by the employer by wages in lieu of notice. This shows that the Employees were aware of the",
+          "annotation": "This case interprets Section 10A of the Employment Ordinance as providing employees with the right to terminate their employment without notice or payment in lieu of notice if wages are unpaid for more than one month. The court found that the employees' awareness of this right, coupled with their delay in exercising it, supported the argument that they had agreed to defer wage payments until the company secured further investment. Ultimately, the employees' claims were impacted by the finding that they had agreed to the deferred payment arrangement.",
+          "url": "https://www.hklii.hk/en/cases/hkcfi/2021/2441"
+        }
+      ]
+    },
+    {
+      "section": "21",
+      "titleEn": "When wages become due",
+      "titleZh": "工資到期支付的時間",
+      "cases": []
+    },
+    {
+      "section": "22",
+      "titleEn": "Deductions from wages",
+      "titleZh": "扣除工資",
+      "cases": []
+    },
+    {
+      "section": "23",
+      "titleEn": "Restriction on deductions",
+      "titleZh": "對扣除工資的限制",
+      "cases": [
+        {
+          "citation": "[2016] HKCA 285",
+          "court": "hkca",
+          "year": 2016,
+          "language": "EN",
+          "score": 3.69,
+          "relevantText": "8.\n\nThe applicant was convicted of the following offences in respect of Ms Erwiana Sulistyaningsih :\n\n(i) Inflicting grievous bodily harm, contrary to section 19 of the Offences against the Person Ordinance,\n\nCap. 212\n\n(Charge 1);\n\n(ii) Assault occasioning actual bodily harm, contrary to common law and punishable under section 39 of the Offences against the Person Ordinance,\n\nCap. 212\n\n(Charges 2, as an alternative, 3);\n\n(iii) Causing grievous bodily harm with intent, contrary to section 17(a) o",
+          "annotation": "This case confirms that failing to pay wages within the due date is a violation of Section 23 of the Employment Ordinance. The applicant was convicted on multiple counts related to this section, specifically Charges 11 to 17. The outcome was a sentence of imprisonment and fines.",
+          "url": "https://www.hklii.hk/en/cases/hkca/2016/285"
+        },
+        {
+          "citation": "[2015] HKDC 102",
+          "court": "hkdc",
+          "year": 2015,
+          "language": "EN",
+          "score": 3.343,
+          "relevantText": "7.\n\nThe contested charges can be divided up as follows. Where PW1 is concerned;\n\nCharge 1; On or about the 8 July 2013, the defendant at home unlawfully and maliciously inflicted grievous bodily harm upon PW1. Contrary to S19 of the Offences against the Persons Ordinance.\n\nCap 212\n\nCharge 2; On an unknown day between July 2013 and October 2013, the defendant at home committed the same offence against PW1 contrary to Section 19 of the same Ordinance.\n\nCharge 3; On an unknown date between July 201",
+          "annotation": "This case references the Employment Ordinance and specifically mentions that Charges 11 to 18 relate to a failure to pay wages within the due date, contrary to Sections 23 and 63C of the Employment Ordinance (Cap. 57). The case does not provide further interpretation of Section 23 beyond stating that it concerns the failure to pay wages on time.",
+          "url": "https://www.hklii.hk/en/cases/hkdc/2015/102"
+        }
+      ]
+    },
+    {
+      "section": "25",
+      "titleEn": "Priority of wages on insolvency",
+      "titleZh": "無力償債時工資的優先權",
+      "cases": [
+        {
+          "citation": "[1996] HKCFI 7",
+          "court": "hkcfi",
+          "year": 1996,
+          "language": "EN",
+          "score": 4.097,
+          "relevantText": "16.\n\nBefore turning to consider the various claims, it would be convenient to deal with a general defence that has been raised in respect of several of the claims, namely, the application of the Limitation Ordinance to those claims.\n\nLimitation Ordinance,\n\nCap.347\n\n17.\n\nOn behalf of the Plaintiff, it was argued that the Limitation Ordinance is not relevant because of section 25 of the Employment Ordinance\n\nCap.57\n\nwhich provides :\n\n(1) ... where a contract of employment is terminated any sum due",
+          "annotation": "This case interprets Section 25 of the Employment Ordinance (Cap. 57) regarding the timely payment of wages upon termination of employment. The court rejected the argument that Section 25 effectively overrides the Limitation Ordinance for employment-related claims, finding no clear legislative intent to curtail the Limitation Ordinance in this way. The court held that Section 25 does not prevent the Limitation Ordinance from applying to wage claims.",
+          "url": "https://www.hklii.hk/en/cases/hkcfi/1996/7"
+        },
+        {
+          "citation": "[2008] HKCA 240",
+          "court": "hkca",
+          "year": 2008,
+          "language": "EN",
+          "score": 4.022,
+          "relevantText": "CAAR 2/2007\n\nIN THE HIGH COURT OF THE\n\nHONG KONG SPECIAL ADMINISTRATIVE REGION\n\nCOURT OF APPEAL\n\nAPPLICATION FOR REVIEW NO. 2 OF 2007\n\n(ON APPEAL FROM ESS 12787-9 AND ESS 18133-6 AND 18913-6 OF 2006)\n\n____________________\n\nBETWEEN\n\nSECRETARY FOR JUSTICE\n\nApplicant\n\nand\n\nsing pao newspaper management LIMITED\n\nRespondent\n\n____________________\n\nBefore: Hon Tang VP, Yeung JA and Yuen JA in Court\n\nDates of Hearing: 28 November 2007 and 15 May 2008\n\nDate of Judgment: 20 June 2008\n\n____________________",
+          "annotation": "This case acknowledges Section 25 of the Employment Ordinance, Cap. 57, which mandates that termination payments be paid to an employee as soon as practicable, and no later than 7 days after termination. The respondent company pleaded guilty to one charge under Section 63C for contravening Section 25 by making a late termination payment.",
+          "url": "https://www.hklii.hk/en/cases/hkca/2008/240"
+        }
+      ]
+    },
+    {
+      "section": "17",
+      "titleEn": "Grant of rest days",
+      "titleZh": "休息日的給予",
+      "cases": [
+        {
+          "citation": "[2008] HKCA 383",
+          "court": "hkca",
+          "year": 2008,
+          "language": "EN",
+          "score": 6.186,
+          "relevantText": "4.\n\nOn the Hospital Authority’s application, those questions set out in paragraph 3 of its notice of motion are:\n\n“ a) Whether a doctor rostered by his employer on non-resident call on a\n\nstatutory\n\nor\n\npublic holiday\n\nbut who is not in fact required to work on that day (i.e. he does not in fact treat any patient on that day) is nevertheless to be regarded as having been deprived of that statutory/public holiday by his employer.\n\nb) Whether a doctor rostered by his employer on non-resident call ",
+          "annotation": "This case concerns the interpretation of Section 17 of the Employment Ordinance in the context of doctors on non-resident call. The court is considering whether being rostered on call, even without actively working, constitutes a deprivation of a rest day under Section 17, and if so, how compensation should be calculated. The court will also consider whether damages should be assessed by reference to the amount of time actually worked on that rest day.",
+          "url": "https://www.hklii.hk/en/cases/hkca/2008/383"
+        },
+        {
+          "citation": "[2015] HKDC 103",
+          "court": "hkdc",
+          "year": 2015,
+          "language": "EN",
+          "score": 5.711,
+          "relevantText": "7.\n\nThe contested charges can be divided up as follows. Where PW1 is concerned;\n\nCharge 1; On or about the 8 July 2013, the defendant at home unlawfully and maliciously inflicted grievous bodily harm upon PW1. Contrary to S19 of the Offences against the Persons Ordinance.\n\nCap 212\n\nCharge 2; On an unknown day between July 2013 and October 2013, the defendant at home committed the same offence against PW1 contrary to Section 19 of the same Ordinance.\n\nCharge 3; On an unknown date between July 201",
+          "annotation": "This case involves multiple charges against the defendant, including a charge (Charge 20) for failing to grant PW1 a rest day on January 5, 2014, contrary to Section 17 of the Employment Ordinance (Cap. 57). The case indicates that the court will consider whether the defendant had a reasonable excuse for failing to grant the rest day, as this is a factor in determining liability under Section 17.",
+          "url": "https://www.hklii.hk/en/cases/hkdc/2015/103"
+        },
+        {
+          "citation": "[2015] HKDC 102",
+          "court": "hkdc",
+          "year": 2015,
+          "language": "EN",
+          "score": 5.711,
+          "relevantText": "7.\n\nThe contested charges can be divided up as follows. Where PW1 is concerned;\n\nCharge 1; On or about the 8 July 2013, the defendant at home unlawfully and maliciously inflicted grievous bodily harm upon PW1. Contrary to S19 of the Offences against the Persons Ordinance.\n\nCap 212\n\nCharge 2; On an unknown day between July 2013 and October 2013, the defendant at home committed the same offence against PW1 contrary to Section 19 of the same Ordinance.\n\nCharge 3; On an unknown date between July 201",
+          "annotation": "This case involves multiple charges against the defendant, including Charge 20, which alleges a violation of Section 17 of the Employment Ordinance (Cap. 57) for failing to grant PW1 a rest day on January 5, 2014. The court is considering whether the defendant had a reasonable excuse for this failure, which is relevant to determining guilt under Section 17.",
+          "url": "https://www.hklii.hk/en/cases/hkdc/2015/102"
+        },
+        {
+          "citation": "[2023] HKCA 232",
+          "court": "hkca",
+          "year": 2023,
+          "language": "EN",
+          "score": 5.554,
+          "relevantText": "3.\n\nBy the judgment of the Court of Final Appeal on 20 October 2009 (“\n\nCFA Judgment\n\n”)\n\n[4]\n\n, it was held that the doctors are entitled to rest days (in accordance with section 17 of the Employment Ordinance,\n\nCap 57\n\n; “\n\nEO\n\n”), statutory and public holidays (in accordance with section 39 of the EO) and in default of being granted such rest days, statutory and public holidays, they are entitled to damages to be assessed in an amount equivalent to a full day’s wages in respect of each missed",
+          "annotation": "This case confirms that doctors are entitled to rest days as per Section 17 of the Employment Ordinance. The court established that if rest days are not granted, employees are entitled to damages equivalent to a full day's wages for each missed rest day.",
+          "url": "https://www.hklii.hk/en/cases/hkca/2023/232"
+        },
+        {
+          "citation": "[2005] HKCA 412",
+          "court": "hkca",
+          "year": 2005,
+          "language": "EN",
+          "score": 5.373,
+          "relevantText": "(3)\n\nAn employer and his employee may agree that another day shall be\nsubstituted for a statutory holiday or an alternative holiday or\na holiday under subsection (4), if such substituted holiday\nfalls within the period of 30 days of such statutory holiday,\nalternative holiday or holiday under subsection (4).\n\n(4)\n\nWhere-\n\n(a)\n\na statutory holiday falls on a rest day, or in the case of an\nemployee who is a young person, on a day on which, by virtue of\nthe Employment of Young Persons (Industry) Re",
+          "annotation": "This case confirms that employers must grant rest days as required by Sections 17-21 of the Employment Ordinance. The court considered whether statutory holidays were in addition to the required rest days, implying that compliance with Section 17 involves providing the mandated rest days separately from statutory holidays.",
+          "url": "https://www.hklii.hk/en/cases/hkca/2005/412"
+        }
+      ]
+    },
+    {
+      "section": "31B",
+      "titleEn": "Entitlement to severance payment",
+      "titleZh": "遣散費的權利",
+      "cases": [
+        {
+          "citation": "[1980] HKDC 34",
+          "court": "hkdc",
+          "year": 1980,
+          "language": "EN",
+          "score": 3.847,
+          "relevantText": "10.\n\nMr. Ramathan submitted that, in spite of the various criticisms of the learned presiding officer's handling of this matter, the appellant's claim in respect of severance payment was doomed to failure. The prospects of success may not be high, but I do not think that they are hopeless. The appellant can rely upon the presumption contained in section 31Q of the Employment Ordinance (\n\nCap. 57\n\n), and may be able to show an arguable case of dismissal \"by reason of redundancy\" under paragraph (",
+          "annotation": "This case interprets Section 31B(2)(c) of the Employment Ordinance (Cap. 57) regarding severance payment eligibility in cases of dismissal due to redundancy. The court held that an employee may have an arguable case for severance payment if their job disappeared due to a change in the employer's business, warranting a new hearing to consider the severance payment claim. The case also references Section 31Q regarding the presumption of dismissal by reason of redundancy.",
+          "url": "https://www.hklii.hk/en/cases/hkdc/1980/34"
+        },
+        {
+          "citation": "[1989] HKCA 227",
+          "court": "hkca",
+          "year": 1989,
+          "language": "EN",
+          "score": 3.524,
+          "relevantText": "3.\n\nThe provisions of the Employment ordinance Cap, 57 which cover a situation of this kind are to be found in Sections 31B (1) and 31E-\n\n\"31B(1) Where an employee who has been employed under a continuous contract for a period of not less than 24 months ending with the relevant date -\n\n(a) is dismissed by his employer by reason of redundancy; or\n\n(b) is laid off within the meaning of section 31E,\n\nthe employer shall, subject to this Part and Part VC, be liable to pay to the employee a severance ",
+          "annotation": "This case clarifies the application of Section 31B(1) of the Employment Ordinance in conjunction with Section 31E, specifically regarding \"lay-off\" as a trigger for severance payment. The court highlights that an employee is considered laid off under Section 31E(1) if the employer fails to provide work for at least 12 normal working days within a 4-week period, resulting in no remuneration, thus potentially entitling the employee to severance payment under Section 31B(1).",
+          "url": "https://www.hklii.hk/en/cases/hkca/1989/227"
+        },
+        {
+          "citation": "[2021] HKCFI 3780",
+          "court": "hkcfi",
+          "year": 2021,
+          "language": "EN",
+          "score": 3.342,
+          "relevantText": "10.\n\nUnder section 32(1) of the LTO, a party may apply to the Court of First Instance (“CFI”) for leave to appeal against the decision of the Tribunal on the grounds that the decision is either erroneous in point of law or outside the jurisdiction of the Tribunal. The burden falls on the applicant seeking leave to show that the intended appeal is arguable: see, for example,\n\nChan Kwok Hung v Hotel Panorama Co Ltd\n\n(unreported, HCLA 30/2009, 19 November 2009, §13).\n\n11.\n\nMr Wright relied on the e",
+          "annotation": "This case acknowledges that a claim for severance payment under Section 31B(1)(a) of the Employment Ordinance falls within the jurisdiction of the Labour Tribunal, as per the Schedule to the Labour Tribunal Ordinance (Cap. 25). The employee's claim for severance payment due to dismissal by reason of redundancy is explicitly based on Section 31B(1)(a) and Section 31G of the EO.",
+          "url": "https://www.hklii.hk/en/cases/hkcfi/2021/3780"
+        }
+      ]
+    },
+    {
+      "section": "31G",
+      "titleEn": "Amount of severance payment",
+      "titleZh": "遣散費的款額",
+      "cases": [
+        {
+          "citation": "[2014] HKCA 591",
+          "court": "hkca",
+          "year": 2014,
+          "language": "EN",
+          "score": 4.412,
+          "relevantText": "40.\n\nBefore resolving this difference, I should first mention section 16(2)(f)(i), the statutory cap. Section 16(2)(f) reads:\n\n“(2) The Commissioner shall not make any payment under subsection (1)‑\n\n…\n\n(f) in respect of a severance payment-\n\n(i) of an amount exceeding the aggregate of $50,000 and half of that part of the applicant's entitlement to severance payment in excess of $50,000; or\n\n(ii) the liability for payment of which arose more than 6 months prior to the date of application;\n\n…”\n\n41",
+          "annotation": "This case clarifies that when calculating the statutory cap on severance payment under Section 16(2)(f)(i) of the Protection of Wages on Insolvency Fund Ordinance (POWIFO), the \"applicant's entitlement to severance payment\" should be calculated using the formula in Section 31G of the Employment Ordinance. The court notes the parties' agreement on this point, based on the wording of Section 16(2)(f)(i) and the reference to Section 31G in Section 16(2B)(a)(A).",
+          "url": "https://www.hklii.hk/en/cases/hkca/2014/591"
+        },
+        {
+          "citation": "[2013] HKCFI 769",
+          "court": "hkcfi",
+          "year": 2013,
+          "language": "EN",
+          "score": 4.105,
+          "relevantText": "HCAL 55/2013\n\nIN THE HIGH COURT OF THE\n\nHONG KONG SPECIAL ADMINISTRATIVE REGION\n\nCOURT OF FIRST INSTANCE\n\nCONSTITUTIONAL AND ADMINISTRATIVE LAW LIST\n\nNO 55 OF 2013\n\n____________\n\nBETWEEN\n\nYUNG CHI KEUNG\n\nApplicant\n\nand\n\nPROTECTION OF WAGES ON\n\nINSOLVENCY FUND BOARD\n\n1st Putative\n\nRespondent\n\nCOMMISSIONER OF LABOUR\n\n2nd Putative\n\nRespondent\n\n____________\n\nBefore: Hon L Chan J in Court\n\nDate of Application: 13 May 2013\n\nDate of Decision: 13 May 2013\n\n_____________\n\nD E C I S I O N\n\n_____________\n\n",
+          "annotation": "This case concerns an application for judicial review regarding the calculation of severance payment under the Protection of Wages on Insolvency Ordinance (Cap 380). The court found it arguable whether \"entitlement to severance payment\" under Cap 380 should be the net sum payable under Section 31G of the Employment Ordinance (Cap 57) after deductions under Section 31I, and granted leave for judicial review to proceed.",
+          "url": "https://www.hklii.hk/en/cases/hkcfi/2013/769"
+        },
+        {
+          "citation": "[2016] HKCFA 32",
+          "court": "hkcfa",
+          "year": 2016,
+          "language": "EN",
+          "score": 3.954,
+          "relevantText": "(3) Reliance was placed on s 16(2B)(a)(A) to support the Court of Appeal’s conclusion.\n\n[36]\n\nThis provides :-\n\n“(2B) (a) Where it appears to the Commissioner that-\n\n(i) an applicant’s wages have been reduced during the period of 12 months immediately before he is dismissed or laid off; and\n\n(ii) before the wage reduction took effect, the employer of the applicant had given an undertaking to the applicant to the effect that if the applicant was dismissed or laid off after the wage reduction, the",
+          "annotation": "This case clarifies that Section 31G of the Employment Ordinance, which outlines the calculation of severance payments, is subject to other provisions within Part VA of the Ordinance, specifically those concerning deductions. The court emphasizes that Section 16(2B)(a)(A) provides a specific calculation method only when an employer has made an undertaking regarding severance payment after a wage reduction, and a comparison with Section 31G is necessary.",
+          "url": "https://www.hklii.hk/en/cases/hkcfa/2016/32"
+        },
+        {
+          "citation": "[1981] HKDC 45",
+          "court": "hkdc",
+          "year": 1981,
+          "language": "EN",
+          "score": 3.934,
+          "relevantText": "22.\n\nThe Ordinance includes specific provisions for the calculation of the wages which would accrue to an employee in certain given situations. See section 15(3), which deals with maternity leave, and section 31G, which deals with severance payments, I consider that section 7(3) falls into the same exceptional category. I do not think that it can be prayed in aid when an award under some other section is in question. In particular, I do not consider that it controls the manner in which \"the amou",
+          "annotation": "This case acknowledges Section 31G of the Employment Ordinance as containing specific provisions for calculating wages in the context of severance payments. However, the court held that the special rules or criteria in Section 31G do not influence the ascertainment of \"the amount of wages\" referred to in Section 8A, which concerns other types of wage calculations. The appeal was dismissed.",
+          "url": "https://www.hklii.hk/en/cases/hkdc/1981/45"
+        }
+      ]
+    },
+    {
+      "section": "31I",
+      "titleEn": "Severance payment to be reduced",
+      "titleZh": "遣散費的扣減",
+      "cases": [
+        {
+          "citation": "[2014] HKCA 591",
+          "court": "hkca",
+          "year": 2014,
+          "language": "EN",
+          "score": 4.129,
+          "relevantText": "3.\n\nThe dispute between the applicant on the one hand and the Commissioner and the Board on the other which gave rise to the application for judicial review centres on the applicant’s application for ex gratia payment from the Fund in respect of his outstanding severance payment. It is not disputed that the applicant is owed $131,696.54 in severance payment by Fu Ming. On the other hand, he has received payments in the total sum of $106,319.04 under a MPF (mandatory provident fund) scheme refera",
+          "annotation": "This case concerns the calculation of ex gratia payment from a fund in respect of outstanding severance payment. The court addresses the Commissioner's interpretation of how Section 31I interacts with the statutory cap on ex gratia payments, specifically whether the MPF benefit should be deducted from the gross severance payment *before* comparing it to the cap. The Commissioner argued that the MPF benefit should be deducted *after* applying the cap, resulting in no ex gratia payment in this case.",
+          "url": "https://www.hklii.hk/en/cases/hkca/2014/591"
+        },
+        {
+          "citation": "[2013] HKCFI 769",
+          "court": "hkcfi",
+          "year": 2013,
+          "language": "EN",
+          "score": 3.989,
+          "relevantText": "HCAL 55/2013\n\nIN THE HIGH COURT OF THE\n\nHONG KONG SPECIAL ADMINISTRATIVE REGION\n\nCOURT OF FIRST INSTANCE\n\nCONSTITUTIONAL AND ADMINISTRATIVE LAW LIST\n\nNO 55 OF 2013\n\n____________\n\nBETWEEN\n\nYUNG CHI KEUNG\n\nApplicant\n\nand\n\nPROTECTION OF WAGES ON\n\nINSOLVENCY FUND BOARD\n\n1st Putative\n\nRespondent\n\nCOMMISSIONER OF LABOUR\n\n2nd Putative\n\nRespondent\n\n____________\n\nBefore: Hon L Chan J in Court\n\nDate of Application: 13 May 2013\n\nDate of Decision: 13 May 2013\n\n_____________\n\nD E C I S I O N\n\n_____________\n\n",
+          "annotation": "This case concerns an application for judicial review regarding the calculation of ex-gratia payment under the Protection of Wages on Insolvency Ordinance (Cap 380). The court found it arguable whether \"entitlement to severance payment\" should be the net sum after deductions under Section 31I of the Employment Ordinance (Cap 57), and whether those deductions should be made from the severance payment itself rather than the ex-gratia payment. The court granted leave for judicial review to proceed.",
+          "url": "https://www.hklii.hk/en/cases/hkcfi/2013/769"
+        },
+        {
+          "citation": "[2016] HKCFA 32",
+          "court": "hkcfa",
+          "year": 2016,
+          "language": "EN",
+          "score": 3.874,
+          "relevantText": "(2) Accordingly, since the figure arrived at after an application of s 16(2)(f)(i) of the PWIO is, in a sense, to be treated as severance payment, so the deductions to be made under s 31I should also be made to this figure. Should the s 31I benefits not be so deducted, this would result in what was termed a “double‑payment”, meaning that no account would then be taken of deductions which had to be taken into account under that provision. The Court of Appeal said this\n\n[42]\n\n:-\n\n“47. That the leg",
+          "annotation": "This case clarifies that deductions under Section 31I of the Employment Ordinance (Cap. 57) must be applied to the severance payment figure calculated under s 16(2)(f)(i) of the PWIO (Protection of Wages on Insolvency Ordinance). The court reasoned that failing to deduct benefits under Section 31I would result in an impermissible \"double-payment\" to the employee, contrary to the legislature's intent.",
+          "url": "https://www.hklii.hk/en/cases/hkcfa/2016/32"
+        },
+        {
+          "citation": "[2013] HKCFI 2159",
+          "court": "hkcfi",
+          "year": 2013,
+          "language": "TC",
+          "score": 1.692,
+          "relevantText": "8.\n\n按照上述不同解釋而產生的特惠款項款額的差異可從以下根據假設數字計算出來的款額為例子加以說明：\n\n根據申請人的計算方式的例子\n\n按照第31G條計算的僱員遣散費\n\n$120,000\n\n第31I條下的酬金、有關職業退休計劃利益和有關強制性公積金計劃權益\n\n$40,000\n\n計算特惠款項時，由第31G條的款額\n\n減去第31I條的款額後\n\n，在第16(2)(f)(i)條下特惠款項的最高款額為：\n\n（$50,000+($120,000-$40,000-$50,000)÷2）\n\n$65,000\n\n第31I條款額的總數+僱員應收取的特惠款項最高款額=$40,000+$65,000\n\n$105,000\n\n根據處長的計算方式的例子\n\n按照第31G條計算的僱員遣散費\n\n$120,000\n\n第31I條下的酬金、有關職業退休計劃利益和有關強制性公積金計劃權益\n\n$40,000\n\n計算特惠款項時，\n\n不\n\n由第31G條的款額\n\n減去第31I條的款額\n\n，在第16(2)(f)(i)條下特惠款項最高款額為：\n\n（$50,000+($120,000-$40,000)÷2）\n\n$90,000\n\n這$90,000是",
+          "annotation": "This case provides examples illustrating different interpretations of how Section 31I (reduction of severance payment) interacts with the calculation of ex gratia payments under Section 16(2)(f)(i) of the Employment Ordinance. The court highlights the discrepancy in the final ex gratia payment amount depending on whether the Section 31I amount is deducted before or after calculating the maximum ex gratia payment. The examples show that the Director's calculation method results in a lower ex gratia payment.",
+          "url": "https://www.hklii.hk/tc/cases/hkcfi/2013/2159"
+        }
+      ]
+    },
+    {
+      "section": "31R",
+      "titleEn": "Entitlement to long service payment",
+      "titleZh": "長期服務金的權利",
+      "cases": [
+        {
+          "citation": "[2009] HKCFI 266",
+          "court": "hkcfi",
+          "year": 2009,
+          "language": "EN",
+          "score": 3.932,
+          "relevantText": "119.\n\nThe plaintiff contends that the reasonable period for terminating his employment by prior notice should be 3 months, being the reasonable period for the position he occupied when employed by the defendant. He argues that s. 6(2)(a),\n\nCap. 57\n\ndoes not preclude such conclusion, the language used there being “not less than 1 month”.\n\n120.\n\nI disagree. In effect, s. 6(2)(a) confers a statutory right on the party wishing to terminate the contract to do so lawfully upon giving the minimum notic",
+          "annotation": "This case interprets Section 31R(1)(a)(i) of the Employment Ordinance (Cap. 57) as establishing the employer's obligation to pay long service payment to an employee dismissed after at least 5 years of continuous service. While the plaintiff met the service requirement, the court considered the defendant's arguments against the claim based on pleading deficiencies and the Limitation Ordinance, without explicitly ruling on the applicability of Section 31R itself.",
+          "url": "https://www.hklii.hk/en/cases/hkcfi/2009/266"
+        },
+        {
+          "citation": "[1998] HKCFA 32",
+          "court": "hkcfa",
+          "year": 1998,
+          "language": "EN",
+          "score": 3.875,
+          "relevantText": "4.\n\nAt the hearing before Deputy Judge Longley the appellant was unrepresented. Amongst the various heads of claim in his statement of claim he sought an award under section 31R of the Employment Ordinance,\n\nCap 57\n\n, for long service payment.\n\n5.\n\nUnder section 31R(1)(a) an employee who has been employed under a continuous contract for not less than the number of years of service at the\n\nrelevant date\n\n, as specified in the Fifth Schedule to the Ordinance, is entitled to long service payment. I",
+          "annotation": "This case interprets Section 31R(1)(a) of the Employment Ordinance in relation to the \"relevant date\" for calculating long service payment entitlement. The court highlights that the \"relevant date\" is crucial for determining whether an employee meets the minimum service requirement, and that the trial judge overlooked the statutory definition of \"relevant date\" in relation to Section 7 (payment in lieu of notice). The Court of Appeal rejected the appellant's argument, but the specific reasoning for the rejection is not provided in this excerpt.",
+          "url": "https://www.hklii.hk/en/cases/hkcfa/1998/32"
+        },
+        {
+          "citation": "[1992] HKCFI 7",
+          "court": "hkcfi",
+          "year": 1992,
+          "language": "EN",
+          "score": 3.597,
+          "relevantText": "4.\n\nIt is against this finding that the Respondent made its first complaint. It is submitted that when an employer is entitled to rely on s.9 of\n\nCap.57\n\nand could have summarily dismissed the employee for misconduct, he is entitled to rely on the exclusion provisions in s.31S(1) and s.31T(1) (a) to deprive the employee of his entitlement to long service payment, notwithstanding that the employment was in fact terminated by the employer by the payment of one month's wages in lieu of notice pursu",
+          "annotation": "This case addresses the temporal application of Section 31R, specifically whether it applies retroactively to dismissals occurring before its enactment but where the wage in lieu of notice extends beyond the enactment date. The court considers the argument that the relevant date for determining entitlement to long service payment under Section 31R is the date of dismissal versus the date to which wages in lieu of notice are calculated.",
+          "url": "https://www.hklii.hk/en/cases/hkcfi/1992/7"
+        },
+        {
+          "citation": "[2018] HKCFI 92",
+          "court": "hkcfi",
+          "year": 2018,
+          "language": "EN",
+          "score": 3.508,
+          "relevantText": "22.\n\nI should mention, as an aside, that the plaintiff’s application for long service payment might not have been a valid application. The function of Form 1 is to enable the employee toterminate his contract of employment without notice or payment in lieu under section 10(aa) of the Employment Ordinance,\n\nCap. 57\n\n. Long service payment is payable when the employee terminates his contract in the circumstances specified in section 10(aa). In this case, it was pleaded in her Revised Statement of ",
+          "annotation": "This case suggests that for an employee to qualify for long service payment under Section 31R of the Employment Ordinance, the termination of employment must occur under the circumstances specified in Section 10(aa). The court raises a concern that a Form 1 issued almost three years after the employee last worked might not constitute a valid termination of a subsisting contract, potentially disqualifying the employee from long service payment.",
+          "url": "https://www.hklii.hk/en/cases/hkcfi/2018/92"
+        }
+      ]
+    },
+    {
+      "section": "31RA",
+      "titleEn": "Amount of long service payment",
+      "titleZh": "長期服務金的款額",
+      "cases": [
+        {
+          "citation": "[2009] HKCFI 266",
+          "court": "hkcfi",
+          "year": 2009,
+          "language": "EN",
+          "score": 2.889,
+          "relevantText": "119.\n\nThe plaintiff contends that the reasonable period for terminating his employment by prior notice should be 3 months, being the reasonable period for the position he occupied when employed by the defendant. He argues that s. 6(2)(a),\n\nCap. 57\n\ndoes not preclude such conclusion, the language used there being “not less than 1 month”.\n\n120.\n\nI disagree. In effect, s. 6(2)(a) confers a statutory right on the party wishing to terminate the contract to do so lawfully upon giving the minimum notic",
+          "annotation": "This case applies Section 31V(1)(a) of the Employment Ordinance (Cap. 57) to calculate the long service payment due to the plaintiff, a monthly-rated employee. The court acknowledges the formula of two-thirds of the last full month's wages or two-thirds of $22,500, whichever is less, but ultimately denies the long service payment claim because it was not raised in the plaintiff's pleadings and was potentially time-barred.",
+          "url": "https://www.hklii.hk/en/cases/hkcfi/2009/266"
+        }
+      ]
+    },
+    {
+      "section": "33",
+      "titleEn": "Sickness allowance",
+      "titleZh": "疾病津貼",
+      "cases": []
+    },
+    {
+      "section": "12",
+      "titleEn": "Right to maternity leave",
+      "titleZh": "產假的權利",
+      "cases": [
+        {
+          "citation": "[1989] HKCFI 51",
+          "court": "hkcfi",
+          "year": 1989,
+          "language": "EN",
+          "score": 3.829,
+          "relevantText": "5.\n\nIt was submitted, inter alia, on her behalf, that by S.14(2)(b) of\n\nCap. 57\n\n, the employment contract which she had earlier entered into did not have to be subsisting. It was sufficient that she had been employed under such a contract at any time before the commencement of her maternity leave. Since the Appellant had been employed by the Respondent under a continuous contract for 40 weeks as at 12th January 1988, the fact that her maternity leave was expected to commence on 30th June 1988, ",
+          "annotation": "This case clarifies the requirements for maternity leave pay under the Employment Ordinance. The court interprets Section 12 in conjunction with Section 14, establishing that an employee must have been employed under a continuous contract for at least 40 weeks before the *expected* commencement of maternity leave to be entitled to maternity leave pay, even if not continuously employed *up to* that date.",
+          "url": "https://www.hklii.hk/en/cases/hkcfi/1989/51"
+        }
+      ]
+    },
+    {
+      "section": "15",
+      "titleEn": "Dismissal during pregnancy",
+      "titleZh": "懷孕期間被解僱",
+      "cases": [
+        {
+          "citation": "[2007] HKCFI 1191",
+          "court": "hkcfi",
+          "year": 2007,
+          "language": "EN",
+          "score": 3.637,
+          "relevantText": "5.\n\nMs Chan wrote to the liquidators on 21 October 2007 stating that she would apply to the court to vary the decision of the liquidators. She contended that $35,699.86 represented her maternity leave and should be treated in the same way as annual leave entitlement as accrued holiday remuneration, in accordance with section 265(1)(cd) of the Companies Ordinance,\n\nCap. 32\n\n.\n\n6.\n\nOn 25 October 2007, she took out a summons seeking an order that the decision of the liquidators be varied and that t",
+          "annotation": "This case references the Employment Ordinance and Section 15(2)(b) regarding payment for unused maternity leave. The court distinguishes between unused maternity leave and unused annual leave, stating they cannot be equated without considering the specific statutory provisions. The court also quotes Section 15(1)(a) regarding the prohibition of dismissing a pregnant employee after notice of pregnancy.",
+          "url": "https://www.hklii.hk/en/cases/hkcfi/2007/1191"
+        },
+        {
+          "citation": "[2005] HKCA 387",
+          "court": "hkca",
+          "year": 2005,
+          "language": "EN",
+          "score": 3.504,
+          "relevantText": "7.\n\nWhether, in the event that there was no termination of a contract of employment upon the giving of a notice to transfer a claimant to work for the employer’s subsidiary, the giving of or failure to withdraw such notice would necessarily constitute constructive dismissal of the said claimant such as would trigger the employer’s liability under section 15(1) of the Employment Ordinance,\n\nCap. 57\n\n.\n\n8.\n\nWhether section 15(1) of the Employment Ordinance requires the employer to maintain the emp",
+          "annotation": "This case considers whether a notice to transfer an employee to a subsidiary constitutes constructive dismissal under Section 15(1) of the Employment Ordinance and whether Section 15(1) requires maintaining employment if the employee becomes \"not lawfully employable\" during maternity leave. The court ultimately refused leave to appeal and dismissed the summons, but the judgment excerpt does not provide a definitive answer to either question.",
+          "url": "https://www.hklii.hk/en/cases/hkca/2005/387"
+        }
+      ]
+    },
+    {
+      "section": "39",
+      "titleEn": "Right to statutory holidays",
+      "titleZh": "法定假日的權利",
+      "cases": [
+        {
+          "citation": "[2008] HKCA 383",
+          "court": "hkca",
+          "year": 2008,
+          "language": "EN",
+          "score": 4.008,
+          "relevantText": "4.\n\nOn the Hospital Authority’s application, those questions set out in paragraph 3 of its notice of motion are:\n\n“ a) Whether a doctor rostered by his employer on non-resident call on a\n\nstatutory\n\nor\n\npublic holiday\n\nbut who is not in fact required to work on that day (i.e. he does not in fact treat any patient on that day) is nevertheless to be regarded as having been deprived of that statutory/public holiday by his employer.\n\nb) Whether a doctor rostered by his employer on non-resident call ",
+          "annotation": "This case considers whether a doctor on non-resident call, who answers a phone call for advice on a statutory holiday, is entitled to compensation under Section 39 of the Employment Ordinance. The court is asked to determine if compensation should be a full day off/damages or assessed based on the actual time worked. The case does not provide a definitive interpretation of Section 39, but frames the legal question to be decided.",
+          "url": "https://www.hklii.hk/en/cases/hkca/2008/383"
+        },
+        {
+          "citation": "[2016] HKCA 285",
+          "court": "hkca",
+          "year": 2016,
+          "language": "EN",
+          "score": 3.999,
+          "relevantText": "8.\n\nThe applicant was convicted of the following offences in respect of Ms Erwiana Sulistyaningsih :\n\n(i) Inflicting grievous bodily harm, contrary to section 19 of the Offences against the Person Ordinance,\n\nCap. 212\n\n(Charge 1);\n\n(ii) Assault occasioning actual bodily harm, contrary to common law and punishable under section 39 of the Offences against the Person Ordinance,\n\nCap. 212\n\n(Charges 2, as an alternative, 3);\n\n(iii) Causing grievous bodily harm with intent, contrary to section 17(a) o",
+          "annotation": "This case confirms that the employer was convicted of failing to grant a statutory holiday, in violation of Sections 39 and 63(4)(a) and (7) of the Employment Ordinance (Cap. 57). The employer was sentenced to imprisonment and fines, reflecting the legal consequences of this violation. The case demonstrates the court's enforcement of the statutory holiday provisions under the Employment Ordinance.",
+          "url": "https://www.hklii.hk/en/cases/hkca/2016/285"
+        },
+        {
+          "citation": "[2015] HKDC 103",
+          "court": "hkdc",
+          "year": 2015,
+          "language": "EN",
+          "score": 3.828,
+          "relevantText": "7.\n\nThe contested charges can be divided up as follows. Where PW1 is concerned;\n\nCharge 1; On or about the 8 July 2013, the defendant at home unlawfully and maliciously inflicted grievous bodily harm upon PW1. Contrary to S19 of the Offences against the Persons Ordinance.\n\nCap 212\n\nCharge 2; On an unknown day between July 2013 and October 2013, the defendant at home committed the same offence against PW1 contrary to Section 19 of the same Ordinance.\n\nCharge 3; On an unknown date between July 201",
+          "annotation": "This case involves a charge against the defendant for allegedly failing to grant PW1 a statutory holiday on 1 January 2014, contrary to Section 39 of the Employment Ordinance (Cap. 57). The case acknowledges the existence of the charge related to Section 39, but the excerpt does not provide details on the court's interpretation or application of the section, or the outcome of the charge.",
+          "url": "https://www.hklii.hk/en/cases/hkdc/2015/103"
+        },
+        {
+          "citation": "[2015] HKDC 102",
+          "court": "hkdc",
+          "year": 2015,
+          "language": "EN",
+          "score": 3.828,
+          "relevantText": "7.\n\nThe contested charges can be divided up as follows. Where PW1 is concerned;\n\nCharge 1; On or about the 8 July 2013, the defendant at home unlawfully and maliciously inflicted grievous bodily harm upon PW1. Contrary to S19 of the Offences against the Persons Ordinance.\n\nCap 212\n\nCharge 2; On an unknown day between July 2013 and October 2013, the defendant at home committed the same offence against PW1 contrary to Section 19 of the same Ordinance.\n\nCharge 3; On an unknown date between July 201",
+          "annotation": "This case involves multiple charges against the defendant, including one (Charge 19) for failing to grant the employee (PW1) a statutory holiday on 1 January 2014, contrary to Section 39 of the Employment Ordinance (Cap. 57). The court is presented with the charge but the judgment excerpt does not reveal the outcome of this specific charge.",
+          "url": "https://www.hklii.hk/en/cases/hkdc/2015/102"
+        }
+      ]
+    },
+    {
+      "section": "41AA",
+      "titleEn": "Entitlement to annual leave",
+      "titleZh": "年假的權利",
+      "cases": [
+        {
+          "citation": "[2005] HKCFI 491",
+          "court": "hkcfi",
+          "year": 2005,
+          "language": "TC",
+          "score": 0.601,
+          "relevantText": "92.\n\n本席現探討有關年假的法定條文。第41AA條訂明根據連續性合約受僱不少於12個月的僱員，有權享有有薪假期。僱主如無合理辯解而沒有給予僱員年假，即屬犯罪，見第63(4)(c)條。第41AA(3)條賦予僱主權力去決定所給予年假的時間，但他需徵詢其僱員。僱員可選擇將其年假根據第41AA(5)(c)條的規定，劃分為幾段時期來放。\n\n93.\n\n對於享有固定薪金的工人來説，年假薪酬須為一筆相等於該僱員假若在該段年假期間内每天工作本應賺取的工資的款項(第41C(1)條)。然而，如僱員已就任何年假獲付給正常工資，則該僱員除正常工資外，不再有權獲付給年假薪酬，見第42條。\n\n94.\n\n第41E(1) 條禁止僱主支付報酬，作爲代替僱員放年假。但這並非絕對。第一，對於超過10天的年假，僱員可選擇不放年假而工作來獲得額外工資，但該工作日數不得多於該年假超出10天之數，見第41E(2)條。第二，僱主在本應給予僱員年假的期間内未有給予該假期時，僱員可選擇追討補償或是放有薪假期，見第41AA(8)(a)條。\n\n95.\n\n從年假的法例綱領可見，\n\n(a)\n雖然僱主須徵詢相關的僱員，但僱主有權決定給予年假的時間",
+          "annotation": "This case confirms that Section 41AA of the Employment Ordinance entitles employees under a continuous contract of at least 12 months to paid annual leave, and that employers must consult with employees when deciding the timing of such leave. The court also clarifies that while the annual leave scheme aims to protect employee welfare, it is somewhat paternalistic, as employees cannot choose to work in lieu of annual leave if their entitlement is 10 days or less.",
+          "url": "https://www.hklii.hk/tc/cases/hkcfi/2005/491"
+        },
+        {
+          "citation": "[2005] HKCFI 1827",
+          "court": "hkcfi",
+          "year": 2005,
+          "language": "TC",
+          "score": 0.579,
+          "relevantText": "5.\n\n周大律師引述\n\nChan Lok Mei & others and Sze Chi Sing trading as Kwun Tong St Agnes English Kindergarten\n\n, 高院小額薪酬上訴1995年第9號。在該上訴中，最高法院法官梁紹中(當時官階)裁定若校方擬將學校假期指定為僱員的有薪年假，校方須按照第41AA(4)條給予僱員恰當的書面通知。本席對梁紹中法官就這條例的法律詮釋絕無異議。不過本席認為第41AA(4)條僅適用於僱主單方面指定僱員休年假的情況，而不適用於僱員要求休年假的情況。《僱傭條例》第41AA(4)條規定如下:\n\n「(4)\n\n僱主須就其決定給予年假的時間向僱員給予不少於14天的書面通知，但如僱主與僱員雙方議定較短的通知期，則不在此限。」\n\n6.\n\n本席不相信立法的原意是將指定顧員休年假的時間的權利單獨賦予僱主，而以第41AA(4)條剝奪僱員決定休年假的時間的權利。倘若僱員沒有權利決定休年假的時間，他便不可以實則地享有假期，他不可以因應自己的需要安排在假日處理他個人的事務或休息。此外，倘若僱主不按照第41AA(4)條指定休年假的時間；僱",
+          "annotation": "This case interprets Section 41AA(4) of the Employment Ordinance, holding that the 14-day written notice requirement only applies when the employer unilaterally designates when an employee takes annual leave. The court found that Section 41AA does not prevent employees from requesting annual leave and negotiating the timing of their leave with their employer.",
+          "url": "https://www.hklii.hk/tc/cases/hkcfi/2005/1827"
+        }
+      ]
+    },
+    {
+      "section": "32K",
+      "titleEn": "Unreasonable dismissal",
+      "titleZh": "不合理解僱",
+      "cases": [
+        {
+          "citation": "[2016] HKCFI 1389",
+          "court": "hkcfi",
+          "year": 2016,
+          "language": "EN",
+          "score": 4.026,
+          "relevantText": "11.\n\nThe grounds put forth by the appellant in support of this appeal can be summarized as:\n\n(a) whether the Tribunal erred in concluding that s 72B(1),\n\nCap 57\n\nwas applicable to the respondent’s claim;\n\n(b) if the answer to sub-para (a) above is in the affirmative, whether the respondent was dismissed for a valid reason (s 32K,\n\nCap 57\n\n);\n\n(c) whether the appellant’s staff manual formed part of the respondent’s employment contract with the appellant.\n\n(para 8, appellant’s skeleton submissions",
+          "annotation": "This case considers whether the Labour Tribunal erred in finding the employee was dismissed for a valid reason under Section 32K of the Employment Ordinance. The court will determine if the dismissal contravened Section 72B(1) regarding termination for giving evidence related to the Employment Ordinance, which would then trigger remedies under Section 32A(1)(c). The judgment will further examine if the employee acted within 12 months of the dismissal, as required by Section 32A(5)(b).",
+          "url": "https://www.hklii.hk/en/cases/hkcfi/2016/1389"
+        },
+        {
+          "citation": "[2002] HKCFI 512",
+          "court": "hkcfi",
+          "year": 2002,
+          "language": "EN",
+          "score": 2.926,
+          "relevantText": "4.\n\nThe defendant pleads that the plaintiff was in breach of implied terms of his contract of employment which required him,\n\ninter alia\n\n, to obey the lawful instructions of the defendant and not to infringe copyright or pass off others' work as his own. In the 4 December 1998 edition of Premier Soccer, a magazine supplement to the Friday edition of the SCMP, he produced an article attributed to himself, of which the vast majority had been copied from an article written by a Mr McIlvanney and p",
+          "annotation": "This case addresses Section 32K of the Employment Ordinance by considering whether the employer had valid reasons for dismissal due to the employee's alleged breach of contract, copyright infringement, and plagiarism. The court is tasked with determining if these reasons constitute sufficient grounds for dismissal under Section 32K, although the plaintiff also argues that the employer failed to follow established warning procedures. Ultimately, the plaintiff's claim shifts to a contractual entitlement and other provisions of the Employment Ordinance.",
+          "url": "https://www.hklii.hk/en/cases/hkcfi/2002/512"
+        },
+        {
+          "citation": "[2022] HKDC 622",
+          "court": "hkdc",
+          "year": 2022,
+          "language": "EN",
+          "score": 2.908,
+          "relevantText": "19.\n\nAccording to the Claimant, the pro-female bias demonstrated by the Respondent’s conduct in handling the Sexual Harassment Complaint, which is prohibited by the SDO.\n\n20.\n\nThe Claimant is seeking the following reliefs:-\n\n(1) a declaration that the Respondent has engaged in a conduct, or committed an act, that is unlawful under the SDO;\n\n(2) an order requiring the Respondent to offer an apology letter to the Claimant for the mishandling of the Sexual Harassment Complaint (“the apology order”)",
+          "annotation": "This case references the Employment Ordinance and Section 32K(a) specifically, stating the employer initially justified the dismissal based on the employee's conduct during and following an investigation, arguing it warranted termination under that section. However, the excerpt focuses on the employer's justification for dismissal and the employee's claim of unlawful conduct under the Sex Discrimination Ordinance, rather than a direct interpretation or application of Section 32K itself.",
+          "url": "https://www.hklii.hk/en/cases/hkdc/2022/622"
+        }
+      ]
+    },
+    {
+      "section": "32N",
+      "titleEn": "Unreasonable variation of terms",
+      "titleZh": "不合理更改僱傭條款",
+      "cases": [
+        {
+          "citation": "[2023] HKCA 1170",
+          "court": "hkca",
+          "year": 2023,
+          "language": "EN",
+          "score": 2.883,
+          "relevantText": "4.\n\nOn 23 March 2021, the Applicant obtained leave to amend her claim to divide it into 2 parts, namely, (i) arrears of wages in the sum of $37,451.61 for the period from 10 September 2019 to 17 October 2019, and (ii) damages in the sum of $193,548.39 ($231,000 - $37,451.61), apparently for unlawful termination of the employment contract.\n\n5.\n\nOn 27 April 2021, the Labour Tribunal made a consent order, under which Northcroft was to pay to the Applicant the alleged arrears of wages in the sum of ",
+          "annotation": "This case concerns an employee's claim for reinstatement under Section 32N of the Employment Ordinance. The Labour Tribunal refused the employee's application for reinstatement because it was not filed within the statutory time limit under Section 32I(b) of the same ordinance, thus barring the claim.",
+          "url": "https://www.hklii.hk/en/cases/hkca/2023/1170"
+        },
+        {
+          "citation": "[2012] HKCFI 1269",
+          "court": "hkcfi",
+          "year": 2012,
+          "language": "EN",
+          "score": 2.838,
+          "relevantText": "29.\n\nIn\n\nPCCW-HKT\n\n, there was an express provision in the\n\nenabling\n\nordinance (ie, the Telecommunications Ordinance) which provided that “\n\nan appeal shall not suspend the operation of the appeal subject matter\n\n”. After referring to it, Ribeiro J rejected that such a provision can be read to be prohibiting the implication to the subject appeal body a discretionary power to stay the operation of the relevant appealed decision. His Lordship explained at paragraphs 56 to 59 as follows:\n\n“56. Lod",
+          "annotation": "This case interprets Section 32N(2) of the Employment Ordinance, clarifying that it only prevents automatic suspension of a decision being appealed, not the power of a body to grant a discretionary stay of that decision. The court found that Section 32N(2) does not exclude the possibility of a discretionary stay.",
+          "url": "https://www.hklii.hk/en/cases/hkcfi/2012/1269"
+        },
+        {
+          "citation": "[2004] HKCA 190",
+          "court": "hkca",
+          "year": 2004,
+          "language": "EN",
+          "score": 1.555,
+          "relevantText": "33.\n\nSection 32N defines the jurisdiction of the Appeal Board, setting out the only situations in which an appeal can be brought before that body. These situations are restricted to an opinion, determination, direction or decision of the TA \"relating to\" sections 7K, 7L, 7M or 7N (section 32N(1)(a)(i)), or any licence condition relating to such sections (section 32N(1)(a)(ii)), or any sanction or remedy imposed or to be imposed by the TA in consequence of a breach of sections 7K, 7L, 7M or 7N or",
+          "annotation": "This case interprets Section 32N of the Employment Ordinance as defining the jurisdiction of the Appeal Board, specifically outlining the types of decisions made by the TA (relating to sections 7K, 7L, 7M or 7N) that can be appealed. The court considered whether a direction made by the TA under section 36B(1)(a)(iii) of the TO related to sections 7K or 7L, which would allow for an appeal under section 32N.",
+          "url": "https://www.hklii.hk/en/cases/hkca/2004/190"
+        }
+      ]
+    },
+    {
+      "section": "63",
+      "titleEn": "Offence of wilfully and without reasonable excuse failing to pay wages",
+      "titleZh": "故意及無合理辯解而不支付工資的罪行",
+      "cases": []
+    },
+    {
+      "section": "70",
+      "titleEn": "General penalties",
+      "titleZh": "一般罰則",
+      "cases": []
+    },
+    {
+      "section": "72B",
+      "titleEn": "Order for reinstatement or re-engagement",
+      "titleZh": "復職或重新聘用命令",
+      "cases": [
+        {
+          "citation": "[2016] HKCFI 1389",
+          "court": "hkcfi",
+          "year": 2016,
+          "language": "EN",
+          "score": 4.337,
+          "relevantText": "11.\n\nThe grounds put forth by the appellant in support of this appeal can be summarized as:\n\n(a) whether the Tribunal erred in concluding that s 72B(1),\n\nCap 57\n\nwas applicable to the respondent’s claim;\n\n(b) if the answer to sub-para (a) above is in the affirmative, whether the respondent was dismissed for a valid reason (s 32K,\n\nCap 57\n\n);\n\n(c) whether the appellant’s staff manual formed part of the respondent’s employment contract with the appellant.\n\n(para 8, appellant’s skeleton submissions",
+          "annotation": "This case considers the applicability of Section 72B(1) of the Employment Ordinance in the context of an employee's dismissal. The court examines whether the employee was dismissed for giving evidence or information related to the enforcement of the Ordinance within 12 months preceding the dismissal, as per Sections 32A(1)(c)(i) and 32A(5)(b). The outcome regarding the application of Section 72B will depend on the court's findings on these issues.",
+          "url": "https://www.hklii.hk/en/cases/hkcfi/2016/1389"
+        }
+      ]
+    }
+  ],
+  "stats": {
+    "totalSections": 29,
+    "totalCases": 57,
+    "sectionsWithCases": 22
+  }
+}

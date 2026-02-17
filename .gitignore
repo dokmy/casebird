@@ -46,3 +46,7 @@ remotion/
 # Documentation with sensitive info
 PINECONE_API.md
 productDescription.md
+
+# Admin dashboard (local only)
+src/app/admin/
+src/app/api/admin/
