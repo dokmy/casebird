@@ -1,0 +1,224 @@
+{
+  "ordinances": [
+    {
+      "cap": "6",
+      "title": "Bankruptcy Ordinance",
+      "titleZh": "破產條例",
+      "exampleQuestions": [
+        "What are the grounds for bankruptcy in Hong Kong?",
+        "Explain the bankruptcy petition process under Cap. 6",
+        "What are the duties of a bankrupt under the Bankruptcy Ordinance?"
+      ]
+    },
+    {
+      "cap": "7",
+      "title": "Landlord and Tenant (Consolidation) Ordinance",
+      "titleZh": "業主與租客(綜合)條例",
+      "exampleQuestions": [
+        "What are the grounds for eviction under Cap. 7?",
+        "Explain rent control provisions in the Landlord and Tenant Ordinance",
+        "What are the tenant's rights to security of tenure?"
+      ]
+    },
+    {
+      "cap": "26",
+      "title": "Sale of Goods Ordinance",
+      "titleZh": "貨品售賣條例",
+      "exampleQuestions": [
+        "What are the implied warranties under the Sale of Goods Ordinance?",
+        "What remedies does a buyer have for breach of contract?",
+        "When does property in goods pass to the buyer?"
+      ]
+    },
+    {
+      "cap": "32",
+      "title": "Companies (Winding Up and Miscellaneous Provisions) Ordinance",
+      "titleZh": "公司(清盤及雜項條文)條例",
+      "exampleQuestions": [
+        "What are the grounds for compulsory winding up under Cap. 32?",
+        "Explain the role of a liquidator in company winding up",
+        "What are the priorities for distribution of assets in liquidation?"
+      ]
+    },
+    {
+      "cap": "57",
+      "title": "Employment Ordinance",
+      "titleZh": "僱傭條例",
+      "exampleQuestions": [
+        "What constitutes a continuous contract under the Employment Ordinance?",
+        "What are the requirements for terminating employment under Cap. 57?",
+        "What statutory entitlements does an employee have?"
+      ]
+    },
+    {
+      "cap": "112",
+      "title": "Inland Revenue Ordinance",
+      "titleZh": "稅務條例",
+      "exampleQuestions": [
+        "What are the rates of profits tax under the Inland Revenue Ordinance?",
+        "Explain the basis of assessment for salaries tax",
+        "What deductions are allowable for profits tax purposes?"
+      ]
+    },
+    {
+      "cap": "115",
+      "title": "Immigration Ordinance",
+      "titleZh": "入境條例",
+      "exampleQuestions": [
+        "What are the requirements for right of abode in Hong Kong?",
+        "Explain the deportation process under Cap. 115",
+        "What are the grounds for refusing entry to Hong Kong?"
+      ]
+    },
+    {
+      "cap": "128",
+      "title": "Land Registration Ordinance",
+      "titleZh": "土地註冊條例",
+      "exampleQuestions": [
+        "What documents must be registered under the Land Registration Ordinance?",
+        "Explain the priority of registered interests",
+        "What is the effect of non-registration of a land transaction?"
+      ]
+    },
+    {
+      "cap": "179",
+      "title": "Matrimonial Causes Ordinance",
+      "titleZh": "婚姻訴訟條例",
+      "exampleQuestions": [
+        "What are the grounds for divorce under the Matrimonial Causes Ordinance?",
+        "Explain the factors considered in ancillary relief applications",
+        "What orders can the court make regarding children in divorce proceedings?"
+      ]
+    },
+    {
+      "cap": "201",
+      "title": "Prevention of Bribery Ordinance",
+      "titleZh": "防止賄賂條例",
+      "exampleQuestions": [
+        "What constitutes bribery under the Prevention of Bribery Ordinance?",
+        "Explain the offence under Section 9 (bribery by public servants)",
+        "What are the defenses available to bribery charges?"
+      ]
+    },
+    {
+      "cap": "210",
+      "title": "Theft Ordinance",
+      "titleZh": "盜竊罪條例",
+      "exampleQuestions": [
+        "What are the elements of theft under the Theft Ordinance?",
+        "Explain the concept of 'dishonesty' in theft cases",
+        "What is the difference between theft and robbery?"
+      ]
+    },
+    {
+      "cap": "221",
+      "title": "Criminal Procedure Ordinance",
+      "titleZh": "刑事訴訟程序條例",
+      "exampleQuestions": [
+        "What are the grounds for bail under Part IA?",
+        "Explain the committal proceedings under the Criminal Procedure Ordinance",
+        "What are the powers of the court in relation to vulnerable witnesses?"
+      ]
+    },
+    {
+      "cap": "282",
+      "title": "Employees' Compensation Ordinance",
+      "titleZh": "僱員補償條例",
+      "exampleQuestions": [
+        "What injuries are compensable under the Employees' Compensation Ordinance?",
+        "How is compensation calculated under Cap. 282?",
+        "What are the employer's obligations under the Employees' Compensation Ordinance?"
+      ]
+    },
+    {
+      "cap": "344",
+      "title": "Building Management Ordinance",
+      "titleZh": "建築物管理條例",
+      "exampleQuestions": [
+        "What are the requirements for forming an owners' corporation?",
+        "Explain the powers and duties of a management committee",
+        "What disputes can the Lands Tribunal resolve under Cap. 344?"
+      ]
+    },
+    {
+      "cap": "374",
+      "title": "Road Traffic Ordinance",
+      "titleZh": "道路交通條例",
+      "exampleQuestions": [
+        "What are the penalties for dangerous driving under the Road Traffic Ordinance?",
+        "Explain the drink-driving offences under Cap. 374",
+        "What are the grounds for disqualification from driving?"
+      ]
+    },
+    {
+      "cap": "455",
+      "title": "Organized and Serious Crimes Ordinance",
+      "titleZh": "有組織及嚴重罪行條例",
+      "exampleQuestions": [
+        "What constitutes an organized crime under Cap. 455?",
+        "Explain the money laundering provisions",
+        "What are the powers of confiscation under the Organized and Serious Crimes Ordinance?"
+      ]
+    },
+    {
+      "cap": "486",
+      "title": "Personal Data (Privacy) Ordinance",
+      "titleZh": "個人資料(私隱)條例",
+      "exampleQuestions": [
+        "What are the data protection principles under the Personal Data (Privacy) Ordinance?",
+        "What are the rights of data subjects under Cap. 486?",
+        "What enforcement powers does the Privacy Commissioner have?"
+      ]
+    },
+    {
+      "cap": "509",
+      "title": "Occupational Safety and Health Ordinance",
+      "titleZh": "職業安全及健康條例",
+      "exampleQuestions": [
+        "What are the general duties of employers under the Occupational Safety and Health Ordinance?",
+        "What safety measures must be implemented in workplaces?",
+        "What penalties apply for breach of safety regulations?"
+      ]
+    },
+    {
+      "cap": "528",
+      "title": "Copyright Ordinance",
+      "titleZh": "版權條例",
+      "exampleQuestions": [
+        "What constitutes copyright infringement in Hong Kong?",
+        "Explain the fair dealing defense for copyright",
+        "Who owns copyright in works created by employees?"
+      ]
+    },
+    {
+      "cap": "553",
+      "title": "Electronic Transactions Ordinance",
+      "titleZh": "電子交易條例",
+      "exampleQuestions": [
+        "What is the legal effect of electronic signatures under Cap. 553?",
+        "What requirements must electronic records meet to be admissible?",
+        "What transactions are excluded from the Electronic Transactions Ordinance?"
+      ]
+    },
+    {
+      "cap": "559",
+      "title": "Trade Marks Ordinance",
+      "titleZh": "商標條例",
+      "exampleQuestions": [
+        "What are the requirements for trade mark registration in Hong Kong?",
+        "What constitutes trade mark infringement under Cap. 559?",
+        "What defenses are available to trade mark infringement claims?"
+      ]
+    },
+    {
+      "cap": "571",
+      "title": "Securities and Futures Ordinance",
+      "titleZh": "證券及期貨條例",
+      "exampleQuestions": [
+        "What are the licensing requirements for securities dealers?",
+        "Explain the market misconduct provisions under Cap. 571",
+        "What are the disclosure obligations for listed companies?"
+      ]
+    }
+  ]
+}

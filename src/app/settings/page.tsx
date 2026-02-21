@@ -2,17 +2,18 @@
 
 import { useState, useEffect } from "react";
 import Link from "next/link";
+import { useSearchParams } from "next/navigation";
 import { ArrowLeft, Loader2, Zap, Crown, Scale, Shield } from "lucide-react";
 import { FeatherIcon } from "@/components/ui/feather-icon";
 import { createClient } from "@/lib/supabase/client";
 import { cn } from "@/lib/utils";
 import type { UserRole } from "@/types/chat";
 
-const ROLE_UNLOCK_EMAILS = ["harryhtkwong@gmail.com", "adrien@stepone.agency", "lolosjc@gmail.com"];
-
 export default function SettingsPage() {
+  const searchParams = useSearchParams();
+  const returnUrl = searchParams.get("returnUrl") || "/";
   const [outputLanguage, setOutputLanguage] = useState<"EN" | "TC">("EN");
-  const [userRole, setUserRole] = useState<UserRole>("insurance");
+  const [userRole, setUserRole] = useState<UserRole>("lawyer");
   const [userEmail, setUserEmail] = useState("");
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
@@ -101,11 +102,11 @@ export default function SettingsPage() {
         {/* Header */}
         <div className="mb-10">
           <Link
-            href="/"
+            href={returnUrl}
             className="inline-flex items-center gap-2 text-sm font-serif text-muted-foreground hover:text-foreground transition-colors mb-6"
           >
             <ArrowLeft className="w-4 h-4" />
-            Back to chat
+            Back
           </Link>
           <h1 className="text-2xl font-serif font-semibold text-foreground">
             Settings
@@ -123,22 +124,17 @@ export default function SettingsPage() {
             </p>
             <div className="flex gap-3">
               {([
-                { value: "insurance" as const, label: "Insurance", desc: "Defendant-focused analysis", icon: Shield },
                 { value: "lawyer" as const, label: "Lawyer", desc: "Balanced legal research", icon: Scale },
-              ]).map((option) => {
-                const locked = option.value === "lawyer" && !ROLE_UNLOCK_EMAILS.includes(userEmail);
-                return (
+                { value: "insurance" as const, label: "Insurance", desc: "Defendant-focused analysis", icon: Shield },
+              ]).map((option) => (
                 <button
                   key={option.value}
-                  disabled={locked && userRole !== option.value}
-                  onClick={() => !locked && handleRoleChange(option.value)}
+                  onClick={() => handleRoleChange(option.value)}
                   className={cn(
                     "flex-1 p-4 rounded-lg border-2 text-left transition-all",
                     userRole === option.value
                       ? "border-primary bg-primary/5"
-                      : locked
-                        ? "border-border opacity-50 cursor-not-allowed"
-                        : "border-border hover:border-border/80 hover:bg-accent/30"
+                      : "border-border hover:border-border/80 hover:bg-accent/30"
                   )}
                 >
                   <div className="flex items-center gap-2">
@@ -148,12 +144,10 @@ export default function SettingsPage() {
                     </span>
                   </div>
                   <div className="font-serif text-xs text-muted-foreground mt-0.5">
-                    {locked && userRole !== option.value
-                      ? "Contact admin to switch roles"
-                      : option.desc}
+                    {option.desc}
                   </div>
                 </button>
-              );})}
+              ))}
             </div>
           </div>
 

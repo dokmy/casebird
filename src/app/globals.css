@@ -239,6 +239,12 @@
   padding-left: 1.5rem;
 }
 
+.legislation-text .leg-num {
+  font-weight: 700;
+  font-size: 0.9em;
+  margin-right: 0.25rem;
+}
+
 .legislation-text a {
   color: var(--primary);
   text-decoration: none;

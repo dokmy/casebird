@@ -1,0 +1,2826 @@
+{
+  "generatedAt": "2026-02-20T15:09:32.756Z",
+  "totalKeywords": 282,
+  "keywords": [
+    {
+      "keyword": "electronic transaction act",
+      "volume": "9900",
+      "competition": "MEDIUM",
+      "competitionIndex": "58",
+      "cpcLow": "8.83",
+      "cpcHigh": "36.25",
+      "ordinanceName": "Electronic Transactions Ordinance",
+      "ordinanceCap": "553"
+    },
+    {
+      "keyword": "securities and futures ordinance",
+      "volume": "6600",
+      "competition": "LOW",
+      "competitionIndex": "0",
+      "cpcLow": "4.98",
+      "cpcHigh": "22.37",
+      "ordinanceName": "Companies Ordinance",
+      "ordinanceCap": "32"
+    },
+    {
+      "keyword": "companies ordinance",
+      "volume": "3600",
+      "competition": "LOW",
+      "competitionIndex": "0",
+      "cpcLow": "8.03",
+      "cpcHigh": "68.24",
+      "ordinanceName": "Companies Ordinance",
+      "ordinanceCap": "32"
+    },
+    {
+      "keyword": "land registration",
+      "volume": "3600",
+      "competition": "LOW",
+      "competitionIndex": "1",
+      "cpcLow": "3.85",
+      "cpcHigh": "10.22",
+      "ordinanceName": "Land Registration Ordinance",
+      "ordinanceCap": "128"
+    },
+    {
+      "keyword": "register land",
+      "volume": "3600",
+      "competition": "LOW",
+      "competitionIndex": "1",
+      "cpcLow": "3.85",
+      "cpcHigh": "10.22",
+      "ordinanceName": "Land Registration Ordinance",
+      "ordinanceCap": "128"
+    },
+    {
+      "keyword": "land and registration",
+      "volume": "3600",
+      "competition": "LOW",
+      "competitionIndex": "1",
+      "cpcLow": "3.85",
+      "cpcHigh": "10.22",
+      "ordinanceName": "Land Registration Ordinance",
+      "ordinanceCap": "128"
+    },
+    {
+      "keyword": "lands and registration",
+      "volume": "3600",
+      "competition": "LOW",
+      "competitionIndex": "1",
+      "cpcLow": "3.85",
+      "cpcHigh": "10.22",
+      "ordinanceName": "Land Registration Ordinance",
+      "ordinanceCap": "128"
+    },
+    {
+      "keyword": "registering land",
+      "volume": "3600",
+      "competition": "LOW",
+      "competitionIndex": "1",
+      "cpcLow": "3.85",
+      "cpcHigh": "10.22",
+      "ordinanceName": "Land Registration Ordinance",
+      "ordinanceCap": "128"
+    },
+    {
+      "keyword": "osh c",
+      "volume": "3600",
+      "competition": "LOW",
+      "competitionIndex": "2",
+      "cpcLow": "5.06",
+      "cpcHigh": "12.24",
+      "ordinanceName": "Occupational Safety and Health Ordinance",
+      "ordinanceCap": "509"
+    },
+    {
+      "keyword": "sfc hk register",
+      "volume": "3600",
+      "competition": "LOW",
+      "competitionIndex": "1",
+      "cpcLow": "22.98",
+      "cpcHigh": "33.31",
+      "ordinanceName": "Securities and Futures Ordinance",
+      "ordinanceCap": "571"
+    },
+    {
+      "keyword": "tenant's",
+      "volume": "3600",
+      "competition": "LOW",
+      "competitionIndex": "0",
+      "cpcLow": "0.00",
+      "cpcHigh": "0.00",
+      "ordinanceName": "Landlord and Tenant Ordinance",
+      "ordinanceCap": "7"
+    },
+    {
+      "keyword": "criminal procedure ordinance",
+      "volume": "3600",
+      "competition": "LOW",
+      "competitionIndex": "1",
+      "cpcLow": "6.83",
+      "cpcHigh": "66.05",
+      "ordinanceName": "Criminal Procedure Ordinance",
+      "ordinanceCap": "221"
+    },
+    {
+      "keyword": "僱傭 條例",
+      "volume": "2900",
+      "competition": "LOW",
+      "competitionIndex": "1",
+      "cpcLow": "0.91",
+      "cpcHigh": "15.06",
+      "ordinanceName": "Employment Ordinance",
+      "ordinanceCap": "57"
+    },
+    {
+      "keyword": "employment ordinance",
+      "volume": "2400",
+      "competition": "LOW",
+      "competitionIndex": "0",
+      "cpcLow": "0.00",
+      "cpcHigh": "0.00",
+      "ordinanceName": "Employment Ordinance",
+      "ordinanceCap": "57"
+    },
+    {
+      "keyword": "香港 稅務",
+      "volume": "2400",
+      "competition": "LOW",
+      "competitionIndex": "22",
+      "cpcLow": "1.11",
+      "cpcHigh": "19.35",
+      "ordinanceName": "Inland Revenue Ordinance",
+      "ordinanceCap": "112"
+    },
+    {
+      "keyword": "securities and futures commission",
+      "volume": "1900",
+      "competition": "LOW",
+      "competitionIndex": "2",
+      "cpcLow": "10.57",
+      "cpcHigh": "37.60",
+      "ordinanceName": "Securities and Futures Ordinance",
+      "ordinanceCap": "571"
+    },
+    {
+      "keyword": "securities & futures commission",
+      "volume": "1900",
+      "competition": "LOW",
+      "competitionIndex": "2",
+      "cpcLow": "10.57",
+      "cpcHigh": "37.60",
+      "ordinanceName": "Securities and Futures Ordinance",
+      "ordinanceCap": "571"
+    },
+    {
+      "keyword": "securities and futures commission sfc",
+      "volume": "1900",
+      "competition": "LOW",
+      "competitionIndex": "2",
+      "cpcLow": "10.57",
+      "cpcHigh": "37.60",
+      "ordinanceName": "Securities and Futures Ordinance",
+      "ordinanceCap": "571"
+    },
+    {
+      "keyword": "divorce",
+      "volume": "1900",
+      "competition": "LOW",
+      "competitionIndex": "21",
+      "cpcLow": "10.97",
+      "cpcHigh": "27.87",
+      "ordinanceName": "Matrimonial Causes Ordinance",
+      "ordinanceCap": "179"
+    },
+    {
+      "keyword": "trade marks",
+      "volume": "1600",
+      "competition": "LOW",
+      "competitionIndex": "24",
+      "cpcLow": "9.09",
+      "cpcHigh": "28.13",
+      "ordinanceName": "Trade Marks Ordinance",
+      "ordinanceCap": "559"
+    },
+    {
+      "keyword": "certified property manager",
+      "volume": "1600",
+      "competition": "LOW",
+      "competitionIndex": "2",
+      "cpcLow": "3.44",
+      "cpcHigh": "16.49",
+      "ordinanceName": "Building Management Ordinance",
+      "ordinanceCap": "344"
+    },
+    {
+      "keyword": "cap 32",
+      "volume": "1300",
+      "competition": "LOW",
+      "competitionIndex": "0",
+      "cpcLow": "0.00",
+      "cpcHigh": "0.00",
+      "ordinanceName": "Companies Ordinance",
+      "ordinanceCap": "32"
+    },
+    {
+      "keyword": "employment compensation ordinance",
+      "volume": "1300",
+      "competition": "LOW",
+      "competitionIndex": "0",
+      "cpcLow": "7.04",
+      "cpcHigh": "14.09",
+      "ordinanceName": "Employment Ordinance",
+      "ordinanceCap": "57"
+    },
+    {
+      "keyword": "私 隱 條例",
+      "volume": "1300",
+      "competition": "LOW",
+      "competitionIndex": "0",
+      "cpcLow": "0.00",
+      "cpcHigh": "0.00",
+      "ordinanceName": "Personal Data (Privacy) Ordinance",
+      "ordinanceCap": "486"
+    },
+    {
+      "keyword": "cap 374",
+      "volume": "1300",
+      "competition": "LOW",
+      "competitionIndex": "0",
+      "cpcLow": "0.00",
+      "cpcHigh": "0.00",
+      "ordinanceName": "Road Traffic Ordinance",
+      "ordinanceCap": "374"
+    },
+    {
+      "keyword": "iso 45001",
+      "volume": "1000",
+      "competition": "LOW",
+      "competitionIndex": "28",
+      "cpcLow": "4.31",
+      "cpcHigh": "13.94",
+      "ordinanceName": "Occupational Safety and Health Ordinance",
+      "ordinanceCap": "509"
+    },
+    {
+      "keyword": "個人 資料 私 隱 條例",
+      "volume": "1000",
+      "competition": "LOW",
+      "competitionIndex": "0",
+      "cpcLow": "0.00",
+      "cpcHigh": "0.00",
+      "ordinanceName": "Personal Data (Privacy) Ordinance",
+      "ordinanceCap": "486"
+    },
+    {
+      "keyword": "personal data privacy ordinance",
+      "volume": "1000",
+      "competition": "LOW",
+      "competitionIndex": "0",
+      "cpcLow": "0.00",
+      "cpcHigh": "0.00",
+      "ordinanceName": "Personal Data (Privacy) Ordinance",
+      "ordinanceCap": "486"
+    },
+    {
+      "keyword": "separation",
+      "volume": "1000",
+      "competition": "LOW",
+      "competitionIndex": "0",
+      "cpcLow": "0.00",
+      "cpcHigh": "0.00",
+      "ordinanceName": "Matrimonial Causes Ordinance",
+      "ordinanceCap": "179"
+    },
+    {
+      "keyword": "landlord",
+      "volume": "1000",
+      "competition": "LOW",
+      "competitionIndex": "1",
+      "cpcLow": "0.00",
+      "cpcHigh": "0.00",
+      "ordinanceName": "Landlord and Tenant Ordinance",
+      "ordinanceCap": "7"
+    },
+    {
+      "keyword": "trademark lookup",
+      "volume": "1000",
+      "competition": "LOW",
+      "competitionIndex": "30",
+      "cpcLow": "13.25",
+      "cpcHigh": "28.13",
+      "ordinanceName": "Trade Marks Ordinance",
+      "ordinanceCap": "559"
+    },
+    {
+      "keyword": "trademark checker",
+      "volume": "1000",
+      "competition": "LOW",
+      "competitionIndex": "30",
+      "cpcLow": "13.25",
+      "cpcHigh": "28.13",
+      "ordinanceName": "Trade Marks Ordinance",
+      "ordinanceCap": "559"
+    },
+    {
+      "keyword": "search trademarks",
+      "volume": "1000",
+      "competition": "LOW",
+      "competitionIndex": "30",
+      "cpcLow": "13.25",
+      "cpcHigh": "28.13",
+      "ordinanceName": "Trade Marks Ordinance",
+      "ordinanceCap": "559"
+    },
+    {
+      "keyword": "look up a trademark",
+      "volume": "1000",
+      "competition": "LOW",
+      "competitionIndex": "30",
+      "cpcLow": "13.25",
+      "cpcHigh": "28.13",
+      "ordinanceName": "Trade Marks Ordinance",
+      "ordinanceCap": "559"
+    },
+    {
+      "keyword": "find a trademark",
+      "volume": "1000",
+      "competition": "LOW",
+      "competitionIndex": "30",
+      "cpcLow": "13.25",
+      "cpcHigh": "28.13",
+      "ordinanceName": "Trade Marks Ordinance",
+      "ordinanceCap": "559"
+    },
+    {
+      "keyword": "search for a trade mark",
+      "volume": "1000",
+      "competition": "LOW",
+      "competitionIndex": "30",
+      "cpcLow": "13.25",
+      "cpcHigh": "28.13",
+      "ordinanceName": "Trade Marks Ordinance",
+      "ordinanceCap": "559"
+    },
+    {
+      "keyword": "僱員 補償 條例",
+      "volume": "880",
+      "competition": "LOW",
+      "competitionIndex": "14",
+      "cpcLow": "4.77",
+      "cpcHigh": "11.30",
+      "ordinanceName": "Employees' Compensation Ordinance",
+      "ordinanceCap": "282"
+    },
+    {
+      "keyword": "compensate leaves",
+      "volume": "880",
+      "competition": "LOW",
+      "competitionIndex": "0",
+      "cpcLow": "0.00",
+      "cpcHigh": "0.00",
+      "ordinanceName": "Employees' Compensation Ordinance",
+      "ordinanceCap": "282"
+    },
+    {
+      "keyword": "盜竊",
+      "volume": "880",
+      "competition": "LOW",
+      "competitionIndex": "23",
+      "cpcLow": "14.52",
+      "cpcHigh": "20.09",
+      "ordinanceName": "Theft Ordinance",
+      "ordinanceCap": "210"
+    },
+    {
+      "keyword": "management property management",
+      "volume": "880",
+      "competition": "LOW",
+      "competitionIndex": "22",
+      "cpcLow": "6.23",
+      "cpcHigh": "25.62",
+      "ordinanceName": "Building Management Ordinance",
+      "ordinanceCap": "344"
+    },
+    {
+      "keyword": "property management properties",
+      "volume": "880",
+      "competition": "LOW",
+      "competitionIndex": "22",
+      "cpcLow": "6.23",
+      "cpcHigh": "25.62",
+      "ordinanceName": "Building Management Ordinance",
+      "ordinanceCap": "344"
+    },
+    {
+      "keyword": "crimes ordinance",
+      "volume": "880",
+      "competition": "LOW",
+      "competitionIndex": "1",
+      "cpcLow": "12.58",
+      "cpcHigh": "20.09",
+      "ordinanceName": "Crimes Ordinance",
+      "ordinanceCap": "200"
+    },
+    {
+      "keyword": "cap 200",
+      "volume": "880",
+      "competition": "LOW",
+      "competitionIndex": "0",
+      "cpcLow": "13.95",
+      "cpcHigh": "20.08",
+      "ordinanceName": "Crimes Ordinance",
+      "ordinanceCap": "200"
+    },
+    {
+      "keyword": "公司 法",
+      "volume": "720",
+      "competition": "LOW",
+      "competitionIndex": "0",
+      "cpcLow": "0.00",
+      "cpcHigh": "0.00",
+      "ordinanceName": "Companies Ordinance",
+      "ordinanceCap": "32"
+    },
+    {
+      "keyword": "inland revenue ordinance",
+      "volume": "720",
+      "competition": "LOW",
+      "competitionIndex": "0",
+      "cpcLow": "0.00",
+      "cpcHigh": "0.00",
+      "ordinanceName": "Companies Ordinance",
+      "ordinanceCap": "32"
+    },
+    {
+      "keyword": "inland revenue ordinance",
+      "volume": "720",
+      "competition": "LOW",
+      "competitionIndex": "0",
+      "cpcLow": "0.00",
+      "cpcHigh": "0.00",
+      "ordinanceName": "Inland Revenue Ordinance",
+      "ordinanceCap": "112"
+    },
+    {
+      "keyword": "land registry search",
+      "volume": "720",
+      "competition": "LOW",
+      "competitionIndex": "6",
+      "cpcLow": "4.90",
+      "cpcHigh": "16.11",
+      "ordinanceName": "Land Registration Ordinance",
+      "ordinanceCap": "128"
+    },
+    {
+      "keyword": "hm land registry search",
+      "volume": "720",
+      "competition": "LOW",
+      "competitionIndex": "6",
+      "cpcLow": "4.90",
+      "cpcHigh": "16.11",
+      "ordinanceName": "Land Registration Ordinance",
+      "ordinanceCap": "128"
+    },
+    {
+      "keyword": "land registry lookup",
+      "volume": "720",
+      "competition": "LOW",
+      "competitionIndex": "6",
+      "cpcLow": "4.90",
+      "cpcHigh": "16.11",
+      "ordinanceName": "Land Registration Ordinance",
+      "ordinanceCap": "128"
+    },
+    {
+      "keyword": "land reg search",
+      "volume": "720",
+      "competition": "LOW",
+      "competitionIndex": "6",
+      "cpcLow": "4.90",
+      "cpcHigh": "16.11",
+      "ordinanceName": "Land Registration Ordinance",
+      "ordinanceCap": "128"
+    },
+    {
+      "keyword": "land registry land search",
+      "volume": "720",
+      "competition": "LOW",
+      "competitionIndex": "6",
+      "cpcLow": "4.90",
+      "cpcHigh": "16.11",
+      "ordinanceName": "Land Registration Ordinance",
+      "ordinanceCap": "128"
+    },
+    {
+      "keyword": "land registry look up",
+      "volume": "720",
+      "competition": "LOW",
+      "competitionIndex": "6",
+      "cpcLow": "4.90",
+      "cpcHigh": "16.11",
+      "ordinanceName": "Land Registration Ordinance",
+      "ordinanceCap": "128"
+    },
+    {
+      "keyword": "land and registry search",
+      "volume": "720",
+      "competition": "LOW",
+      "competitionIndex": "6",
+      "cpcLow": "4.90",
+      "cpcHigh": "16.11",
+      "ordinanceName": "Land Registration Ordinance",
+      "ordinanceCap": "128"
+    },
+    {
+      "keyword": "find land registry",
+      "volume": "720",
+      "competition": "LOW",
+      "competitionIndex": "6",
+      "cpcLow": "4.90",
+      "cpcHigh": "16.11",
+      "ordinanceName": "Land Registration Ordinance",
+      "ordinanceCap": "128"
+    },
+    {
+      "keyword": "hmlr search",
+      "volume": "720",
+      "competition": "LOW",
+      "competitionIndex": "6",
+      "cpcLow": "4.90",
+      "cpcHigh": "16.11",
+      "ordinanceName": "Land Registration Ordinance",
+      "ordinanceCap": "128"
+    },
+    {
+      "keyword": "land registration search",
+      "volume": "720",
+      "competition": "LOW",
+      "competitionIndex": "6",
+      "cpcLow": "4.90",
+      "cpcHigh": "16.11",
+      "ordinanceName": "Land Registration Ordinance",
+      "ordinanceCap": "128"
+    },
+    {
+      "keyword": "land registry finder",
+      "volume": "720",
+      "competition": "LOW",
+      "competitionIndex": "6",
+      "cpcLow": "4.90",
+      "cpcHigh": "16.11",
+      "ordinanceName": "Land Registration Ordinance",
+      "ordinanceCap": "128"
+    },
+    {
+      "keyword": "cap 486",
+      "volume": "720",
+      "competition": "LOW",
+      "competitionIndex": "0",
+      "cpcLow": "0.00",
+      "cpcHigh": "0.00",
+      "ordinanceName": "Personal Data (Privacy) Ordinance",
+      "ordinanceCap": "486"
+    },
+    {
+      "keyword": "cap 115",
+      "volume": "720",
+      "competition": "LOW",
+      "competitionIndex": "0",
+      "cpcLow": "0.00",
+      "cpcHigh": "0.00",
+      "ordinanceName": "Immigration Ordinance",
+      "ordinanceCap": "115"
+    },
+    {
+      "keyword": "tm character",
+      "volume": "720",
+      "competition": "LOW",
+      "competitionIndex": "9",
+      "cpcLow": "28.11",
+      "cpcHigh": "28.13",
+      "ordinanceName": "Trade Marks Ordinance",
+      "ordinanceCap": "559"
+    },
+    {
+      "keyword": "tm symbols",
+      "volume": "720",
+      "competition": "LOW",
+      "competitionIndex": "9",
+      "cpcLow": "28.11",
+      "cpcHigh": "28.13",
+      "ordinanceName": "Trade Marks Ordinance",
+      "ordinanceCap": "559"
+    },
+    {
+      "keyword": "theft ordinance",
+      "volume": "720",
+      "competition": "LOW",
+      "competitionIndex": "1",
+      "cpcLow": "15.35",
+      "cpcHigh": "20.08",
+      "ordinanceName": "Theft Ordinance",
+      "ordinanceCap": "210"
+    },
+    {
+      "keyword": "建築 物 管理 條例",
+      "volume": "720",
+      "competition": "LOW",
+      "competitionIndex": "0",
+      "cpcLow": "0.00",
+      "cpcHigh": "0.00",
+      "ordinanceName": "Building Management Ordinance",
+      "ordinanceCap": "344"
+    },
+    {
+      "keyword": "cap 134",
+      "volume": "720",
+      "competition": "LOW",
+      "competitionIndex": "5",
+      "cpcLow": "20.08",
+      "cpcHigh": "20.09",
+      "ordinanceName": "Dangerous Drugs Ordinance",
+      "ordinanceCap": "134"
+    },
+    {
+      "keyword": "cap 221",
+      "volume": "720",
+      "competition": "LOW",
+      "competitionIndex": "1",
+      "cpcLow": "13.20",
+      "cpcHigh": "20.09",
+      "ordinanceName": "Criminal Procedure Ordinance",
+      "ordinanceCap": "221"
+    },
+    {
+      "keyword": "jewel store near me",
+      "volume": "720",
+      "competition": "MEDIUM",
+      "competitionIndex": "47",
+      "cpcLow": "8.34",
+      "cpcHigh": "32.72",
+      "ordinanceName": "Organized and Serious Crimes Ordinance",
+      "ordinanceCap": "455"
+    },
+    {
+      "keyword": "pobo",
+      "volume": "720",
+      "competition": "LOW",
+      "competitionIndex": "0",
+      "cpcLow": "0.00",
+      "cpcHigh": "0.00",
+      "ordinanceName": "Prevention of Bribery Ordinance",
+      "ordinanceCap": "201"
+    },
+    {
+      "keyword": "cap 57",
+      "volume": "590",
+      "competition": "LOW",
+      "competitionIndex": "0",
+      "cpcLow": "0.00",
+      "cpcHigh": "0.00",
+      "ordinanceName": "Employment Ordinance",
+      "ordinanceCap": "57"
+    },
+    {
+      "keyword": "land land registry",
+      "volume": "590",
+      "competition": "LOW",
+      "competitionIndex": "13",
+      "cpcLow": "3.54",
+      "cpcHigh": "12.07",
+      "ordinanceName": "Land Registration Ordinance",
+      "ordinanceCap": "128"
+    },
+    {
+      "keyword": "land registry hm",
+      "volume": "590",
+      "competition": "LOW",
+      "competitionIndex": "13",
+      "cpcLow": "3.54",
+      "cpcHigh": "12.07",
+      "ordinanceName": "Land Registration Ordinance",
+      "ordinanceCap": "128"
+    },
+    {
+      "keyword": "land registry hmlr",
+      "volume": "590",
+      "competition": "LOW",
+      "competitionIndex": "13",
+      "cpcLow": "3.54",
+      "cpcHigh": "12.07",
+      "ordinanceName": "Land Registration Ordinance",
+      "ordinanceCap": "128"
+    },
+    {
+      "keyword": "ukland registry",
+      "volume": "590",
+      "competition": "LOW",
+      "competitionIndex": "13",
+      "cpcLow": "3.54",
+      "cpcHigh": "12.07",
+      "ordinanceName": "Land Registration Ordinance",
+      "ordinanceCap": "128"
+    },
+    {
+      "keyword": "occupational health and safety council",
+      "volume": "590",
+      "competition": "LOW",
+      "competitionIndex": "1",
+      "cpcLow": "0.00",
+      "cpcHigh": "0.00",
+      "ordinanceName": "Occupational Safety and Health Ordinance",
+      "ordinanceCap": "509"
+    },
+    {
+      "keyword": "occupational safety & health council",
+      "volume": "590",
+      "competition": "LOW",
+      "competitionIndex": "1",
+      "cpcLow": "0.00",
+      "cpcHigh": "0.00",
+      "ordinanceName": "Occupational Safety and Health Ordinance",
+      "ordinanceCap": "509"
+    },
+    {
+      "keyword": "cap 571",
+      "volume": "590",
+      "competition": "LOW",
+      "competitionIndex": "0",
+      "cpcLow": "0.00",
+      "cpcHigh": "0.00",
+      "ordinanceName": "Securities and Futures Ordinance",
+      "ordinanceCap": "571"
+    },
+    {
+      "keyword": "employees compensation",
+      "volume": "590",
+      "competition": "LOW",
+      "competitionIndex": "9",
+      "cpcLow": "9.04",
+      "cpcHigh": "28.67",
+      "ordinanceName": "Employees' Compensation Ordinance",
+      "ordinanceCap": "282"
+    },
+    {
+      "keyword": "cap 282",
+      "volume": "590",
+      "competition": "LOW",
+      "competitionIndex": "0",
+      "cpcLow": "0.00",
+      "cpcHigh": "0.00",
+      "ordinanceName": "Employees' Compensation Ordinance",
+      "ordinanceCap": "282"
+    },
+    {
+      "keyword": "alimony",
+      "volume": "590",
+      "competition": "LOW",
+      "competitionIndex": "0",
+      "cpcLow": "0.00",
+      "cpcHigh": "0.00",
+      "ordinanceName": "Matrimonial Causes Ordinance",
+      "ordinanceCap": "179"
+    },
+    {
+      "keyword": "immigration ordinance",
+      "volume": "590",
+      "competition": "LOW",
+      "competitionIndex": "0",
+      "cpcLow": "0.00",
+      "cpcHigh": "0.00",
+      "ordinanceName": "Immigration Ordinance",
+      "ordinanceCap": "115"
+    },
+    {
+      "keyword": "cap 344",
+      "volume": "590",
+      "competition": "LOW",
+      "competitionIndex": "0",
+      "cpcLow": "0.00",
+      "cpcHigh": "0.00",
+      "ordinanceName": "Building Management Ordinance",
+      "ordinanceCap": "344"
+    },
+    {
+      "keyword": "道路 交通 條例",
+      "volume": "590",
+      "competition": "LOW",
+      "competitionIndex": "0",
+      "cpcLow": "0.00",
+      "cpcHigh": "0.00",
+      "ordinanceName": "Road Traffic Ordinance",
+      "ordinanceCap": "374"
+    },
+    {
+      "keyword": "公司 條例",
+      "volume": "480",
+      "competition": "LOW",
+      "competitionIndex": "0",
+      "cpcLow": "0.00",
+      "cpcHigh": "0.00",
+      "ordinanceName": "Companies Ordinance",
+      "ordinanceCap": "32"
+    },
+    {
+      "keyword": "勞工 法",
+      "volume": "480",
+      "competition": "LOW",
+      "competitionIndex": "0",
+      "cpcLow": "0.00",
+      "cpcHigh": "0.00",
+      "ordinanceName": "Employment Ordinance",
+      "ordinanceCap": "57"
+    },
+    {
+      "keyword": "cap 112",
+      "volume": "480",
+      "competition": "LOW",
+      "competitionIndex": "0",
+      "cpcLow": "0.00",
+      "cpcHigh": "0.00",
+      "ordinanceName": "Inland Revenue Ordinance",
+      "ordinanceCap": "112"
+    },
+    {
+      "keyword": "cap 509",
+      "volume": "480",
+      "competition": "LOW",
+      "competitionIndex": "0",
+      "cpcLow": "0.00",
+      "cpcHigh": "0.00",
+      "ordinanceName": "Occupational Safety and Health Ordinance",
+      "ordinanceCap": "509"
+    },
+    {
+      "keyword": "occupational safety health administration",
+      "volume": "480",
+      "competition": "LOW",
+      "competitionIndex": "2",
+      "cpcLow": "2.16",
+      "cpcHigh": "11.29",
+      "ordinanceName": "Occupational Safety and Health Ordinance",
+      "ordinanceCap": "509"
+    },
+    {
+      "keyword": "香港 入境",
+      "volume": "480",
+      "competition": "LOW",
+      "competitionIndex": "3",
+      "cpcLow": "0.14",
+      "cpcHigh": "3.26",
+      "ordinanceName": "Immigration Ordinance",
+      "ordinanceCap": "115"
+    },
+    {
+      "keyword": "trademark registration",
+      "volume": "480",
+      "competition": "MEDIUM",
+      "competitionIndex": "49",
+      "cpcLow": "18.91",
+      "cpcHigh": "42.60",
+      "ordinanceName": "Trade Marks Ordinance",
+      "ordinanceCap": "559"
+    },
+    {
+      "keyword": "uspto trademark search",
+      "volume": "480",
+      "competition": "LOW",
+      "competitionIndex": "24",
+      "cpcLow": "13.36",
+      "cpcHigh": "30.13",
+      "ordinanceName": "Trade Marks Ordinance",
+      "ordinanceCap": "559"
+    },
+    {
+      "keyword": "register trademark",
+      "volume": "480",
+      "competition": "MEDIUM",
+      "competitionIndex": "49",
+      "cpcLow": "18.91",
+      "cpcHigh": "42.60",
+      "ordinanceName": "Trade Marks Ordinance",
+      "ordinanceCap": "559"
+    },
+    {
+      "keyword": "register trade mark",
+      "volume": "480",
+      "competition": "MEDIUM",
+      "competitionIndex": "49",
+      "cpcLow": "18.91",
+      "cpcHigh": "42.60",
+      "ordinanceName": "Trade Marks Ordinance",
+      "ordinanceCap": "559"
+    },
+    {
+      "keyword": "register a trade mark",
+      "volume": "480",
+      "competition": "MEDIUM",
+      "competitionIndex": "49",
+      "cpcLow": "18.91",
+      "cpcHigh": "42.60",
+      "ordinanceName": "Trade Marks Ordinance",
+      "ordinanceCap": "559"
+    },
+    {
+      "keyword": "register for a trademark",
+      "volume": "480",
+      "competition": "MEDIUM",
+      "competitionIndex": "49",
+      "cpcLow": "18.91",
+      "cpcHigh": "42.60",
+      "ordinanceName": "Trade Marks Ordinance",
+      "ordinanceCap": "559"
+    },
+    {
+      "keyword": "us trademark lookup",
+      "volume": "480",
+      "competition": "LOW",
+      "competitionIndex": "24",
+      "cpcLow": "13.36",
+      "cpcHigh": "30.13",
+      "ordinanceName": "Trade Marks Ordinance",
+      "ordinanceCap": "559"
+    },
+    {
+      "keyword": "registration of trade mark",
+      "volume": "480",
+      "competition": "MEDIUM",
+      "competitionIndex": "49",
+      "cpcLow": "18.91",
+      "cpcHigh": "42.60",
+      "ordinanceName": "Trade Marks Ordinance",
+      "ordinanceCap": "559"
+    },
+    {
+      "keyword": "patent trademark search",
+      "volume": "480",
+      "competition": "LOW",
+      "competitionIndex": "24",
+      "cpcLow": "13.36",
+      "cpcHigh": "30.13",
+      "ordinanceName": "Trade Marks Ordinance",
+      "ordinanceCap": "559"
+    },
+    {
+      "keyword": "trademark and registration",
+      "volume": "480",
+      "competition": "MEDIUM",
+      "competitionIndex": "49",
+      "cpcLow": "18.91",
+      "cpcHigh": "42.60",
+      "ordinanceName": "Trade Marks Ordinance",
+      "ordinanceCap": "559"
+    },
+    {
+      "keyword": "trademark and registered trademark",
+      "volume": "480",
+      "competition": "MEDIUM",
+      "competitionIndex": "49",
+      "cpcLow": "18.91",
+      "cpcHigh": "42.60",
+      "ordinanceName": "Trade Marks Ordinance",
+      "ordinanceCap": "559"
+    },
+    {
+      "keyword": "刑事 罪行 條例",
+      "volume": "480",
+      "competition": "LOW",
+      "competitionIndex": "29",
+      "cpcLow": "12.91",
+      "cpcHigh": "17.41",
+      "ordinanceName": "Crimes Ordinance",
+      "ordinanceCap": "200"
+    },
+    {
+      "keyword": "osco",
+      "volume": "480",
+      "competition": "LOW",
+      "competitionIndex": "0",
+      "cpcLow": "0.00",
+      "cpcHigh": "0.00",
+      "ordinanceName": "Organized and Serious Crimes Ordinance",
+      "ordinanceCap": "455"
+    },
+    {
+      "keyword": "prevention of bribery ordinance",
+      "volume": "480",
+      "competition": "LOW",
+      "competitionIndex": "0",
+      "cpcLow": "0.00",
+      "cpcHigh": "0.00",
+      "ordinanceName": "Prevention of Bribery Ordinance",
+      "ordinanceCap": "201"
+    },
+    {
+      "keyword": "證券 及 期貨 條例",
+      "volume": "390",
+      "competition": "LOW",
+      "competitionIndex": "0",
+      "cpcLow": "0.00",
+      "cpcHigh": "0.00",
+      "ordinanceName": "Securities and Futures Ordinance",
+      "ordinanceCap": "571"
+    },
+    {
+      "keyword": "入境 條例",
+      "volume": "390",
+      "competition": "LOW",
+      "competitionIndex": "0",
+      "cpcLow": "0.00",
+      "cpcHigh": "0.00",
+      "ordinanceName": "Immigration Ordinance",
+      "ordinanceCap": "115"
+    },
+    {
+      "keyword": "cap 6",
+      "volume": "390",
+      "competition": "LOW",
+      "competitionIndex": "0",
+      "cpcLow": "0.00",
+      "cpcHigh": "0.00",
+      "ordinanceName": "Bankruptcy Ordinance",
+      "ordinanceCap": "6"
+    },
+    {
+      "keyword": "copyright ordinance",
+      "volume": "390",
+      "competition": "LOW",
+      "competitionIndex": "1",
+      "cpcLow": "0.00",
+      "cpcHigh": "0.00",
+      "ordinanceName": "Copyright Ordinance",
+      "ordinanceCap": "528"
+    },
+    {
+      "keyword": "版權 條例",
+      "volume": "390",
+      "competition": "LOW",
+      "competitionIndex": "10",
+      "cpcLow": "6.40",
+      "cpcHigh": "10.05",
+      "ordinanceName": "Copyright Ordinance",
+      "ordinanceCap": "528"
+    },
+    {
+      "keyword": "trade mark",
+      "volume": "390",
+      "competition": "LOW",
+      "competitionIndex": "33",
+      "cpcLow": "10.04",
+      "cpcHigh": "35.16",
+      "ordinanceName": "Trade Marks Ordinance",
+      "ordinanceCap": "559"
+    },
+    {
+      "keyword": "trade mark search",
+      "volume": "390",
+      "competition": "LOW",
+      "competitionIndex": "25",
+      "cpcLow": "21.80",
+      "cpcHigh": "45.21",
+      "ordinanceName": "Trade Marks Ordinance",
+      "ordinanceCap": "559"
+    },
+    {
+      "keyword": "tm search",
+      "volume": "390",
+      "competition": "LOW",
+      "competitionIndex": "25",
+      "cpcLow": "21.80",
+      "cpcHigh": "45.21",
+      "ordinanceName": "Trade Marks Ordinance",
+      "ordinanceCap": "559"
+    },
+    {
+      "keyword": "cap 210",
+      "volume": "390",
+      "competition": "LOW",
+      "competitionIndex": "1",
+      "cpcLow": "0.00",
+      "cpcHigh": "0.00",
+      "ordinanceName": "Theft Ordinance",
+      "ordinanceCap": "210"
+    },
+    {
+      "keyword": "dangerous drugs ordinance",
+      "volume": "390",
+      "competition": "LOW",
+      "competitionIndex": "1",
+      "cpcLow": "0.00",
+      "cpcHigh": "0.00",
+      "ordinanceName": "Dangerous Drugs Ordinance",
+      "ordinanceCap": "134"
+    },
+    {
+      "keyword": "危險 藥物 條例",
+      "volume": "390",
+      "competition": "LOW",
+      "competitionIndex": "22",
+      "cpcLow": "20.08",
+      "cpcHigh": "20.09",
+      "ordinanceName": "Dangerous Drugs Ordinance",
+      "ordinanceCap": "134"
+    },
+    {
+      "keyword": "road traffic ordinance",
+      "volume": "390",
+      "competition": "LOW",
+      "competitionIndex": "0",
+      "cpcLow": "0.00",
+      "cpcHigh": "0.00",
+      "ordinanceName": "Road Traffic Ordinance",
+      "ordinanceCap": "374"
+    },
+    {
+      "keyword": "employment ordinance cap 57",
+      "volume": "320",
+      "competition": "LOW",
+      "competitionIndex": "0",
+      "cpcLow": "0.00",
+      "cpcHigh": "0.00",
+      "ordinanceName": "Employment Ordinance",
+      "ordinanceCap": "57"
+    },
+    {
+      "keyword": "稅務 條例",
+      "volume": "320",
+      "competition": "LOW",
+      "competitionIndex": "1",
+      "cpcLow": "0.00",
+      "cpcHigh": "0.00",
+      "ordinanceName": "Inland Revenue Ordinance",
+      "ordinanceCap": "112"
+    },
+    {
+      "keyword": "matrimonial causes rules",
+      "volume": "320",
+      "competition": "LOW",
+      "competitionIndex": "1",
+      "cpcLow": "0.00",
+      "cpcHigh": "0.00",
+      "ordinanceName": "Matrimonial Causes Ordinance",
+      "ordinanceCap": "179"
+    },
+    {
+      "keyword": "盜竊 罪 條例",
+      "volume": "320",
+      "competition": "LOW",
+      "competitionIndex": "32",
+      "cpcLow": "20.07",
+      "cpcHigh": "20.09",
+      "ordinanceName": "Theft Ordinance",
+      "ordinanceCap": "210"
+    },
+    {
+      "keyword": "partnership ordinance",
+      "volume": "260",
+      "competition": "LOW",
+      "competitionIndex": "0",
+      "cpcLow": "0.00",
+      "cpcHigh": "0.00",
+      "ordinanceName": "Companies Ordinance",
+      "ordinanceCap": "32"
+    },
+    {
+      "keyword": "labour ordinance",
+      "volume": "260",
+      "competition": "LOW",
+      "competitionIndex": "0",
+      "cpcLow": "0.00",
+      "cpcHigh": "0.00",
+      "ordinanceName": "Employment Ordinance",
+      "ordinanceCap": "57"
+    },
+    {
+      "keyword": "the land registry",
+      "volume": "260",
+      "competition": "LOW",
+      "competitionIndex": "3",
+      "cpcLow": "0.00",
+      "cpcHigh": "0.00",
+      "ordinanceName": "Land Registration Ordinance",
+      "ordinanceCap": "128"
+    },
+    {
+      "keyword": "職業 安全",
+      "volume": "260",
+      "competition": "LOW",
+      "competitionIndex": "1",
+      "cpcLow": "0.00",
+      "cpcHigh": "0.00",
+      "ordinanceName": "Occupational Safety and Health Ordinance",
+      "ordinanceCap": "509"
+    },
+    {
+      "keyword": "oh&s",
+      "volume": "260",
+      "competition": "LOW",
+      "competitionIndex": "1",
+      "cpcLow": "0.00",
+      "cpcHigh": "0.00",
+      "ordinanceName": "Occupational Safety and Health Ordinance",
+      "ordinanceCap": "509"
+    },
+    {
+      "keyword": "oh&",
+      "volume": "260",
+      "competition": "LOW",
+      "competitionIndex": "1",
+      "cpcLow": "0.00",
+      "cpcHigh": "0.00",
+      "ordinanceName": "Occupational Safety and Health Ordinance",
+      "ordinanceCap": "509"
+    },
+    {
+      "keyword": "copyright logo",
+      "volume": "260",
+      "competition": "LOW",
+      "competitionIndex": "1",
+      "cpcLow": "0.00",
+      "cpcHigh": "0.00",
+      "ordinanceName": "Trade Marks Ordinance",
+      "ordinanceCap": "559"
+    },
+    {
+      "keyword": "wipo trademark search",
+      "volume": "260",
+      "competition": "LOW",
+      "competitionIndex": "12",
+      "cpcLow": "28.09",
+      "cpcHigh": "28.14",
+      "ordinanceName": "Trade Marks Ordinance",
+      "ordinanceCap": "559"
+    },
+    {
+      "keyword": "wipo tm search",
+      "volume": "260",
+      "competition": "LOW",
+      "competitionIndex": "12",
+      "cpcLow": "28.09",
+      "cpcHigh": "28.14",
+      "ordinanceName": "Trade Marks Ordinance",
+      "ordinanceCap": "559"
+    },
+    {
+      "keyword": "electronic transactions ordinance",
+      "volume": "260",
+      "competition": "LOW",
+      "competitionIndex": "0",
+      "cpcLow": "0.00",
+      "cpcHigh": "0.00",
+      "ordinanceName": "Electronic Transactions Ordinance",
+      "ordinanceCap": "553"
+    },
+    {
+      "keyword": "cap 455",
+      "volume": "260",
+      "competition": "LOW",
+      "competitionIndex": "0",
+      "cpcLow": "0.00",
+      "cpcHigh": "0.00",
+      "ordinanceName": "Organized and Serious Crimes Ordinance",
+      "ordinanceCap": "455"
+    },
+    {
+      "keyword": "cap 7",
+      "volume": "210",
+      "competition": "LOW",
+      "competitionIndex": "0",
+      "cpcLow": "0.00",
+      "cpcHigh": "0.00",
+      "ordinanceName": "Landlord and Tenant Ordinance",
+      "ordinanceCap": "7"
+    },
+    {
+      "keyword": "cisg",
+      "volume": "210",
+      "competition": "LOW",
+      "competitionIndex": "0",
+      "cpcLow": "0.00",
+      "cpcHigh": "0.00",
+      "ordinanceName": "Sale of Goods Ordinance",
+      "ordinanceCap": "26"
+    },
+    {
+      "keyword": "anti money laundering ordinance",
+      "volume": "210",
+      "competition": "LOW",
+      "competitionIndex": "2",
+      "cpcLow": "5.96",
+      "cpcHigh": "22.19",
+      "ordinanceName": "Organized and Serious Crimes Ordinance",
+      "ordinanceCap": "455"
+    },
+    {
+      "keyword": "cap 201",
+      "volume": "210",
+      "competition": "LOW",
+      "competitionIndex": "0",
+      "cpcLow": "0.00",
+      "cpcHigh": "0.00",
+      "ordinanceName": "Prevention of Bribery Ordinance",
+      "ordinanceCap": "201"
+    },
+    {
+      "keyword": "companies winding up and miscellaneous provisions ordinance",
+      "volume": "170",
+      "competition": "LOW",
+      "competitionIndex": "1",
+      "cpcLow": "0.00",
+      "cpcHigh": "0.00",
+      "ordinanceName": "Companies Ordinance",
+      "ordinanceCap": "32"
+    },
+    {
+      "keyword": "minimum wage ordinance",
+      "volume": "170",
+      "competition": "LOW",
+      "competitionIndex": "0",
+      "cpcLow": "0.00",
+      "cpcHigh": "0.00",
+      "ordinanceName": "Employment Ordinance",
+      "ordinanceCap": "57"
+    },
+    {
+      "keyword": "privacy ordinance",
+      "volume": "170",
+      "competition": "LOW",
+      "competitionIndex": "0",
+      "cpcLow": "0.00",
+      "cpcHigh": "0.00",
+      "ordinanceName": "Personal Data (Privacy) Ordinance",
+      "ordinanceCap": "486"
+    },
+    {
+      "keyword": "personal data privacy ordinance cap 486",
+      "volume": "170",
+      "competition": "LOW",
+      "competitionIndex": "0",
+      "cpcLow": "0.00",
+      "cpcHigh": "0.00",
+      "ordinanceName": "Personal Data (Privacy) Ordinance",
+      "ordinanceCap": "486"
+    },
+    {
+      "keyword": "sfc license type 1 4 9",
+      "volume": "170",
+      "competition": "LOW",
+      "competitionIndex": "5",
+      "cpcLow": "1.96",
+      "cpcHigh": "27.35",
+      "ordinanceName": "Securities and Futures Ordinance",
+      "ordinanceCap": "571"
+    },
+    {
+      "keyword": "sfc licensed corporation",
+      "volume": "170",
+      "competition": "LOW",
+      "competitionIndex": "0",
+      "cpcLow": "0.00",
+      "cpcHigh": "0.00",
+      "ordinanceName": "Securities and Futures Ordinance",
+      "ordinanceCap": "571"
+    },
+    {
+      "keyword": "cap 179",
+      "volume": "170",
+      "competition": "LOW",
+      "competitionIndex": "0",
+      "cpcLow": "0.00",
+      "cpcHigh": "0.00",
+      "ordinanceName": "Matrimonial Causes Ordinance",
+      "ordinanceCap": "179"
+    },
+    {
+      "keyword": "decree absolute",
+      "volume": "170",
+      "competition": "LOW",
+      "competitionIndex": "4",
+      "cpcLow": "10.19",
+      "cpcHigh": "23.32",
+      "ordinanceName": "Matrimonial Causes Ordinance",
+      "ordinanceCap": "179"
+    },
+    {
+      "keyword": "australian trade mark search",
+      "volume": "170",
+      "competition": "LOW",
+      "competitionIndex": "15",
+      "cpcLow": "10.64",
+      "cpcHigh": "28.12",
+      "ordinanceName": "Trade Marks Ordinance",
+      "ordinanceCap": "559"
+    },
+    {
+      "keyword": "r registered mark",
+      "volume": "170",
+      "competition": "LOW",
+      "competitionIndex": "4",
+      "cpcLow": "0.00",
+      "cpcHigh": "0.00",
+      "ordinanceName": "Trade Marks Ordinance",
+      "ordinanceCap": "559"
+    },
+    {
+      "keyword": "r registered trademark",
+      "volume": "170",
+      "competition": "LOW",
+      "competitionIndex": "4",
+      "cpcLow": "0.00",
+      "cpcHigh": "0.00",
+      "ordinanceName": "Trade Marks Ordinance",
+      "ordinanceCap": "559"
+    },
+    {
+      "keyword": "building management",
+      "volume": "170",
+      "competition": "LOW",
+      "competitionIndex": "6",
+      "cpcLow": "4.97",
+      "cpcHigh": "20.35",
+      "ordinanceName": "Building Management Ordinance",
+      "ordinanceCap": "344"
+    },
+    {
+      "keyword": "刑事 訴訟 程序 條例",
+      "volume": "170",
+      "competition": "LOW",
+      "competitionIndex": "19",
+      "cpcLow": "12.69",
+      "cpcHigh": "16.82",
+      "ordinanceName": "Criminal Procedure Ordinance",
+      "ordinanceCap": "221"
+    },
+    {
+      "keyword": "香港 公司 條例",
+      "volume": "140",
+      "competition": "LOW",
+      "competitionIndex": "2",
+      "cpcLow": "1.17",
+      "cpcHigh": "60.24",
+      "ordinanceName": "Companies Ordinance",
+      "ordinanceCap": "32"
+    },
+    {
+      "keyword": "cap 128",
+      "volume": "140",
+      "competition": "LOW",
+      "competitionIndex": "0",
+      "cpcLow": "0.00",
+      "cpcHigh": "0.00",
+      "ordinanceName": "Land Registration Ordinance",
+      "ordinanceCap": "128"
+    },
+    {
+      "keyword": "occupational health and safety",
+      "volume": "140",
+      "competition": "LOW",
+      "competitionIndex": "7",
+      "cpcLow": "4.00",
+      "cpcHigh": "12.11",
+      "ordinanceName": "Occupational Safety and Health Ordinance",
+      "ordinanceCap": "509"
+    },
+    {
+      "keyword": "occupational health & safety",
+      "volume": "140",
+      "competition": "LOW",
+      "competitionIndex": "7",
+      "cpcLow": "4.00",
+      "cpcHigh": "12.11",
+      "ordinanceName": "Occupational Safety and Health Ordinance",
+      "ordinanceCap": "509"
+    },
+    {
+      "keyword": "ohs occupational health and safety",
+      "volume": "140",
+      "competition": "LOW",
+      "competitionIndex": "7",
+      "cpcLow": "4.00",
+      "cpcHigh": "12.11",
+      "ordinanceName": "Occupational Safety and Health Ordinance",
+      "ordinanceCap": "509"
+    },
+    {
+      "keyword": "ohs health and safety",
+      "volume": "140",
+      "competition": "LOW",
+      "competitionIndex": "7",
+      "cpcLow": "4.00",
+      "cpcHigh": "12.11",
+      "ordinanceName": "Occupational Safety and Health Ordinance",
+      "ordinanceCap": "509"
+    },
+    {
+      "keyword": "occ health and safety",
+      "volume": "140",
+      "competition": "LOW",
+      "competitionIndex": "7",
+      "cpcLow": "4.00",
+      "cpcHigh": "12.11",
+      "ordinanceName": "Occupational Safety and Health Ordinance",
+      "ordinanceCap": "509"
+    },
+    {
+      "keyword": "osh safety",
+      "volume": "140",
+      "competition": "LOW",
+      "competitionIndex": "7",
+      "cpcLow": "4.00",
+      "cpcHigh": "12.11",
+      "ordinanceName": "Occupational Safety and Health Ordinance",
+      "ordinanceCap": "509"
+    },
+    {
+      "keyword": "occupational safety officer",
+      "volume": "140",
+      "competition": "LOW",
+      "competitionIndex": "1",
+      "cpcLow": "0.00",
+      "cpcHigh": "0.00",
+      "ordinanceName": "Occupational Safety and Health Ordinance",
+      "ordinanceCap": "509"
+    },
+    {
+      "keyword": "labour safety",
+      "volume": "140",
+      "competition": "LOW",
+      "competitionIndex": "7",
+      "cpcLow": "4.00",
+      "cpcHigh": "12.11",
+      "ordinanceName": "Occupational Safety and Health Ordinance",
+      "ordinanceCap": "509"
+    },
+    {
+      "keyword": "occupational and safety",
+      "volume": "140",
+      "competition": "LOW",
+      "competitionIndex": "7",
+      "cpcLow": "4.00",
+      "cpcHigh": "12.11",
+      "ordinanceName": "Occupational Safety and Health Ordinance",
+      "ordinanceCap": "509"
+    },
+    {
+      "keyword": "worker injured",
+      "volume": "140",
+      "competition": "LOW",
+      "competitionIndex": "7",
+      "cpcLow": "6.16",
+      "cpcHigh": "16.71",
+      "ordinanceName": "Employees' Compensation Ordinance",
+      "ordinanceCap": "282"
+    },
+    {
+      "keyword": "租 務 條例",
+      "volume": "140",
+      "competition": "LOW",
+      "competitionIndex": "30",
+      "cpcLow": "0.95",
+      "cpcHigh": "5.46",
+      "ordinanceName": "Landlord and Tenant Ordinance",
+      "ordinanceCap": "7"
+    },
+    {
+      "keyword": "破產 條例",
+      "volume": "140",
+      "competition": "LOW",
+      "competitionIndex": "31",
+      "cpcLow": "2.71",
+      "cpcHigh": "14.26",
+      "ordinanceName": "Bankruptcy Ordinance",
+      "ordinanceCap": "6"
+    },
+    {
+      "keyword": "cap 528",
+      "volume": "140",
+      "competition": "LOW",
+      "competitionIndex": "1",
+      "cpcLow": "0.00",
+      "cpcHigh": "0.00",
+      "ordinanceName": "Copyright Ordinance",
+      "ordinanceCap": "528"
+    },
+    {
+      "keyword": "tm register",
+      "volume": "140",
+      "competition": "MEDIUM",
+      "competitionIndex": "34",
+      "cpcLow": "23.37",
+      "cpcHigh": "48.18",
+      "ordinanceName": "Trade Marks Ordinance",
+      "ordinanceCap": "559"
+    },
+    {
+      "keyword": "tmview",
+      "volume": "140",
+      "competition": "LOW",
+      "competitionIndex": "17",
+      "cpcLow": "8.25",
+      "cpcHigh": "45.18",
+      "ordinanceName": "Trade Marks Ordinance",
+      "ordinanceCap": "559"
+    },
+    {
+      "keyword": "registered mark",
+      "volume": "140",
+      "competition": "LOW",
+      "competitionIndex": "1",
+      "cpcLow": "0.00",
+      "cpcHigh": "0.00",
+      "ordinanceName": "Trade Marks Ordinance",
+      "ordinanceCap": "559"
+    },
+    {
+      "keyword": "registration mark",
+      "volume": "140",
+      "competition": "LOW",
+      "competitionIndex": "1",
+      "cpcLow": "0.00",
+      "cpcHigh": "0.00",
+      "ordinanceName": "Trade Marks Ordinance",
+      "ordinanceCap": "559"
+    },
+    {
+      "keyword": "r with circle",
+      "volume": "140",
+      "competition": "LOW",
+      "competitionIndex": "2",
+      "cpcLow": "0.00",
+      "cpcHigh": "0.00",
+      "ordinanceName": "Trade Marks Ordinance",
+      "ordinanceCap": "559"
+    },
+    {
+      "keyword": "property management companies",
+      "volume": "140",
+      "competition": "LOW",
+      "competitionIndex": "16",
+      "cpcLow": "13.68",
+      "cpcHigh": "29.23",
+      "ordinanceName": "Building Management Ordinance",
+      "ordinanceCap": "344"
+    },
+    {
+      "keyword": "property management firms",
+      "volume": "140",
+      "competition": "LOW",
+      "competitionIndex": "16",
+      "cpcLow": "13.68",
+      "cpcHigh": "29.23",
+      "ordinanceName": "Building Management Ordinance",
+      "ordinanceCap": "344"
+    },
+    {
+      "keyword": "property management agencies",
+      "volume": "140",
+      "competition": "LOW",
+      "competitionIndex": "16",
+      "cpcLow": "13.68",
+      "cpcHigh": "29.23",
+      "ordinanceName": "Building Management Ordinance",
+      "ordinanceCap": "344"
+    },
+    {
+      "keyword": "company property management",
+      "volume": "140",
+      "competition": "LOW",
+      "competitionIndex": "16",
+      "cpcLow": "13.68",
+      "cpcHigh": "29.23",
+      "ordinanceName": "Building Management Ordinance",
+      "ordinanceCap": "344"
+    },
+    {
+      "keyword": "assault occasioning actual bodily harm",
+      "volume": "140",
+      "competition": "LOW",
+      "competitionIndex": "9",
+      "cpcLow": "12.95",
+      "cpcHigh": "20.06",
+      "ordinanceName": "Crimes Ordinance",
+      "ordinanceCap": "200"
+    },
+    {
+      "keyword": "assault occasioning bodily harm",
+      "volume": "140",
+      "competition": "LOW",
+      "competitionIndex": "9",
+      "cpcLow": "12.95",
+      "cpcHigh": "20.06",
+      "ordinanceName": "Crimes Ordinance",
+      "ordinanceCap": "200"
+    },
+    {
+      "keyword": "actual body harm",
+      "volume": "140",
+      "competition": "LOW",
+      "competitionIndex": "9",
+      "cpcLow": "12.95",
+      "cpcHigh": "20.06",
+      "ordinanceName": "Crimes Ordinance",
+      "ordinanceCap": "200"
+    },
+    {
+      "keyword": "assault actual bodily harm",
+      "volume": "140",
+      "competition": "LOW",
+      "competitionIndex": "9",
+      "cpcLow": "12.95",
+      "cpcHigh": "20.06",
+      "ordinanceName": "Crimes Ordinance",
+      "ordinanceCap": "200"
+    },
+    {
+      "keyword": "assault occasioning abh",
+      "volume": "140",
+      "competition": "LOW",
+      "competitionIndex": "9",
+      "cpcLow": "12.95",
+      "cpcHigh": "20.06",
+      "ordinanceName": "Crimes Ordinance",
+      "ordinanceCap": "200"
+    },
+    {
+      "keyword": "occasioning actual bodily harm",
+      "volume": "140",
+      "competition": "LOW",
+      "competitionIndex": "9",
+      "cpcLow": "12.95",
+      "cpcHigh": "20.06",
+      "ordinanceName": "Crimes Ordinance",
+      "ordinanceCap": "200"
+    },
+    {
+      "keyword": "occasioning bodily harm",
+      "volume": "140",
+      "competition": "LOW",
+      "competitionIndex": "9",
+      "cpcLow": "12.95",
+      "cpcHigh": "20.06",
+      "ordinanceName": "Crimes Ordinance",
+      "ordinanceCap": "200"
+    },
+    {
+      "keyword": "companies winding up ordinance",
+      "volume": "110",
+      "competition": "LOW",
+      "competitionIndex": "0",
+      "cpcLow": "0.00",
+      "cpcHigh": "0.00",
+      "ordinanceName": "Companies Ordinance",
+      "ordinanceCap": "32"
+    },
+    {
+      "keyword": "occupational safety",
+      "volume": "110",
+      "competition": "LOW",
+      "competitionIndex": "0",
+      "cpcLow": "0.00",
+      "cpcHigh": "0.00",
+      "ordinanceName": "Occupational Safety and Health Ordinance",
+      "ordinanceCap": "509"
+    },
+    {
+      "keyword": "ohsas 18001",
+      "volume": "110",
+      "competition": "LOW",
+      "competitionIndex": "16",
+      "cpcLow": "4.00",
+      "cpcHigh": "15.78",
+      "ordinanceName": "Occupational Safety and Health Ordinance",
+      "ordinanceCap": "509"
+    },
+    {
+      "keyword": "data privacy ordinance",
+      "volume": "110",
+      "competition": "LOW",
+      "competitionIndex": "0",
+      "cpcLow": "0.00",
+      "cpcHigh": "0.00",
+      "ordinanceName": "Personal Data (Privacy) Ordinance",
+      "ordinanceCap": "486"
+    },
+    {
+      "keyword": "landlord and tenant board",
+      "volume": "110",
+      "competition": "LOW",
+      "competitionIndex": "0",
+      "cpcLow": "0.00",
+      "cpcHigh": "0.00",
+      "ordinanceName": "Landlord and Tenant Ordinance",
+      "ordinanceCap": "7"
+    },
+    {
+      "keyword": "land and tenant board",
+      "volume": "110",
+      "competition": "LOW",
+      "competitionIndex": "0",
+      "cpcLow": "0.00",
+      "cpcHigh": "0.00",
+      "ordinanceName": "Landlord and Tenant Ordinance",
+      "ordinanceCap": "7"
+    },
+    {
+      "keyword": "landlord board",
+      "volume": "110",
+      "competition": "LOW",
+      "competitionIndex": "0",
+      "cpcLow": "0.00",
+      "cpcHigh": "0.00",
+      "ordinanceName": "Landlord and Tenant Ordinance",
+      "ordinanceCap": "7"
+    },
+    {
+      "keyword": "ltb board",
+      "volume": "110",
+      "competition": "LOW",
+      "competitionIndex": "0",
+      "cpcLow": "0.00",
+      "cpcHigh": "0.00",
+      "ordinanceName": "Landlord and Tenant Ordinance",
+      "ordinanceCap": "7"
+    },
+    {
+      "keyword": "eu trademark search",
+      "volume": "110",
+      "competition": "LOW",
+      "competitionIndex": "21",
+      "cpcLow": "5.94",
+      "cpcHigh": "30.13",
+      "ordinanceName": "Trade Marks Ordinance",
+      "ordinanceCap": "559"
+    },
+    {
+      "keyword": "r trademark",
+      "volume": "110",
+      "competition": "LOW",
+      "competitionIndex": "5",
+      "cpcLow": "0.00",
+      "cpcHigh": "0.00",
+      "ordinanceName": "Trade Marks Ordinance",
+      "ordinanceCap": "559"
+    },
+    {
+      "keyword": "tm trademark logo",
+      "volume": "110",
+      "competition": "LOW",
+      "competitionIndex": "8",
+      "cpcLow": "28.12",
+      "cpcHigh": "45.19",
+      "ordinanceName": "Trade Marks Ordinance",
+      "ordinanceCap": "559"
+    },
+    {
+      "keyword": "大廈 管理",
+      "volume": "110",
+      "competition": "LOW",
+      "competitionIndex": "0",
+      "cpcLow": "0.00",
+      "cpcHigh": "0.00",
+      "ordinanceName": "Building Management Ordinance",
+      "ordinanceCap": "344"
+    },
+    {
+      "keyword": "sale of goods",
+      "volume": "110",
+      "competition": "LOW",
+      "competitionIndex": "0",
+      "cpcLow": "0.00",
+      "cpcHigh": "0.00",
+      "ordinanceName": "Sale of Goods Ordinance",
+      "ordinanceCap": "26"
+    },
+    {
+      "keyword": "sale of goods act",
+      "volume": "110",
+      "competition": "LOW",
+      "competitionIndex": "0",
+      "cpcLow": "0.00",
+      "cpcHigh": "0.00",
+      "ordinanceName": "Sale of Goods Ordinance",
+      "ordinanceCap": "26"
+    },
+    {
+      "keyword": "goods and sales act",
+      "volume": "110",
+      "competition": "LOW",
+      "competitionIndex": "0",
+      "cpcLow": "0.00",
+      "cpcHigh": "0.00",
+      "ordinanceName": "Sale of Goods Ordinance",
+      "ordinanceCap": "26"
+    },
+    {
+      "keyword": "committal proceedings",
+      "volume": "110",
+      "competition": "LOW",
+      "competitionIndex": "1",
+      "cpcLow": "0.00",
+      "cpcHigh": "0.00",
+      "ordinanceName": "Criminal Procedure Ordinance",
+      "ordinanceCap": "221"
+    },
+    {
+      "keyword": "committal hearing",
+      "volume": "110",
+      "competition": "LOW",
+      "competitionIndex": "1",
+      "cpcLow": "0.00",
+      "cpcHigh": "0.00",
+      "ordinanceName": "Criminal Procedure Ordinance",
+      "ordinanceCap": "221"
+    },
+    {
+      "keyword": "committal procedure",
+      "volume": "110",
+      "competition": "LOW",
+      "competitionIndex": "1",
+      "cpcLow": "0.00",
+      "cpcHigh": "0.00",
+      "ordinanceName": "Criminal Procedure Ordinance",
+      "ordinanceCap": "221"
+    },
+    {
+      "keyword": "有 組織 及 嚴重 罪行 條例",
+      "volume": "110",
+      "competition": "LOW",
+      "competitionIndex": "7",
+      "cpcLow": "12.92",
+      "cpcHigh": "21.00",
+      "ordinanceName": "Organized and Serious Crimes Ordinance",
+      "ordinanceCap": "455"
+    },
+    {
+      "keyword": "limited partnership fund ordinance",
+      "volume": "90",
+      "competition": "LOW",
+      "competitionIndex": "1",
+      "cpcLow": "0.00",
+      "cpcHigh": "0.00",
+      "ordinanceName": "Companies Ordinance",
+      "ordinanceCap": "32"
+    },
+    {
+      "keyword": "workplace safety",
+      "volume": "90",
+      "competition": "LOW",
+      "competitionIndex": "2",
+      "cpcLow": "0.00",
+      "cpcHigh": "0.00",
+      "ordinanceName": "Occupational Safety and Health Ordinance",
+      "ordinanceCap": "509"
+    },
+    {
+      "keyword": "worker safety",
+      "volume": "90",
+      "competition": "LOW",
+      "competitionIndex": "2",
+      "cpcLow": "0.00",
+      "cpcHigh": "0.00",
+      "ordinanceName": "Occupational Safety and Health Ordinance",
+      "ordinanceCap": "509"
+    },
+    {
+      "keyword": "occupational safety and health management institute",
+      "volume": "90",
+      "competition": "LOW",
+      "competitionIndex": "3",
+      "cpcLow": "0.00",
+      "cpcHigh": "0.00",
+      "ordinanceName": "Occupational Safety and Health Ordinance",
+      "ordinanceCap": "509"
+    },
+    {
+      "keyword": "compensation benefits",
+      "volume": "90",
+      "competition": "LOW",
+      "competitionIndex": "11",
+      "cpcLow": "12.90",
+      "cpcHigh": "46.22",
+      "ordinanceName": "Employees' Compensation Ordinance",
+      "ordinanceCap": "282"
+    },
+    {
+      "keyword": "divorce lawyer",
+      "volume": "90",
+      "competition": "HIGH",
+      "competitionIndex": "72",
+      "cpcLow": "21.25",
+      "cpcHigh": "58.82",
+      "ordinanceName": "Matrimonial Causes Ordinance",
+      "ordinanceCap": "179"
+    },
+    {
+      "keyword": "divorce papers",
+      "volume": "90",
+      "competition": "LOW",
+      "competitionIndex": "26",
+      "cpcLow": "10.05",
+      "cpcHigh": "24.60",
+      "ordinanceName": "Matrimonial Causes Ordinance",
+      "ordinanceCap": "179"
+    },
+    {
+      "keyword": "divorce petition",
+      "volume": "90",
+      "competition": "MEDIUM",
+      "competitionIndex": "34",
+      "cpcLow": "12.55",
+      "cpcHigh": "33.32",
+      "ordinanceName": "Matrimonial Causes Ordinance",
+      "ordinanceCap": "179"
+    },
+    {
+      "keyword": "love after divorce",
+      "volume": "90",
+      "competition": "LOW",
+      "competitionIndex": "0",
+      "cpcLow": "0.00",
+      "cpcHigh": "0.00",
+      "ordinanceName": "Matrimonial Causes Ordinance",
+      "ordinanceCap": "179"
+    },
+    {
+      "keyword": "破產 法",
+      "volume": "90",
+      "competition": "LOW",
+      "competitionIndex": "8",
+      "cpcLow": "3.47",
+      "cpcHigh": "16.41",
+      "ordinanceName": "Bankruptcy Ordinance",
+      "ordinanceCap": "6"
+    },
+    {
+      "keyword": "cap 559",
+      "volume": "90",
+      "competition": "LOW",
+      "competitionIndex": "0",
+      "cpcLow": "0.00",
+      "cpcHigh": "0.00",
+      "ordinanceName": "Trade Marks Ordinance",
+      "ordinanceCap": "559"
+    },
+    {
+      "keyword": "trademark logo",
+      "volume": "90",
+      "competition": "LOW",
+      "competitionIndex": "17",
+      "cpcLow": "18.58",
+      "cpcHigh": "48.18",
+      "ordinanceName": "Trade Marks Ordinance",
+      "ordinanceCap": "559"
+    },
+    {
+      "keyword": "trademark registration search",
+      "volume": "90",
+      "competition": "LOW",
+      "competitionIndex": "9",
+      "cpcLow": "10.04",
+      "cpcHigh": "32.59",
+      "ordinanceName": "Trade Marks Ordinance",
+      "ordinanceCap": "559"
+    },
+    {
+      "keyword": "trade mark a logo",
+      "volume": "90",
+      "competition": "LOW",
+      "competitionIndex": "17",
+      "cpcLow": "18.58",
+      "cpcHigh": "48.18",
+      "ordinanceName": "Trade Marks Ordinance",
+      "ordinanceCap": "559"
+    },
+    {
+      "keyword": "cnipa trademark search",
+      "volume": "90",
+      "competition": "LOW",
+      "competitionIndex": "12",
+      "cpcLow": "28.15",
+      "cpcHigh": "30.14",
+      "ordinanceName": "Trade Marks Ordinance",
+      "ordinanceCap": "559"
+    },
+    {
+      "keyword": "ipos trademark search",
+      "volume": "90",
+      "competition": "LOW",
+      "competitionIndex": "13",
+      "cpcLow": "16.41",
+      "cpcHigh": "30.13",
+      "ordinanceName": "Trade Marks Ordinance",
+      "ordinanceCap": "559"
+    },
+    {
+      "keyword": "trademark application search",
+      "volume": "90",
+      "competition": "LOW",
+      "competitionIndex": "9",
+      "cpcLow": "10.04",
+      "cpcHigh": "32.59",
+      "ordinanceName": "Trade Marks Ordinance",
+      "ordinanceCap": "559"
+    },
+    {
+      "keyword": "logo and trademark",
+      "volume": "90",
+      "competition": "LOW",
+      "competitionIndex": "17",
+      "cpcLow": "18.58",
+      "cpcHigh": "48.18",
+      "ordinanceName": "Trade Marks Ordinance",
+      "ordinanceCap": "559"
+    },
+    {
+      "keyword": "infringing trademark",
+      "volume": "90",
+      "competition": "LOW",
+      "competitionIndex": "10",
+      "cpcLow": "15.07",
+      "cpcHigh": "28.11",
+      "ordinanceName": "Trade Marks Ordinance",
+      "ordinanceCap": "559"
+    },
+    {
+      "keyword": "ukipo tm search",
+      "volume": "90",
+      "competition": "LOW",
+      "competitionIndex": "13",
+      "cpcLow": "16.41",
+      "cpcHigh": "30.13",
+      "ordinanceName": "Trade Marks Ordinance",
+      "ordinanceCap": "559"
+    },
+    {
+      "keyword": "jones lang lasalle property management",
+      "volume": "90",
+      "competition": "MEDIUM",
+      "competitionIndex": "45",
+      "cpcLow": "6.00",
+      "cpcHigh": "41.81",
+      "ordinanceName": "Building Management Ordinance",
+      "ordinanceCap": "344"
+    },
+    {
+      "keyword": "jll property manager",
+      "volume": "90",
+      "competition": "MEDIUM",
+      "competitionIndex": "45",
+      "cpcLow": "6.00",
+      "cpcHigh": "41.81",
+      "ordinanceName": "Building Management Ordinance",
+      "ordinanceCap": "344"
+    },
+    {
+      "keyword": "property management jll",
+      "volume": "90",
+      "competition": "MEDIUM",
+      "competitionIndex": "45",
+      "cpcLow": "6.00",
+      "cpcHigh": "41.81",
+      "ordinanceName": "Building Management Ordinance",
+      "ordinanceCap": "344"
+    },
+    {
+      "keyword": "cap 26",
+      "volume": "90",
+      "competition": "LOW",
+      "competitionIndex": "0",
+      "cpcLow": "0.00",
+      "cpcHigh": "0.00",
+      "ordinanceName": "Sale of Goods Ordinance",
+      "ordinanceCap": "26"
+    },
+    {
+      "keyword": "貨品 售賣 條例",
+      "volume": "90",
+      "competition": "LOW",
+      "competitionIndex": "0",
+      "cpcLow": "0.00",
+      "cpcHigh": "0.00",
+      "ordinanceName": "Sale of Goods Ordinance",
+      "ordinanceCap": "26"
+    },
+    {
+      "keyword": "cap 553",
+      "volume": "90",
+      "competition": "LOW",
+      "competitionIndex": "0",
+      "cpcLow": "0.00",
+      "cpcHigh": "0.00",
+      "ordinanceName": "Electronic Transactions Ordinance",
+      "ordinanceCap": "553"
+    },
+    {
+      "keyword": "iso 45001 2018",
+      "volume": "70",
+      "competition": "LOW",
+      "competitionIndex": "30",
+      "cpcLow": "4.31",
+      "cpcHigh": "16.72",
+      "ordinanceName": "Occupational Safety and Health Ordinance",
+      "ordinanceCap": "509"
+    },
+    {
+      "keyword": "iso 18001",
+      "volume": "70",
+      "competition": "LOW",
+      "competitionIndex": "18",
+      "cpcLow": "5.26",
+      "cpcHigh": "15.77",
+      "ordinanceName": "Occupational Safety and Health Ordinance",
+      "ordinanceCap": "509"
+    },
+    {
+      "keyword": "45001",
+      "volume": "70",
+      "competition": "LOW",
+      "competitionIndex": "13",
+      "cpcLow": "4.89",
+      "cpcHigh": "13.94",
+      "ordinanceName": "Occupational Safety and Health Ordinance",
+      "ordinanceCap": "509"
+    },
+    {
+      "keyword": "eddid securities and futures limited",
+      "volume": "70",
+      "competition": "LOW",
+      "competitionIndex": "3",
+      "cpcLow": "0.00",
+      "cpcHigh": "0.00",
+      "ordinanceName": "Securities and Futures Ordinance",
+      "ordinanceCap": "571"
+    },
+    {
+      "keyword": "sfc aml",
+      "volume": "70",
+      "competition": "LOW",
+      "competitionIndex": "0",
+      "cpcLow": "0.00",
+      "cpcHigh": "0.00",
+      "ordinanceName": "Securities and Futures Ordinance",
+      "ordinanceCap": "571"
+    },
+    {
+      "keyword": "tfi securities and futures limited",
+      "volume": "70",
+      "competition": "LOW",
+      "competitionIndex": "0",
+      "cpcLow": "0.00",
+      "cpcHigh": "0.00",
+      "ordinanceName": "Securities and Futures Ordinance",
+      "ordinanceCap": "571"
+    },
+    {
+      "keyword": "工傷 補償",
+      "volume": "70",
+      "competition": "MEDIUM",
+      "competitionIndex": "39",
+      "cpcLow": "4.18",
+      "cpcHigh": "10.37",
+      "ordinanceName": "Employees' Compensation Ordinance",
+      "ordinanceCap": "282"
+    },
+    {
+      "keyword": "workers compensation",
+      "volume": "70",
+      "competition": "LOW",
+      "competitionIndex": "13",
+      "cpcLow": "7.71",
+      "cpcHigh": "65.65",
+      "ordinanceName": "Employees' Compensation Ordinance",
+      "ordinanceCap": "282"
+    },
+    {
+      "keyword": "employees compensation ordinance cap 282",
+      "volume": "70",
+      "competition": "LOW",
+      "competitionIndex": "0",
+      "cpcLow": "0.00",
+      "cpcHigh": "0.00",
+      "ordinanceName": "Employees' Compensation Ordinance",
+      "ordinanceCap": "282"
+    },
+    {
+      "keyword": "immigration ordinance cap 115",
+      "volume": "70",
+      "competition": "LOW",
+      "competitionIndex": "2",
+      "cpcLow": "0.00",
+      "cpcHigh": "0.00",
+      "ordinanceName": "Immigration Ordinance",
+      "ordinanceCap": "115"
+    },
+    {
+      "keyword": "trademark search worldwide",
+      "volume": "70",
+      "competition": "MEDIUM",
+      "competitionIndex": "36",
+      "cpcLow": "5.70",
+      "cpcHigh": "28.13",
+      "ordinanceName": "Trade Marks Ordinance",
+      "ordinanceCap": "559"
+    },
+    {
+      "keyword": "euipo trademark search",
+      "volume": "70",
+      "competition": "LOW",
+      "competitionIndex": "23",
+      "cpcLow": "5.94",
+      "cpcHigh": "30.13",
+      "ordinanceName": "Trade Marks Ordinance",
+      "ordinanceCap": "559"
+    },
+    {
+      "keyword": "international trademark search",
+      "volume": "70",
+      "competition": "MEDIUM",
+      "competitionIndex": "36",
+      "cpcLow": "5.70",
+      "cpcHigh": "28.13",
+      "ordinanceName": "Trade Marks Ordinance",
+      "ordinanceCap": "559"
+    },
+    {
+      "keyword": "global trademark search",
+      "volume": "70",
+      "competition": "MEDIUM",
+      "competitionIndex": "36",
+      "cpcLow": "5.70",
+      "cpcHigh": "28.13",
+      "ordinanceName": "Trade Marks Ordinance",
+      "ordinanceCap": "559"
+    },
+    {
+      "keyword": "amazon brand registration",
+      "volume": "70",
+      "competition": "LOW",
+      "competitionIndex": "8",
+      "cpcLow": "6.64",
+      "cpcHigh": "28.13",
+      "ordinanceName": "Trade Marks Ordinance",
+      "ordinanceCap": "559"
+    },
+    {
+      "keyword": "brand registry on amazon",
+      "volume": "70",
+      "competition": "LOW",
+      "competitionIndex": "8",
+      "cpcLow": "6.64",
+      "cpcHigh": "28.13",
+      "ordinanceName": "Trade Marks Ordinance",
+      "ordinanceCap": "559"
+    },
+    {
+      "keyword": "world trademark search",
+      "volume": "70",
+      "competition": "MEDIUM",
+      "competitionIndex": "36",
+      "cpcLow": "5.70",
+      "cpcHigh": "28.13",
+      "ordinanceName": "Trade Marks Ordinance",
+      "ordinanceCap": "559"
+    },
+    {
+      "keyword": "international trade mark search",
+      "volume": "70",
+      "competition": "MEDIUM",
+      "competitionIndex": "36",
+      "cpcLow": "5.70",
+      "cpcHigh": "28.13",
+      "ordinanceName": "Trade Marks Ordinance",
+      "ordinanceCap": "559"
+    },
+    {
+      "keyword": "criminal procedure",
+      "volume": "70",
+      "competition": "LOW",
+      "competitionIndex": "9",
+      "cpcLow": "0.00",
+      "cpcHigh": "0.00",
+      "ordinanceName": "Criminal Procedure Ordinance",
+      "ordinanceCap": "221"
+    },
+    {
+      "keyword": "crim pro",
+      "volume": "70",
+      "competition": "LOW",
+      "competitionIndex": "9",
+      "cpcLow": "0.00",
+      "cpcHigh": "0.00",
+      "ordinanceName": "Criminal Procedure Ordinance",
+      "ordinanceCap": "221"
+    },
+    {
+      "keyword": "money laundering ordinance",
+      "volume": "70",
+      "competition": "LOW",
+      "competitionIndex": "1",
+      "cpcLow": "0.00",
+      "cpcHigh": "0.00",
+      "ordinanceName": "Organized and Serious Crimes Ordinance",
+      "ordinanceCap": "455"
+    },
+    {
+      "keyword": "jewel foods",
+      "volume": "70",
+      "competition": "LOW",
+      "competitionIndex": "12",
+      "cpcLow": "0.00",
+      "cpcHigh": "0.00",
+      "ordinanceName": "Organized and Serious Crimes Ordinance",
+      "ordinanceCap": "455"
+    },
+    {
+      "keyword": "jewel osco food",
+      "volume": "70",
+      "competition": "LOW",
+      "competitionIndex": "12",
+      "cpcLow": "0.00",
+      "cpcHigh": "0.00",
+      "ordinanceName": "Organized and Serious Crimes Ordinance",
+      "ordinanceCap": "455"
+    },
+    {
+      "keyword": "bribery ordinance",
+      "volume": "70",
+      "competition": "LOW",
+      "competitionIndex": "0",
+      "cpcLow": "0.00",
+      "cpcHigh": "0.00",
+      "ordinanceName": "Prevention of Bribery Ordinance",
+      "ordinanceCap": "201"
+    },
+    {
+      "keyword": "fatal accidents",
+      "volume": "70",
+      "competition": "LOW",
+      "competitionIndex": "0",
+      "cpcLow": "0.00",
+      "cpcHigh": "0.00",
+      "ordinanceName": "Fatal Accidents Ordinance",
+      "ordinanceCap": "22"
+    },
+    {
+      "keyword": "limited partnership ordinance",
+      "volume": "50",
+      "competition": "LOW",
+      "competitionIndex": "0",
+      "cpcLow": "0.00",
+      "cpcHigh": "0.00",
+      "ordinanceName": "Companies Ordinance",
+      "ordinanceCap": "32"
+    },
+    {
+      "keyword": "the personal data privacy ordinance",
+      "volume": "50",
+      "competition": "LOW",
+      "competitionIndex": "0",
+      "cpcLow": "0.00",
+      "cpcHigh": "0.00",
+      "ordinanceName": "Companies Ordinance",
+      "ordinanceCap": "32"
+    },
+    {
+      "keyword": "土地 註冊 條例",
+      "volume": "50",
+      "competition": "LOW",
+      "competitionIndex": "0",
+      "cpcLow": "0.00",
+      "cpcHigh": "0.00",
+      "ordinanceName": "Land Registration Ordinance",
+      "ordinanceCap": "128"
+    },
+    {
+      "keyword": "osh trainings",
+      "volume": "50",
+      "competition": "LOW",
+      "competitionIndex": "5",
+      "cpcLow": "0.00",
+      "cpcHigh": "0.00",
+      "ordinanceName": "Occupational Safety and Health Ordinance",
+      "ordinanceCap": "509"
+    },
+    {
+      "keyword": "personal data ordinance",
+      "volume": "50",
+      "competition": "LOW",
+      "competitionIndex": "1",
+      "cpcLow": "0.00",
+      "cpcHigh": "0.00",
+      "ordinanceName": "Personal Data (Privacy) Ordinance",
+      "ordinanceCap": "486"
+    },
+    {
+      "keyword": "personal data privacy ordinance pdpo",
+      "volume": "50",
+      "competition": "LOW",
+      "competitionIndex": "1",
+      "cpcLow": "0.00",
+      "cpcHigh": "0.00",
+      "ordinanceName": "Personal Data (Privacy) Ordinance",
+      "ordinanceCap": "486"
+    },
+    {
+      "keyword": "the personal data privacy ordinance",
+      "volume": "50",
+      "competition": "LOW",
+      "competitionIndex": "0",
+      "cpcLow": "0.00",
+      "cpcHigh": "0.00",
+      "ordinanceName": "Personal Data (Privacy) Ordinance",
+      "ordinanceCap": "486"
+    },
+    {
+      "keyword": "securities and futures",
+      "volume": "50",
+      "competition": "LOW",
+      "competitionIndex": "1",
+      "cpcLow": "0.00",
+      "cpcHigh": "0.00",
+      "ordinanceName": "Securities and Futures Ordinance",
+      "ordinanceCap": "571"
+    },
+    {
+      "keyword": "us treasury bond futures",
+      "volume": "50",
+      "competition": "LOW",
+      "competitionIndex": "3",
+      "cpcLow": "0.00",
+      "cpcHigh": "0.00",
+      "ordinanceName": "Securities and Futures Ordinance",
+      "ordinanceCap": "571"
+    },
+    {
+      "keyword": "the securities and futures commission",
+      "volume": "50",
+      "competition": "LOW",
+      "competitionIndex": "0",
+      "cpcLow": "0.00",
+      "cpcHigh": "0.00",
+      "ordinanceName": "Securities and Futures Ordinance",
+      "ordinanceCap": "571"
+    },
+    {
+      "keyword": "www sfc hk",
+      "volume": "50",
+      "competition": "LOW",
+      "competitionIndex": "4",
+      "cpcLow": "0.00",
+      "cpcHigh": "0.00",
+      "ordinanceName": "Securities and Futures Ordinance",
+      "ordinanceCap": "571"
+    },
+    {
+      "keyword": "workers compensation bc",
+      "volume": "50",
+      "competition": "LOW",
+      "competitionIndex": "0",
+      "cpcLow": "0.00",
+      "cpcHigh": "0.00",
+      "ordinanceName": "Employees' Compensation Ordinance",
+      "ordinanceCap": "282"
+    },
+    {
+      "keyword": "婚姻 訴訟 條例",
+      "volume": "50",
+      "competition": "LOW",
+      "competitionIndex": "19",
+      "cpcLow": "7.28",
+      "cpcHigh": "24.88",
+      "ordinanceName": "Matrimonial Causes Ordinance",
+      "ordinanceCap": "179"
+    },
+    {
+      "keyword": "file for divorce",
+      "volume": "50",
+      "competition": "MEDIUM",
+      "competitionIndex": "39",
+      "cpcLow": "13.92",
+      "cpcHigh": "44.54",
+      "ordinanceName": "Matrimonial Causes Ordinance",
+      "ordinanceCap": "179"
+    },
+    {
+      "keyword": "marriage annulment",
+      "volume": "50",
+      "competition": "LOW",
+      "competitionIndex": "1",
+      "cpcLow": "0.00",
+      "cpcHigh": "0.00",
+      "ordinanceName": "Matrimonial Causes Ordinance",
+      "ordinanceCap": "179"
+    },
+    {
+      "keyword": "uncontested",
+      "volume": "50",
+      "competition": "LOW",
+      "competitionIndex": "0",
+      "cpcLow": "0.00",
+      "cpcHigh": "0.00",
+      "ordinanceName": "Matrimonial Causes Ordinance",
+      "ordinanceCap": "179"
+    },
+    {
+      "keyword": "業主 與 租 客 條例",
+      "volume": "50",
+      "competition": "LOW",
+      "competitionIndex": "12",
+      "cpcLow": "0.83",
+      "cpcHigh": "3.90",
+      "ordinanceName": "Landlord and Tenant Ordinance",
+      "ordinanceCap": "7"
+    },
+    {
+      "keyword": "notice to quit",
+      "volume": "50",
+      "competition": "LOW",
+      "competitionIndex": "0",
+      "cpcLow": "0.00",
+      "cpcHigh": "0.00",
+      "ordinanceName": "Landlord and Tenant Ordinance",
+      "ordinanceCap": "7"
+    },
+    {
+      "keyword": "trademark lawyer",
+      "volume": "50",
+      "competition": "LOW",
+      "competitionIndex": "21",
+      "cpcLow": "18.38",
+      "cpcHigh": "54.21",
+      "ordinanceName": "Trade Marks Ordinance",
+      "ordinanceCap": "559"
+    },
+    {
+      "keyword": "trademark usa",
+      "volume": "50",
+      "competition": "LOW",
+      "competitionIndex": "26",
+      "cpcLow": "11.02",
+      "cpcHigh": "40.20",
+      "ordinanceName": "Trade Marks Ordinance",
+      "ordinanceCap": "559"
+    },
+    {
+      "keyword": "brand registration",
+      "volume": "50",
+      "competition": "MEDIUM",
+      "competitionIndex": "38",
+      "cpcLow": "11.72",
+      "cpcHigh": "40.19",
+      "ordinanceName": "Trade Marks Ordinance",
+      "ordinanceCap": "559"
+    },
+    {
+      "keyword": "logo registration",
+      "volume": "50",
+      "competition": "MEDIUM",
+      "competitionIndex": "43",
+      "cpcLow": "23.23",
+      "cpcHigh": "48.20",
+      "ordinanceName": "Trade Marks Ordinance",
+      "ordinanceCap": "559"
+    },
+    {
+      "keyword": "register a brand",
+      "volume": "50",
+      "competition": "MEDIUM",
+      "competitionIndex": "38",
+      "cpcLow": "11.72",
+      "cpcHigh": "40.19",
+      "ordinanceName": "Trade Marks Ordinance",
+      "ordinanceCap": "559"
+    },
+    {
+      "keyword": "register logo",
+      "volume": "50",
+      "competition": "MEDIUM",
+      "competitionIndex": "43",
+      "cpcLow": "23.23",
+      "cpcHigh": "48.20",
+      "ordinanceName": "Trade Marks Ordinance",
+      "ordinanceCap": "559"
+    },
+    {
+      "keyword": "patent a design",
+      "volume": "50",
+      "competition": "MEDIUM",
+      "competitionIndex": "38",
+      "cpcLow": "7.16",
+      "cpcHigh": "30.14",
+      "ordinanceName": "Trade Marks Ordinance",
+      "ordinanceCap": "559"
+    },
+    {
+      "keyword": "registering a brand",
+      "volume": "50",
+      "competition": "MEDIUM",
+      "competitionIndex": "38",
+      "cpcLow": "11.72",
+      "cpcHigh": "40.19",
+      "ordinanceName": "Trade Marks Ordinance",
+      "ordinanceCap": "559"
+    },
+    {
+      "keyword": "lawyer for trademark",
+      "volume": "50",
+      "competition": "LOW",
+      "competitionIndex": "21",
+      "cpcLow": "18.38",
+      "cpcHigh": "54.21",
+      "ordinanceName": "Trade Marks Ordinance",
+      "ordinanceCap": "559"
+    },
+    {
+      "keyword": "trademark law firm",
+      "volume": "50",
+      "competition": "LOW",
+      "competitionIndex": "0",
+      "cpcLow": "0.00",
+      "cpcHigh": "0.00",
+      "ordinanceName": "Trade Marks Ordinance",
+      "ordinanceCap": "559"
+    },
+    {
+      "keyword": "us patent trademark",
+      "volume": "50",
+      "competition": "LOW",
+      "competitionIndex": "26",
+      "cpcLow": "11.02",
+      "cpcHigh": "40.20",
+      "ordinanceName": "Trade Marks Ordinance",
+      "ordinanceCap": "559"
+    },
+    {
+      "keyword": "tm trademark",
+      "volume": "50",
+      "competition": "LOW",
+      "competitionIndex": "12",
+      "cpcLow": "28.11",
+      "cpcHigh": "28.13",
+      "ordinanceName": "Trade Marks Ordinance",
+      "ordinanceCap": "559"
+    },
+    {
+      "keyword": "patent and trademark attorney",
+      "volume": "50",
+      "competition": "LOW",
+      "competitionIndex": "5",
+      "cpcLow": "0.00",
+      "cpcHigh": "0.00",
+      "ordinanceName": "Trade Marks Ordinance",
+      "ordinanceCap": "559"
+    },
+    {
+      "keyword": "indian trade mark search",
+      "volume": "50",
+      "competition": "LOW",
+      "competitionIndex": "14",
+      "cpcLow": "28.11",
+      "cpcHigh": "28.14",
+      "ordinanceName": "Trade Marks Ordinance",
+      "ordinanceCap": "559"
+    },
+    {
+      "keyword": "building management office",
+      "volume": "50",
+      "competition": "LOW",
+      "competitionIndex": "3",
+      "cpcLow": "0.00",
+      "cpcHigh": "0.00",
+      "ordinanceName": "Building Management Ordinance",
+      "ordinanceCap": "344"
+    },
+    {
+      "keyword": "電子 交易 條例",
+      "volume": "50",
+      "competition": "LOW",
+      "competitionIndex": "0",
+      "cpcLow": "0.00",
+      "cpcHigh": "0.00",
+      "ordinanceName": "Electronic Transactions Ordinance",
+      "ordinanceCap": "553"
+    },
+    {
+      "keyword": "code criminal procedure",
+      "volume": "50",
+      "competition": "LOW",
+      "competitionIndex": "2",
+      "cpcLow": "0.00",
+      "cpcHigh": "0.00",
+      "ordinanceName": "Criminal Procedure Ordinance",
+      "ordinanceCap": "221"
+    },
+    {
+      "keyword": "cap 22",
+      "volume": "50",
+      "competition": "LOW",
+      "competitionIndex": "0",
+      "cpcLow": "0.00",
+      "cpcHigh": "0.00",
+      "ordinanceName": "Fatal Accidents Ordinance",
+      "ordinanceCap": "22"
+    }
+  ]
+}

@@ -3,6 +3,11 @@ import { searchCasesRaw, getCaseDetails, getCaseUrl, SearchResult } from "@/lib/
 import { createClient } from "@/lib/supabase/server";
 import { SYSTEM_PROMPTS, DIRECT_PROMPTS, INSURANCE_COURTS } from "@/lib/prompts";
 
+// Load ordinance structures for getOrdinanceSection tool
+import cap57Data from "@/data/cap57-annotations.json";
+import cap201Data from "@/data/cap201-structure.json";
+import cap282Data from "@/data/cap282-annotations.json";
+
 
 const searchCasesDeclaration: FunctionDeclaration = {
   name: "searchCases",
@@ -58,12 +63,42 @@ const getCaseDetailsDeclaration: FunctionDeclaration = {
   },
 };
 
+const getOrdinanceSectionDeclaration: FunctionDeclaration = {
+  name: "getOrdinanceSection",
+  description: `Get the full statutory text of a Hong Kong ordinance section. Use this when the user asks about a section they are not currently viewing, or when you need to reference the exact wording of a provision.
+
+Available ordinances:
+
+**Cap. 57 (Employment Ordinance 僱傭條例)**
+Key sections: s.2 (definitions), s.3 (continuous contract), s.4 (fixed term), s.6 (notice), s.6A (continuous contract info), s.7 (payment in lieu), s.9 (unreasonable dismissal), s.18 (employment protection), s.31B (severance payment), s.31I-31R (long service payment), s.32 (sickness allowance), s.33 (maternity leave), s.38B (paternity leave), s.40 (annual leave), s.41 (holiday pay), s.43C (statutory holidays), s.44A (end of year payment), s.63C (offences), s.70 (contracting out)
+
+**Cap. 201 (Prevention of Bribery Ordinance 防止賄賂條例)**
+Key sections: s.4 (bribery by agent), s.5 (corruption in elections), s.8 (bribery of public servants), s.9 (bribery transactions with agents), s.10 (false entries), s.12 (penalties), s.30 (ICAC powers)
+
+**Cap. 282 (Employees' Compensation Ordinance 僱員補償條例)**
+Key sections: s.2 (interpretation), s.3 (liability for compensation), s.4 (scope), s.5 (amount of compensation), s.6 (death cases), s.7 (partial incapacity), s.9 (common law rights), s.10A (employees' compensation insurance), s.18 (occupational diseases), s.24 (assessment), s.36 (certificate of compensation), s.40 (offences)`,
+  parameters: {
+    type: Type.OBJECT,
+    properties: {
+      cap: {
+        type: Type.NUMBER,
+        description: "The ordinance chapter number. Must be one of: 57 (Employment Ordinance), 201 (Prevention of Bribery Ordinance), or 282 (Employees' Compensation Ordinance)",
+      },
+      section: {
+        type: Type.STRING,
+        description: "The section number, e.g., '4', '9', '31B', '6A'",
+      },
+    },
+    required: ["cap", "section"],
+  },
+};
+
 const searchOnlyTools: Tool[] = [
-  { functionDeclarations: [searchCasesDeclaration] },
+  { functionDeclarations: [searchCasesDeclaration, getOrdinanceSectionDeclaration] },
 ];
 
 const readOnlyTools: Tool[] = [
-  { functionDeclarations: [getCaseDetailsDeclaration] },
+  { functionDeclarations: [getCaseDetailsDeclaration, getOrdinanceSectionDeclaration] },
 ];
 
 // Phase types: which tools are available at each iteration
@@ -153,32 +188,147 @@ async function executeRead(
   return result;
 }
 
+// Generate follow-up questions based on conversation context
+async function generateFollowUpQuestions(
+  ai: GoogleGenAI,
+  conversationContents: Array<{ role: string; parts: Array<unknown> }>,
+  userMessage: string
+): Promise<string[]> {
+  try {
+    // Extract the last assistant message text
+    const lastModelMessage = conversationContents
+      .reverse()
+      .find(msg => {
+        const parts = msg.parts as Array<{ text?: string }>;
+        return msg.role === "model" && parts.some(p => p.text && p.text.length > 50);
+      });
+
+    if (!lastModelMessage) {
+      console.log("[follow-up] No model message found");
+      return [];
+    }
+
+    const parts = lastModelMessage.parts as Array<{ text?: string }>;
+    const answerText = parts.find(p => p.text)?.text || "";
+
+    // Use function calling for structured output
+    const suggestQuestionsTool: Tool = {
+      functionDeclarations: [{
+        name: "suggestFollowUpQuestions",
+        description: "Suggest follow-up questions",
+        parameters: {
+          type: Type.OBJECT,
+          properties: {
+            questions: {
+              type: Type.ARRAY,
+              items: { type: Type.STRING },
+            },
+          },
+          required: ["questions"],
+        },
+      }],
+    };
+
+    const followUpPrompt = `Legal answer: "${answerText.slice(0, 500)}..."\n\nYou MUST call the suggestFollowUpQuestions function with 2-3 follow-up questions. Do not write text - only call the function.`;
+
+    const followUpResponse = await ai.models.generateContent({
+      model: "gemini-3-flash-preview",
+      contents: [
+        { role: "user", parts: [{ text: followUpPrompt }] },
+      ],
+      config: {
+        temperature: 0.7,
+        tools: [suggestQuestionsTool],
+        toolConfig: { functionCallingConfig: { mode: "ANY" } },
+      },
+    });
+
+    // Extract function call result
+    const candidate = followUpResponse.candidates?.[0];
+    const functionCall = candidate?.content?.parts?.find((p: { functionCall?: { name: string; args: { questions: string[] } } }) => p.functionCall)?.functionCall;
+
+    console.log("[follow-up] Function call:", JSON.stringify(functionCall));
+
+    if (functionCall?.name === "suggestFollowUpQuestions" && functionCall.args?.questions) {
+      const questions = functionCall.args.questions
+        .filter((q: string) => q && q.length > 5)
+        .slice(0, 3);
+      console.log("[follow-up] Parsed questions:", questions);
+      return questions;
+    }
+
+    console.log("[follow-up] No function call found");
+    return [];
+  } catch (error) {
+    console.error("[follow-up] Error generating questions:", error);
+    return [];
+  }
+}
+
+// Execute getOrdinanceSection to fetch statutory text
+function executeGetOrdinanceSection(cap: number, section: string): string {
+  // Normalize section number (remove 's.' prefix if present)
+  const normalizedSection = section.replace(/^s\.?\s*/i, "");
+
+  try {
+    if (cap === 57) {
+      // Cap 57 uses flat sections array in annotations file
+      const sectionData = cap57Data.sections.find((s: { section: string }) => s.section === normalizedSection);
+      if (!sectionData) {
+        return `Section ${section} not found in Cap. 57 (Employment Ordinance). Available sections: ${cap57Data.sections.map((s: { section: string }) => "s." + s.section).join(", ")}`;
+      }
+      return `**Cap. 57 s.${normalizedSection}: ${(sectionData as { titleEn?: string }).titleEn || ""}**\n\nEnglish text:\n${(sectionData as { sectionTextEn?: string }).sectionTextEn || "Text not available"}\n\nChinese text (中文文本):\n${(sectionData as { sectionTextZh?: string }).sectionTextZh || "Text not available"}`;
+    } else if (cap === 201) {
+      // Cap 201 uses hierarchical parts structure
+      for (const part of cap201Data.parts) {
+        const sectionData = part.sections.find((s: { id: string }) => s.id === `s.${normalizedSection}` || s.id === normalizedSection);
+        if (sectionData) {
+          return `**Cap. 201 s.${normalizedSection}: ${(sectionData as { title?: string }).title || ""}**\n\nEnglish text:\n${(sectionData as { textEn?: string }).textEn || "Text not available"}\n\nChinese text (中文文本):\n${(sectionData as { textZh?: string }).textZh || "Text not available"}`;
+        }
+      }
+      return `Section ${section} not found in Cap. 201 (Prevention of Bribery Ordinance).`;
+    } else if (cap === 282) {
+      // Cap 282 uses flat sections array in annotations file
+      const sectionData = cap282Data.sections.find((s: { section: string }) => s.section === normalizedSection);
+      if (!sectionData) {
+        return `Section ${section} not found in Cap. 282 (Employees' Compensation Ordinance). Available sections: ${cap282Data.sections.map((s: { section: string }) => "s." + s.section).join(", ")}`;
+      }
+      return `**Cap. 282 s.${normalizedSection}: ${(sectionData as { titleEn?: string }).titleEn || ""}**\n\nEnglish text:\n${(sectionData as { sectionTextEn?: string }).sectionTextEn || "Text not available"}\n\nChinese text (中文文本):\n${(sectionData as { sectionTextZh?: string }).sectionTextZh || "Text not available"}`;
+    } else {
+      return `Invalid ordinance chapter number: ${cap}. Supported: 57, 201, 282`;
+    }
+  } catch (error) {
+    return `Error fetching section: ${error instanceof Error ? error.message : "Unknown error"}`;
+  }
+}
+
 export async function POST(request: Request) {
   try {
-    // Auth check
+    // Auth check - allow anonymous users (for ordinance landing pages)
     const supabase = await createClient();
     const { data: { user } } = await supabase.auth.getUser();
-    if (!user) {
-      return Response.json({ error: "Unauthorized" }, { status: 401 });
+
+    // Only enforce message limits for authenticated users
+    if (user) {
+      // Atomically check limit and increment message count
+      const { data: rpcResult, error: rpcError } = await supabase
+        .rpc("increment_message_count", { uid: user.id });
+
+      if (rpcError) {
+        console.error("RPC error:", rpcError);
+        return Response.json({ error: "Failed to check usage" }, { status: 500 });
+      }
+
+      if (!rpcResult?.allowed) {
+        return Response.json(
+          { error: "limit_reached", plan: rpcResult?.plan || "free", count: rpcResult?.count || 0, limit: rpcResult?.limit || 0 },
+          { status: 403 }
+        );
+      }
     }
+    // Anonymous users can proceed without message counting (limited by frontend)
 
-    // Atomically check limit and increment message count
-    const { data: rpcResult, error: rpcError } = await supabase
-      .rpc("increment_message_count", { uid: user.id });
-
-    if (rpcError) {
-      console.error("RPC error:", rpcError);
-      return Response.json({ error: "Failed to check usage" }, { status: 500 });
-    }
-
-    if (!rpcResult?.allowed) {
-      return Response.json(
-        { error: "limit_reached", plan: rpcResult?.plan || "free", count: rpcResult?.count || 0, limit: rpcResult?.limit || 0 },
-        { status: 403 }
-      );
-    }
-
-    const { message, history, mode = "normal", outputLanguage = "EN", userRole = "insurance", caseLanguage } = (await request.json()) as {
+    const { message, history, mode = "normal", outputLanguage = "EN", userRole = "lawyer", caseLanguage } = (await request.json()) as {
       message: string;
       history: Message[];
       mode?: "fast" | "normal" | "deep";
@@ -188,7 +338,7 @@ export async function POST(request: Request) {
     };
 
     console.log("[chat] outputLanguage:", outputLanguage, "userRole:", userRole, "caseLanguage:", caseLanguage, "mode:", mode);
-    const systemPrompt = SYSTEM_PROMPTS[userRole]?.[outputLanguage] || SYSTEM_PROMPTS.insurance.EN;
+    const systemPrompt = SYSTEM_PROMPTS[userRole]?.[outputLanguage] || SYSTEM_PROMPTS.lawyer.EN;
     const allowedCourts = userRole === "insurance" ? INSURANCE_COURTS : undefined;
 
     const thinkingLevelConfig: Record<string, ThinkingLevel> = {
@@ -260,33 +410,101 @@ Reply with EXACTLY one word:
           if (!needsResearch) {
             sendStage("responding", "Generating response...");
 
-            const directPrompt = DIRECT_PROMPTS[userRole]?.[outputLanguage] || DIRECT_PROMPTS.insurance.EN;
+            const directPrompt = DIRECT_PROMPTS[userRole]?.[outputLanguage] || DIRECT_PROMPTS.lawyer.EN;
+            const directTools: Tool[] = [{ functionDeclarations: [getOrdinanceSectionDeclaration] }];
+
             const directResponse = await ai.models.generateContentStream({
               model: "gemini-3-flash-preview",
               contents: conversationContents,
               config: {
                 systemInstruction: directPrompt,
+                tools: directTools,
                 thinkingConfig: { thinkingLevel, includeThoughts: true },
               },
             });
+
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
+            const directParts: any[] = [];
+            const directOrdinanceCalls: Array<{ cap: number; section: string }> = [];
 
             for await (const chunk of directResponse) {
               const candidate = (chunk as { candidates?: Array<{ content?: { parts?: Array<unknown> } }> }).candidates?.[0];
               if (!candidate?.content?.parts) continue;
 
               for (const part of candidate.content.parts) {
-                const typedPart = part as { thought?: boolean; text?: string };
+                directParts.push(part);
+                const typedPart = part as { thought?: boolean; text?: string; functionCall?: { name: string; args: Record<string, unknown> } };
+
                 if (typedPart.text && !typedPart.thought) {
                   sendEvent("text", typedPart.text);
                 } else if (typedPart.thought && typedPart.text) {
                   sendEvent("thinking", { type: "thought", content: typedPart.text, iteration: 1 });
+                } else if (typedPart.functionCall?.name === "getOrdinanceSection") {
+                  const cap = typedPart.functionCall.args.cap as number;
+                  const section = typedPart.functionCall.args.section as string;
+                  if (cap && section) {
+                    directOrdinanceCalls.push({ cap, section });
+                    sendEvent("tool_call", { name: "getOrdinanceSection", args: { cap, section }, iteration: 1 });
+                  }
+                }
+              }
+            }
+
+            // If ordinance calls were made, execute them and continue
+            if (directOrdinanceCalls.length > 0) {
+              conversationContents.push({ role: "model", parts: directParts });
+
+              const ordinanceResponseParts: Array<{ functionResponse: { name: string; response: { result: string } } }> = [];
+              for (const { cap, section } of directOrdinanceCalls) {
+                try {
+                  const sectionText = executeGetOrdinanceSection(cap, section);
+                  ordinanceResponseParts.push({
+                    functionResponse: { name: "getOrdinanceSection", response: { result: sectionText } },
+                  });
+                  sendEvent("tool_result", { name: "getOrdinanceSection", summary: `Retrieved Cap. ${cap} s.${section}`, iteration: 1 });
+                } catch (error) {
+                  const errorMsg = `Error: ${error instanceof Error ? error.message : "Unknown error"}`;
+                  ordinanceResponseParts.push({
+                    functionResponse: { name: "getOrdinanceSection", response: { result: errorMsg } },
+                  });
+                }
+              }
+
+              conversationContents.push({ role: "user", parts: ordinanceResponseParts });
+
+              // Generate final response with ordinance context
+              const finalDirectResponse = await ai.models.generateContentStream({
+                model: "gemini-3-flash-preview",
+                contents: conversationContents,
+                config: {
+                  systemInstruction: directPrompt,
+                  thinkingConfig: { thinkingLevel: ThinkingLevel.LOW, includeThoughts: true },
+                },
+              });
+
+              for await (const chunk of finalDirectResponse) {
+                const candidate = (chunk as { candidates?: Array<{ content?: { parts?: Array<unknown> } }> }).candidates?.[0];
+                if (!candidate?.content?.parts) continue;
+
+                for (const part of candidate.content.parts) {
+                  const typedPart = part as { thought?: boolean; text?: string };
+                  if (typedPart.text && !typedPart.thought) {
+                    sendEvent("text", typedPart.text);
+                  } else if (typedPart.thought && typedPart.text) {
+                    sendEvent("thinking", { type: "thought", content: typedPart.text, iteration: 1 });
+                  }
                 }
               }
             }
 
             sendEvent("done", { iterations: 1 });
-            controller.close();
-            return;
+
+            // Generate follow-up questions AFTER sending done
+            const followUpQuestions = await generateFollowUpQuestions(ai, conversationContents, message);
+            // Always send the event, even if empty, to clear loading state
+            sendEvent("follow_up_questions", followUpQuestions);
+
+            return; // Don't close here - let finally block handle it
           }
 
           // ────────────────────────────────────────────────────────────
@@ -396,31 +614,69 @@ Reply with EXACTLY one word:
               }
             }
 
-            // Execute all search calls and accumulate chunks
+            // Execute all tool calls
+            // First add model's function calls to conversation
+            if (searchFunctionCalls.length > 0) {
+              conversationContents.push({ role: "model", parts: searchModelParts });
+            }
+
+            const toolResponseParts: Array<{ functionResponse: { name: string; response: { result: string } } }> = [];
+
             for (const call of searchFunctionCalls) {
-              if (call.name !== "searchCases") continue;
-              searchCount++;
+              if (call.name === "searchCases") {
+                searchCount++;
+                try {
+                  const { results, formattedResult, urls } = await executeSearch(call.args, caseLanguage, allowedCourts);
 
-              try {
-                const { results, urls } = await executeSearch(call.args, caseLanguage, allowedCourts);
+                  // Merge URLs
+                  Object.assign(caseUrlMap, urls);
+                  sendEvent("case_urls", urls);
 
-                // Merge URLs
-                Object.assign(caseUrlMap, urls);
-                sendEvent("case_urls", urls);
-
-                // Accumulate unique chunks (deduplicate identical chunks, keep different chunks from same case)
-                for (const r of results) {
-                  const chunkKey = `${r.citation}|${r.chunkIndex}`;
-                  if (!allChunks.has(chunkKey)) {
-                    allChunks.set(chunkKey, { result: r, url: urls[r.citation] || "" });
+                  // Accumulate unique chunks (deduplicate identical chunks, keep different chunks from same case)
+                  for (const r of results) {
+                    const chunkKey = `${r.citation}|${r.chunkIndex}`;
+                    if (!allChunks.has(chunkKey)) {
+                      allChunks.set(chunkKey, { result: r, url: urls[r.citation] || "" });
+                    }
                   }
-                }
 
-                sendEvent("tool_result", { name: "searchCases", summary: `Found ${results.length} chunks`, iteration: phaseNum });
-              } catch (error) {
-                const errorMsg = `Error: ${error instanceof Error ? error.message : "Unknown error"}`;
-                sendEvent("tool_result", { name: "searchCases", summary: errorMsg, iteration: phaseNum });
+                  // Add formatted result to tool responses for Gemini to see
+                  toolResponseParts.push({
+                    functionResponse: { name: "searchCases", response: { result: formattedResult } },
+                  });
+
+                  sendEvent("tool_result", { name: "searchCases", summary: `Found ${results.length} chunks`, iteration: phaseNum });
+                } catch (error) {
+                  const errorMsg = `Error: ${error instanceof Error ? error.message : "Unknown error"}`;
+                  toolResponseParts.push({
+                    functionResponse: { name: "searchCases", response: { result: errorMsg } },
+                  });
+                  sendEvent("tool_result", { name: "searchCases", summary: errorMsg, iteration: phaseNum });
+                }
+              } else if (call.name === "getOrdinanceSection") {
+                try {
+                  const cap = call.args.cap as number;
+                  const section = call.args.section as string;
+                  const sectionText = executeGetOrdinanceSection(cap, section);
+
+                  toolResponseParts.push({
+                    functionResponse: { name: "getOrdinanceSection", response: { result: sectionText } },
+                  });
+
+                  sendEvent("tool_result", { name: "getOrdinanceSection", summary: `Retrieved Cap. ${cap} s.${section}`, iteration: phaseNum });
+                } catch (error) {
+                  const errorMsg = `Error: ${error instanceof Error ? error.message : "Unknown error"}`;
+                  toolResponseParts.push({
+                    functionResponse: { name: "getOrdinanceSection", response: { result: errorMsg } },
+                  });
+                  sendEvent("tool_result", { name: "getOrdinanceSection", summary: errorMsg, iteration: phaseNum });
+                }
               }
+            }
+
+            // Add tool responses to conversation if any tools were called
+            if (toolResponseParts.length > 0) {
+              conversationContents.push({ role: "user", parts: toolResponseParts });
             }
           }
 
@@ -604,6 +860,7 @@ ${chunkSummary}`;
             // eslint-disable-next-line @typescript-eslint/no-explicit-any
             const readProcessParts: any[] = [];
             const additionalReads: string[] = [];
+            const additionalOrdinanceCalls: Array<{ cap: number; section: string }> = [];
 
             for await (const chunk of readResponse) {
               const candidate = (chunk as { candidates?: Array<{ content?: { parts?: Array<unknown> } }> }).candidates?.[0];
@@ -621,15 +878,24 @@ ${chunkSummary}`;
                   if (citation && !casesRead.has(citation) && caseUrlMap[citation]) {
                     additionalReads.push(citation);
                   }
+                } else if (typedPart.functionCall?.name === "getOrdinanceSection") {
+                  // Gemini wants to reference an ordinance section
+                  const cap = typedPart.functionCall.args.cap as number;
+                  const section = typedPart.functionCall.args.section as string;
+                  if (cap && section) {
+                    additionalOrdinanceCalls.push({ cap, section });
+                  }
                 }
               }
             }
 
-            // Handle any additional reads Gemini requested
-            if (additionalReads.length > 0) {
+            // Handle any additional tool calls Gemini requested
+            if (additionalReads.length > 0 || additionalOrdinanceCalls.length > 0) {
               conversationContents.push({ role: "model", parts: readProcessParts });
 
               const additionalResponseParts: Array<{ functionResponse: { name: string; response: { result: string } } }> = [];
+
+              // Handle additional case reads
               for (const citation of additionalReads) {
                 sendStage("retrieving", `Retrieving: ${citation}`);
                 sendEvent("tool_call", { name: "getCaseDetails", args: { citation }, iteration: phaseNum });
@@ -646,6 +912,25 @@ ${chunkSummary}`;
                   const errorMsg = `Error: ${error instanceof Error ? error.message : "Unknown error"}`;
                   additionalResponseParts.push({
                     functionResponse: { name: "getCaseDetails", response: { result: errorMsg } },
+                  });
+                }
+              }
+
+              // Handle additional ordinance section requests
+              for (const { cap, section } of additionalOrdinanceCalls) {
+                sendStage("retrieving", `Retrieving: Cap. ${cap} s.${section}`);
+                sendEvent("tool_call", { name: "getOrdinanceSection", args: { cap, section }, iteration: phaseNum });
+
+                try {
+                  const sectionText = executeGetOrdinanceSection(cap, section);
+                  additionalResponseParts.push({
+                    functionResponse: { name: "getOrdinanceSection", response: { result: sectionText } },
+                  });
+                  sendEvent("tool_result", { name: "getOrdinanceSection", summary: `Retrieved Cap. ${cap} s.${section}`, iteration: phaseNum });
+                } catch (error) {
+                  const errorMsg = `Error: ${error instanceof Error ? error.message : "Unknown error"}`;
+                  additionalResponseParts.push({
+                    functionResponse: { name: "getOrdinanceSection", response: { result: errorMsg } },
                   });
                 }
               }
@@ -709,6 +994,12 @@ IMPORTANT RULES FOR YOUR RESPONSE:
           }
 
           sendEvent("done", { iterations: phases.length });
+
+          // Generate follow-up questions AFTER sending done
+          const followUpQuestions = await generateFollowUpQuestions(ai, conversationContents, message);
+          // Always send the event, even if empty, to clear loading state
+          sendEvent("follow_up_questions", followUpQuestions);
+
         } catch (error) {
           console.error("Stream error:", error);
           sendEvent("error", {

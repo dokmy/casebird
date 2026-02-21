@@ -1,0 +1,293 @@
+{
+  "generatedAt": "2026-02-20T00:00:00.000Z",
+  "ordinances": [
+    {
+      "name": "Trade Marks Ordinance",
+      "cap": "559",
+      "keywordCount": 69,
+      "totalVolume": 16000,
+      "avgCpcLow": 13.42,
+      "avgCpcHigh": 30.59,
+      "topKeyword": {
+        "keyword": "trade marks",
+        "volume": 1600,
+        "competition": "LOW",
+        "cpcLow": "9.09",
+        "cpcHigh": "28.13"
+      },
+      "status": "not_annotated"
+    },
+    {
+      "name": "Land Registration Ordinance",
+      "cap": "128",
+      "keywordCount": 23,
+      "totalVolume": 14400,
+      "avgCpcLow": 3.80,
+      "avgCpcHigh": 12.03,
+      "topKeyword": {
+        "keyword": "land registration",
+        "volume": 3600,
+        "competition": "LOW",
+        "cpcLow": "3.85",
+        "cpcHigh": "10.22"
+      },
+      "status": "not_annotated"
+    },
+    {
+      "name": "Occupational Safety and Health Ordinance",
+      "cap": "509",
+      "keywordCount": 27,
+      "totalVolume": 10200,
+      "avgCpcLow": 2.30,
+      "avgCpcHigh": 7.28,
+      "topKeyword": {
+        "keyword": "osh c",
+        "volume": 3600,
+        "competition": "LOW",
+        "cpcLow": "5.06",
+        "cpcHigh": "12.24"
+      },
+      "status": "not_annotated"
+    },
+    {
+      "name": "Securities and Futures Ordinance",
+      "cap": "571",
+      "keywordCount": 15,
+      "totalVolume": 9800,
+      "avgCpcLow": 3.78,
+      "avgCpcHigh": 11.56,
+      "topKeyword": {
+        "keyword": "sfc hk register",
+        "volume": 3600,
+        "competition": "LOW",
+        "cpcLow": "22.98",
+        "cpcHigh": "33.31"
+      },
+      "status": "not_annotated"
+    },
+    {
+      "name": "Companies Ordinance",
+      "cap": "32",
+      "keywordCount": 13,
+      "totalVolume": 14250,
+      "avgCpcLow": 1.09,
+      "avgCpcHigh": 11.60,
+      "topKeyword": {
+        "keyword": "securities and futures ordinance",
+        "volume": 6600,
+        "competition": "LOW",
+        "cpcLow": "4.98",
+        "cpcHigh": "22.37"
+      },
+      "status": "not_annotated"
+    },
+    {
+      "name": "Building Management Ordinance",
+      "cap": "344",
+      "keywordCount": 15,
+      "totalVolume": 5800,
+      "avgCpcLow": 6.24,
+      "avgCpcHigh": 22.03,
+      "topKeyword": {
+        "keyword": "certified property manager",
+        "volume": 1600,
+        "competition": "LOW",
+        "cpcLow": "3.44",
+        "cpcHigh": "16.49"
+      },
+      "status": "not_annotated"
+    },
+    {
+      "name": "Matrimonial Causes Ordinance",
+      "cap": "179",
+      "keywordCount": 14,
+      "totalVolume": 5200,
+      "avgCpcLow": 6.16,
+      "avgCpcHigh": 16.95,
+      "topKeyword": {
+        "keyword": "divorce",
+        "volume": 1900,
+        "competition": "LOW",
+        "cpcLow": "10.97",
+        "cpcHigh": "27.87"
+      },
+      "status": "not_annotated"
+    },
+    {
+      "name": "Landlord and Tenant Ordinance",
+      "cap": "7",
+      "keywordCount": 10,
+      "totalVolume": 5800,
+      "avgCpcLow": 0.18,
+      "avgCpcHigh": 0.94,
+      "topKeyword": {
+        "keyword": "tenant's",
+        "volume": 3600,
+        "competition": "LOW",
+        "cpcLow": "0.00",
+        "cpcHigh": "0.00"
+      },
+      "status": "not_annotated"
+    },
+    {
+      "name": "Personal Data (Privacy) Ordinance",
+      "cap": "486",
+      "keywordCount": 10,
+      "totalVolume": 4620,
+      "avgCpcLow": 0.00,
+      "avgCpcHigh": 0.00,
+      "topKeyword": {
+        "keyword": "私隱條例",
+        "volume": 1300,
+        "competition": "LOW",
+        "cpcLow": "0.00",
+        "cpcHigh": "0.00"
+      },
+      "status": "not_annotated"
+    },
+    {
+      "name": "Employment Ordinance",
+      "cap": "57",
+      "keywordCount": 8,
+      "totalVolume": 8420,
+      "avgCpcLow": 0.99,
+      "avgCpcHigh": 3.64,
+      "topKeyword": {
+        "keyword": "僱傭條例",
+        "volume": 2900,
+        "competition": "LOW",
+        "cpcLow": "0.91",
+        "cpcHigh": "15.06"
+      },
+      "status": "annotated"
+    },
+    {
+      "name": "Employees' Compensation Ordinance",
+      "cap": "282",
+      "keywordCount": 10,
+      "totalVolume": 3430,
+      "avgCpcLow": 4.48,
+      "avgCpcHigh": 17.89,
+      "topKeyword": {
+        "keyword": "僱員補償條例",
+        "volume": 880,
+        "competition": "LOW",
+        "cpcLow": "4.77",
+        "cpcHigh": "11.30"
+      },
+      "status": "annotated"
+    },
+    {
+      "name": "Inland Revenue Ordinance",
+      "cap": "112",
+      "keywordCount": 4,
+      "totalVolume": 3920,
+      "avgCpcLow": 0.28,
+      "avgCpcHigh": 4.84,
+      "topKeyword": {
+        "keyword": "香港稅務",
+        "volume": 2400,
+        "competition": "LOW",
+        "cpcLow": "1.11",
+        "cpcHigh": "19.35"
+      },
+      "status": "not_annotated"
+    },
+    {
+      "name": "Immigration Ordinance",
+      "cap": "115",
+      "keywordCount": 5,
+      "totalVolume": 2250,
+      "avgCpcLow": 0.03,
+      "avgCpcHigh": 0.65,
+      "topKeyword": {
+        "keyword": "cap 115",
+        "volume": 720,
+        "competition": "LOW",
+        "cpcLow": "0.00",
+        "cpcHigh": "0.00"
+      },
+      "status": "not_annotated"
+    },
+    {
+      "name": "Theft Ordinance",
+      "cap": "210",
+      "keywordCount": 4,
+      "totalVolume": 2310,
+      "avgCpcLow": 12.48,
+      "avgCpcHigh": 15.07,
+      "topKeyword": {
+        "keyword": "盜竊",
+        "volume": 880,
+        "competition": "LOW",
+        "cpcLow": "14.52",
+        "cpcHigh": "20.09"
+      },
+      "status": "not_annotated"
+    },
+    {
+      "name": "Electronic Transactions Ordinance",
+      "cap": "553",
+      "keywordCount": 4,
+      "totalVolume": 10300,
+      "avgCpcLow": 2.21,
+      "avgCpcHigh": 9.06,
+      "topKeyword": {
+        "keyword": "electronic transaction act",
+        "volume": 9900,
+        "competition": "MEDIUM",
+        "cpcLow": "8.83",
+        "cpcHigh": "36.25"
+      },
+      "status": "not_annotated"
+    },
+    {
+      "name": "Copyright Ordinance",
+      "cap": "528",
+      "keywordCount": 3,
+      "totalVolume": 920,
+      "avgCpcLow": 2.13,
+      "avgCpcHigh": 3.35,
+      "topKeyword": {
+        "keyword": "copyright ordinance",
+        "volume": 390,
+        "competition": "LOW",
+        "cpcLow": "0.00",
+        "cpcHigh": "0.00"
+      },
+      "status": "not_annotated"
+    },
+    {
+      "name": "Bankruptcy Ordinance",
+      "cap": "6",
+      "keywordCount": 3,
+      "totalVolume": 620,
+      "avgCpcLow": 2.06,
+      "avgCpcHigh": 10.22,
+      "topKeyword": {
+        "keyword": "cap 6",
+        "volume": 390,
+        "competition": "LOW",
+        "cpcLow": "0.00",
+        "cpcHigh": "0.00"
+      },
+      "status": "not_annotated"
+    },
+    {
+      "name": "Sale of Goods Ordinance",
+      "cap": "26",
+      "keywordCount": 6,
+      "totalVolume": 720,
+      "avgCpcLow": 0.00,
+      "avgCpcHigh": 0.00,
+      "topKeyword": {
+        "keyword": "cisg",
+        "volume": 210,
+        "competition": "LOW",
+        "cpcLow": "0.00",
+        "cpcHigh": "0.00"
+      },
+      "status": "not_annotated"
+    }
+  ]
+}

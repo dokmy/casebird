@@ -9,9 +9,10 @@ import { CaseViewer } from "@/components/chat/CaseViewer";
 import { WelcomeScreen } from "@/components/chat/WelcomeScreen";
 import { Sidebar, ConversationItem } from "@/components/chat/Sidebar";
 import { AuthModal } from "@/components/auth/AuthModal";
+import { SignupPromptModal } from "@/components/auth/SignupPromptModal";
 import { UpgradeModal } from "@/components/chat/UpgradeModal";
 import { AnimatedBird } from "@/components/ui/animated-bird";
-import { FeatherIcon } from "@/components/ui/feather-icon";
+import { Header } from "@/components/layout/Header";
 import { Message, SelectedCase, ThinkingStep, Stage, ResearchMode, CaseLanguage, UserRole } from "@/types/chat";
 import { createClient } from "@/lib/supabase/client";
 
@@ -26,9 +27,10 @@ export default function Home() {
   const [isAuthenticated, setIsAuthenticated] = useState<boolean | null>(null);
   const [loadingConversations, setLoadingConversations] = useState(true);
   const [showAuthModal, setShowAuthModal] = useState(false);
+  const [showSignupPrompt, setShowSignupPrompt] = useState(false);
   const [showUpgradeModal, setShowUpgradeModal] = useState(false);
   const [outputLanguage, setOutputLanguage] = useState<"EN" | "TC">("EN");
-  const [userRole, setUserRole] = useState<UserRole>("insurance");
+  const [userRole, setUserRole] = useState<UserRole>("lawyer");
   const [caseLanguage, setCaseLanguage] = useState<CaseLanguage>("any");
   const [subscription, setSubscription] = useState<{
     plan: string;
@@ -38,7 +40,9 @@ export default function Home() {
   const [mobileSidebarOpen, setMobileSidebarOpen] = useState(false);
   const [chatInput, setChatInput] = useState("");
   const scrollRef = useRef<HTMLDivElement>(null);
-  const supabase = createClient();
+  const isSendingRef = useRef(false);
+  // Create supabase client once to avoid infinite loops in useEffects
+  const supabase = useRef(createClient()).current;
 
   // Load user and conversations on mount
   useEffect(() => {
@@ -48,6 +52,9 @@ export default function Home() {
         setIsAuthenticated(true);
         setUserEmail(user.email || "");
         setUserId(user.id);
+
+        // Clear anonymous message count for authenticated users
+        localStorage.removeItem('anonymous_message_count');
         const [convResult, settingsResult, subResult] = await Promise.all([
           supabase
             .from("conversations")
@@ -83,11 +90,32 @@ export default function Home() {
       setLoadingConversations(false);
     };
     init();
+
+    // Listen for auth state changes
+    const { data: { subscription } } = supabase.auth.onAuthStateChange((event, session) => {
+      if (session?.user) {
+        setIsAuthenticated(true);
+        localStorage.removeItem('anonymous_message_count');
+        setShowAuthModal(false);
+        setShowSignupPrompt(false);
+        // Reload page to fetch user data
+        if (event === 'SIGNED_IN') {
+          window.location.reload();
+        }
+      } else {
+        setIsAuthenticated(false);
+      }
+    });
+
+    return () => subscription.unsubscribe();
   }, [supabase]);
 
   // Load messages when switching conversations
   useEffect(() => {
     if (!activeConversationId) return;
+    // Skip reload if we're in the middle of sending a message
+    if (isSendingRef.current) return;
+
     const loadMessages = async () => {
       const { data } = await supabase
         .from("messages")
@@ -118,11 +146,21 @@ export default function Home() {
 
   const handleSend = useCallback(
     async (content: string, mode: ResearchMode = "normal") => {
-      // If not authenticated, show auth modal
-      if (!isAuthenticated) {
-        setShowAuthModal(true);
-        return;
+      // Check if user is NOT authenticated (includes null/loading state)
+      if (isAuthenticated !== true) {
+        const anonymousCount = parseInt(localStorage.getItem('anonymous_message_count') || '0');
+
+        if (anonymousCount >= 1) {
+          // Show signup prompt instead of sending message
+          setShowSignupPrompt(true);
+          return;
+        }
+
+        // Increment anonymous message count for first message
+        localStorage.setItem('anonymous_message_count', (anonymousCount + 1).toString());
       }
+
+      console.log('[handleSend] Creating user message, isAuthenticated:', isAuthenticated);
 
       const userMessage: Message = {
         id: Date.now().toString(),
@@ -134,9 +172,14 @@ export default function Home() {
       setIsLoading(true);
       setChatInput("");
 
-      // Create or reuse conversation
+      // Mark that we're sending a message to prevent message reload race condition
+      isSendingRef.current = true;
+
+      console.log('[handleSend] Set loading true, messages updated');
+
+      // Create or reuse conversation (only for authenticated users)
       let convId = activeConversationId;
-      if (!convId) {
+      if (isAuthenticated === true && !convId) {
         const { data, error } = await supabase
           .from("conversations")
           .insert({ title: "New conversation", mode, case_language: caseLanguage, user_id: userId })
@@ -186,8 +229,8 @@ export default function Home() {
         }
       }
 
-      // Save user message to DB
-      if (convId) {
+      // Save user message to DB (only for authenticated users)
+      if (isAuthenticated === true && convId) {
         await supabase.from("messages").insert({
           conversation_id: convId,
           role: "user",
@@ -198,6 +241,9 @@ export default function Home() {
           .from("conversations")
           .update({ updated_at: new Date().toISOString() })
           .eq("id", convId);
+
+        // User message saved, safe to allow message reloads now
+        isSendingRef.current = false;
       }
 
       // Create placeholder for assistant message
@@ -218,6 +264,7 @@ export default function Home() {
       let finalIterations = 0;
 
       try {
+        console.log('[handleSend] Calling chat API with mode:', mode);
         const response = await fetch("/api/chat", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
@@ -233,6 +280,8 @@ export default function Home() {
             })),
           }),
         });
+
+        console.log('[handleSend] API response status:', response.status);
 
         if (response.status === 403) {
           const errorData = await response.json();
@@ -399,8 +448,8 @@ export default function Home() {
           }
         }
 
-        // Save assistant message to DB after streaming completes
-        if (convId && finalAssistantContent) {
+        // Save assistant message to DB after streaming completes (only for authenticated users)
+        if (isAuthenticated === true && convId && finalAssistantContent) {
           await supabase.from("messages").insert({
             conversation_id: convId,
             role: "assistant",
@@ -422,6 +471,8 @@ export default function Home() {
         );
       } finally {
         setIsLoading(false);
+        // Always clear the sending flag, even on error or for anonymous users
+        isSendingRef.current = false;
       }
     },
     [messages, activeConversationId, userId, isAuthenticated, outputLanguage, userRole, caseLanguage, supabase]
@@ -481,87 +532,37 @@ export default function Home() {
     window.location.reload();
   }, [supabase]);
 
-  // Loading state
-  if (isAuthenticated === null) {
-    return (
-      <div className="h-screen flex items-center justify-center bg-background">
-        <FeatherIcon className="w-8 h-8 animate-pulse" />
-      </div>
-    );
-  }
-
-  // Public (not logged in) layout
-  if (!isAuthenticated) {
-    return (
-      <div className="h-screen flex flex-col overflow-hidden bg-background">
-        {/* Top bar with sign in */}
-        <header className="relative z-10 px-6 py-3 shrink-0 flex items-center justify-end">
-          <button
-            onClick={() => setShowAuthModal(true)}
-            className="px-4 py-2 rounded-lg bg-primary text-primary-foreground font-serif text-sm font-medium hover:bg-primary/90 transition-colors"
-          >
-            Sign in
-          </button>
-        </header>
-
-        {/* Centered welcome + input */}
-        <div className="flex-1 flex flex-col items-center justify-center overflow-y-auto px-4 pb-4">
-          <WelcomeScreen onExampleClick={handleExampleClick} outputLanguage={outputLanguage} userRole={userRole} />
-          <div className="w-full max-w-2xl mx-auto mt-4">
-            <ChatInput onSend={handleSend} isLoading={false} caseLanguage={caseLanguage} onCaseLanguageChange={setCaseLanguage} input={chatInput} onInputChange={setChatInput} />
-          </div>
-          <div className="pt-2 text-center">
-            <p className="text-xs font-serif text-muted-foreground">
-              <Link href="/terms" className="hover:underline">Terms of Use</Link>
-              {" · "}
-              <Link href="/privacy" className="hover:underline">Privacy Policy</Link>
-            </p>
-          </div>
-        </div>
-
-        {showAuthModal && <AuthModal onClose={() => setShowAuthModal(false)} />}
-      </div>
-    );
-  }
-
-  // Authenticated layout
   return (
     <div className="h-screen flex overflow-hidden bg-background">
-      {/* Sidebar */}
-      <Sidebar
-        conversations={conversations}
-        activeConversationId={activeConversationId}
-        userEmail={userEmail}
-        mobileOpen={mobileSidebarOpen}
-        onMobileClose={() => setMobileSidebarOpen(false)}
-        onNewChat={handleNewChat}
-        onSelectConversation={handleSelectConversation}
-        onDeleteConversation={handleDeleteConversation}
-        onRenameConversation={handleRenameConversation}
-        onSignOut={handleSignOut}
-        loading={loadingConversations}
-      />
+      {/* Sidebar - only for authenticated users */}
+      {isAuthenticated && (
+        <Sidebar
+          conversations={conversations}
+          activeConversationId={activeConversationId}
+          userEmail={userEmail}
+          mobileOpen={mobileSidebarOpen}
+          onMobileClose={() => setMobileSidebarOpen(false)}
+          onNewChat={handleNewChat}
+          onSelectConversation={handleSelectConversation}
+          onDeleteConversation={handleDeleteConversation}
+          onRenameConversation={handleRenameConversation}
+          onSignOut={handleSignOut}
+          loading={loadingConversations}
+        />
+      )}
 
       {/* Main Content */}
       <div className="flex-1 flex flex-col min-h-0 min-w-0">
-        {/* Header */}
-        <header className="border-b border-border/50 px-4 md:px-6 py-4 shrink-0">
-          <div className="max-w-2xl mx-auto flex items-center gap-3">
-            <button
-              onClick={() => setMobileSidebarOpen(true)}
-              className="md:hidden p-1.5 -ml-1.5 rounded-lg hover:bg-accent/50 text-muted-foreground hover:text-foreground transition-colors"
-              title="Open menu"
-            >
-              <Menu className="w-5 h-5" />
-            </button>
-            <button
-              onClick={handleNewChat}
-              className="flex items-center gap-2 text-xl font-serif font-medium text-foreground tracking-tight hover:text-primary transition-colors group"
-            >
-              <span className="font-serif">Casebird</span>
-            </button>
-          </div>
-        </header>
+        <Header
+          isAuthenticated={isAuthenticated}
+          userEmail={userEmail}
+          onSignOut={handleSignOut}
+          onSignIn={() => setShowAuthModal(true)}
+          navigationLink={{ href: "/ordinances", label: "Ordinances" }}
+          showMobileMenu={true}
+          onMobileMenuClick={() => setMobileSidebarOpen(true)}
+          onLogoClick={isAuthenticated ? handleNewChat : undefined}
+        />
 
         {/* Chat Area */}
         <div className="flex-1 flex min-h-0">
@@ -629,6 +630,24 @@ export default function Home() {
             mobile
           />
         </div>
+      )}
+
+      {/* Modals */}
+      {showSignupPrompt && (
+        <SignupPromptModal
+          onClose={() => setShowSignupPrompt(false)}
+          onSignUp={() => {
+            setShowSignupPrompt(false);
+            setShowAuthModal(true);
+          }}
+        />
+      )}
+
+      {showAuthModal && (
+        <AuthModal
+          onClose={() => setShowAuthModal(false)}
+          initialMode="signup"
+        />
       )}
 
       {showUpgradeModal && subscription && (

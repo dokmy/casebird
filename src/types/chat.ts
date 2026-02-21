@@ -6,6 +6,7 @@ export interface Message {
   iterations?: number;
   currentStage?: Stage;
   caseUrls?: Record<string, string>;
+  followUpQuestions?: string[];
 }
 
 export interface Stage {
@@ -30,7 +31,7 @@ export interface ThinkingStep {
 }
 
 export interface StreamEvent {
-  type: "thinking" | "tool_call" | "tool_result" | "text" | "done" | "error" | "stage" | "case_urls";
+  type: "thinking" | "tool_call" | "tool_result" | "text" | "done" | "error" | "stage" | "case_urls" | "follow_up_questions";
   data: unknown;
 }
 

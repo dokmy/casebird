@@ -276,7 +276,7 @@ const LAWYER_QUERIES: Record<string, { EN: { title: string; query: string }[]; T
   },
 };
 
-export function WelcomeScreen({ onExampleClick, outputLanguage = "EN", userRole = "insurance" }: WelcomeScreenProps) {
+export function WelcomeScreen({ onExampleClick, outputLanguage = "EN", userRole = "lawyer" }: WelcomeScreenProps) {
   const [activeField, setActiveField] = useState<string | null>(null);
   const isChinese = outputLanguage === "TC";
 

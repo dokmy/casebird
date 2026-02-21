@@ -7,10 +7,11 @@ import { createClient } from "@/lib/supabase/client";
 
 interface AuthModalProps {
   onClose: () => void;
+  initialMode?: "signin" | "signup";
 }
 
-export function AuthModal({ onClose }: AuthModalProps) {
-  const [isSignUp, setIsSignUp] = useState(false);
+export function AuthModal({ onClose, initialMode = "signin" }: AuthModalProps) {
+  const [isSignUp, setIsSignUp] = useState(initialMode === "signup");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");

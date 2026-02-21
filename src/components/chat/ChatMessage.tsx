@@ -18,9 +18,10 @@ import { cn } from "@/lib/utils";
 interface ChatMessageProps {
   message: Message;
   onCaseClick: (url: string, citation: string) => void;
+  onQuestionClick?: (question: string) => void;
 }
 
-export function ChatMessage({ message, onCaseClick }: ChatMessageProps) {
+export function ChatMessage({ message, onCaseClick, onQuestionClick }: ChatMessageProps) {
   const isUser = message.role === "user";
 
   const hasThinkingSteps =
@@ -175,6 +176,28 @@ export function ChatMessage({ message, onCaseClick }: ChatMessageProps) {
                 {message.content}
               </ReactMarkdown>
             </div>
+
+            {/* Follow-up Questions */}
+            {!isUser && message.followUpQuestions && message.followUpQuestions.length > 0 && (
+              <div className="mt-6 pt-6 border-t border-border/50">
+                <p className="text-xs font-serif uppercase tracking-wider text-muted-foreground mb-3">
+                  Follow-up questions
+                </p>
+                <div className="space-y-2">
+                  {message.followUpQuestions.map((question, i) => (
+                    <button
+                      key={i}
+                      onClick={() => onQuestionClick?.(question)}
+                      className="w-full px-4 py-3 text-left bg-muted/30 hover:bg-muted/50 border border-border rounded-lg transition-colors group"
+                    >
+                      <div className="text-sm font-serif text-foreground group-hover:text-primary transition-colors">
+                        {question}
+                      </div>
+                    </button>
+                  ))}
+                </div>
+              </div>
+            )}
           </div>
         )}
       </div>

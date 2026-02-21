@@ -40,7 +40,7 @@ export function ErrorReportButton() {
     return (
       <button
         onClick={() => setOpen(true)}
-        className="fixed bottom-6 right-6 z-50 w-10 h-10 rounded-full bg-muted border border-border shadow-md flex items-center justify-center text-muted-foreground hover:text-foreground hover:bg-muted/80 transition-colors"
+        className="fixed bottom-24 right-6 z-50 w-10 h-10 rounded-full bg-muted border border-border shadow-md flex items-center justify-center text-muted-foreground hover:text-foreground hover:bg-muted/80 transition-colors"
         aria-label="Report an error"
         title="Report an error"
       >
@@ -50,7 +50,7 @@ export function ErrorReportButton() {
   }
 
   return (
-    <div className="fixed bottom-6 right-6 z-50 w-80 bg-background border border-border rounded-lg shadow-lg">
+    <div className="fixed bottom-24 right-6 z-50 w-80 bg-background border border-border rounded-lg shadow-lg">
       <div className="flex items-center justify-between px-4 py-3 border-b border-border">
         <span className="font-serif text-sm font-medium text-foreground">
           Report an error

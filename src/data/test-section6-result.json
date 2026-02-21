@@ -1,0 +1,38 @@
+[
+  {
+    "citation": "[2002] HKCFI 1074",
+    "caseName": "YEUNG WAI HON v HO & PARTNERS ARCHITECTS ENGINEERS & DEVELOPMENT CONSULTANTS LIMITED",
+    "court": "hkcfi",
+    "year": 2002,
+    "language": "EN",
+    "annotation": "Section 6(2)(c) of the Employment Ordinance (Cap. 57) is interpreted to mean that if an employment contract is terminated *before* its contractual expiry date, the agreed notice period (or a minimum of 7 days) or payment in lieu of notice is required. However, Section 6 does not require such notice or payment when a contract ends due to the *effluxion of time* (i.e., the contract period expires), as this is not considered termination by \"either party\" as contemplated by the section.",
+    "url": "https://www.hklii.hk/en/cases/hkcfi/2002/1074"
+  },
+  {
+    "citation": "[2006] HKCFI 161",
+    "caseName": "Cheung Chi Keung v The Hospital Authority",
+    "court": "hkcfi",
+    "year": 2006,
+    "language": "EN",
+    "annotation": "Section 6 of the Employment Ordinance (Cap. 57) provides a statutory right for either party to a continuous contract of employment to terminate the contract by giving the other party notice of not less than seven days, in accordance with their contract. The court clarifies that this statutory right can be modified by contract, such as by agreeing to a longer notice period or specifying that notice must be in writing, as long as the contractual terms are not inconsistent with the Ordinance. In this case, the Plaintiff and the Hospital Authority had modified their statutory rights to require two weeks' notice in writing.",
+    "url": "https://www.hklii.hk/en/cases/hkcfi/2006/161"
+  },
+  {
+    "citation": "[2009] HKCFI 553",
+    "caseName": "TADJUDIN SUNNY v BANK OF AMERICA, NATIONAL ASSOCIATION",
+    "court": "hkcfi",
+    "year": 2009,
+    "language": "EN",
+    "annotation": "The court references Section 6 of the Employment Ordinance (Cap. 57) to highlight that the statutory protection against wrongful dismissal is limited to instances where the employer fails to provide the agreed-upon or statutorily required notice of termination. The court states that Sections 6 and 7 of the ordinance confer a clear statutory right of termination without cause, and that it is inappropriate to construct a common law remedy based on an implied anti-avoidance term, which would go against the legislature's intent and cut down the employer's right to terminate without cause.",
+    "url": "https://www.hklii.hk/en/cases/hkcfi/2009/553"
+  },
+  {
+    "citation": "[2004] HKCFI 528",
+    "caseName": "Elizabeth Harrington v Cap Gemini Ernst & Young Hong Kong Limited",
+    "court": "hkcfi",
+    "year": 2004,
+    "language": "EN",
+    "annotation": "The court considered whether Section 6 of the Employment Ordinance (Cap. 57) limits the plaintiff's damages to one month's wages, given the argument that the employment agreement was a \"contract for one month renewable from month to month\" under Section 5(2) because it was not evidenced in writing. However, the court's finding that a two-year contract existed (though unenforceable beyond one month due to lack of written evidence) meant that the damages assessment was governed by Section 5(2), effectively limiting the plaintiff's claim to one month's wages as per the Employment Ordinance.",
+    "url": "https://www.hklii.hk/en/cases/hkcfi/2004/528"
+  }
+]

@@ -6,11 +6,22 @@ import { useCaseViewer } from "./CaseViewerContext";
 interface LegislationTextProps {
   textEn?: string;
   textZh?: string;
+  language?: "en" | "zh";
+  onLanguageChange?: (lang: "en" | "zh") => void;
 }
 
-export function LegislationText({ textEn, textZh }: LegislationTextProps) {
-  const [lang, setLang] = useState<"en" | "zh">(textEn ? "en" : "zh");
+export function LegislationText({ textEn, textZh, language, onLanguageChange }: LegislationTextProps) {
+  const [internalLang, setInternalLang] = useState<"en" | "zh">(textEn ? "en" : "zh");
+  const lang = language ?? internalLang;
   const { openCase } = useCaseViewer();
+
+  const handleLanguageChange = (newLang: "en" | "zh") => {
+    if (onLanguageChange) {
+      onLanguageChange(newLang);
+    } else {
+      setInternalLang(newLang);
+    }
+  };
 
   const handleClick = useCallback(
     (e: React.MouseEvent<HTMLDivElement>) => {
@@ -56,7 +67,7 @@ export function LegislationText({ textEn, textZh }: LegislationTextProps) {
         {textEn && textZh && (
           <div className="flex gap-1 text-xs font-mono">
             <button
-              onClick={() => setLang("en")}
+              onClick={() => handleLanguageChange("en")}
               className={`px-2 py-0.5 rounded transition-colors ${
                 lang === "en"
                   ? "bg-primary text-primary-foreground"
@@ -66,7 +77,7 @@ export function LegislationText({ textEn, textZh }: LegislationTextProps) {
               EN
             </button>
             <button
-              onClick={() => setLang("zh")}
+              onClick={() => handleLanguageChange("zh")}
               className={`px-2 py-0.5 rounded transition-colors ${
                 lang === "zh"
                   ? "bg-primary text-primary-foreground"
