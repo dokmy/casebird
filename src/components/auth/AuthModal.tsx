@@ -8,9 +8,10 @@ import { createClient } from "@/lib/supabase/client";
 interface AuthModalProps {
   onClose: () => void;
   initialMode?: "signin" | "signup";
+  onSuccess?: () => void;
 }
 
-export function AuthModal({ onClose, initialMode = "signin" }: AuthModalProps) {
+export function AuthModal({ onClose, initialMode = "signin", onSuccess }: AuthModalProps) {
   const [isSignUp, setIsSignUp] = useState(initialMode === "signup");
   const [isForgotPassword, setIsForgotPassword] = useState(false);
   const [email, setEmail] = useState("");
@@ -50,7 +51,11 @@ export function AuthModal({ onClose, initialMode = "signin" }: AuthModalProps) {
           password,
         });
         if (error) throw error;
-        window.location.reload();
+        if (onSuccess) {
+          onSuccess();
+        } else {
+          window.location.reload();
+        }
       }
     } catch (err) {
       setError(err instanceof Error ? err.message : "An error occurred");

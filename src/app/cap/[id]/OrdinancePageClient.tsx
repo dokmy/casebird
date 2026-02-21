@@ -119,6 +119,9 @@ export default function OrdinancePageClient({
 
         if (subRes.data) {
           setSubscription(subRes.data);
+        } else {
+          console.error(`[AUTH] Cap ${cap} page: subscription query failed:`, subRes.error);
+          setSubscription({ plan: "free", message_count: 0, message_limit: 10 });
         }
       }
       console.log(`[AUTH] Cap ${cap} page: checkAuth complete`);
@@ -162,6 +165,9 @@ export default function OrdinancePageClient({
 
         if (subRes.data) {
           setSubscription(subRes.data);
+        } else {
+          console.error(`[AUTH] Cap ${cap} page: subscription query failed in onAuthStateChange:`, subRes.error);
+          setSubscription({ plan: "free", message_count: 0, message_limit: 10 });
         }
       }
     });
@@ -212,7 +218,13 @@ export default function OrdinancePageClient({
 
   const handleSignOut = async () => {
     await supabase.auth.signOut();
-    window.location.reload();
+    // Don't reload — onAuthStateChange handles state cleanup
+    setIsAuthenticated(false);
+    setUserEmail("");
+    setUserId(null);
+    setSubscription(null);
+    setConversationId(null);
+    setMessages([]);
   };
 
   const handleSendMessage = async () => {
@@ -771,6 +783,7 @@ User's question: ${chatInput}`;
         <AuthModal
           onClose={() => setShowAuthModal(false)}
           initialMode="signup"
+          onSuccess={() => setShowAuthModal(false)}
         />
       )}
 
