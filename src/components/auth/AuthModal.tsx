@@ -12,6 +12,7 @@ interface AuthModalProps {
 
 export function AuthModal({ onClose, initialMode = "signin" }: AuthModalProps) {
   const [isSignUp, setIsSignUp] = useState(initialMode === "signup");
+  const [isForgotPassword, setIsForgotPassword] = useState(false);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
@@ -27,7 +28,13 @@ export function AuthModal({ onClose, initialMode = "signin" }: AuthModalProps) {
     setLoading(true);
 
     try {
-      if (isSignUp) {
+      if (isForgotPassword) {
+        const { error } = await supabase.auth.resetPasswordForEmail(email, {
+          redirectTo: `${window.location.origin}/auth/callback?type=recovery`,
+        });
+        if (error) throw error;
+        setMessage("Check your email for a password reset link.");
+      } else if (isSignUp) {
         const { error } = await supabase.auth.signUp({
           email,
           password,
@@ -75,10 +82,12 @@ export function AuthModal({ onClose, initialMode = "signin" }: AuthModalProps) {
             <FeatherIcon className="w-6 h-6" />
           </div>
           <h2 className="text-lg font-serif font-semibold text-foreground">
-            {isSignUp ? "Create an account" : "Sign in to Casebird"}
+            {isForgotPassword ? "Reset your password" : isSignUp ? "Create an account" : "Sign in to Casebird"}
           </h2>
           <p className="font-serif text-sm text-muted-foreground mt-1">
-            Sign in to save your research and chat history
+            {isForgotPassword
+              ? "Enter your email to receive a password reset link"
+              : "Sign in to save your research and chat history"}
           </p>
         </div>
 
@@ -97,20 +106,37 @@ export function AuthModal({ onClose, initialMode = "signin" }: AuthModalProps) {
               placeholder="you@example.com"
             />
           </div>
-          <div>
-            <label className="block text-sm font-serif text-foreground mb-1">
-              Password
-            </label>
-            <input
-              type="password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              required
-              minLength={6}
-              className="w-full px-3 py-2 rounded-lg border border-border bg-background text-foreground font-serif text-sm focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary"
-              placeholder="At least 6 characters"
-            />
-          </div>
+          {!isForgotPassword && (
+            <div>
+              <div className="flex items-center justify-between mb-1">
+                <label className="block text-sm font-serif text-foreground">
+                  Password
+                </label>
+                {!isSignUp && (
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setIsForgotPassword(true);
+                      setError("");
+                      setMessage("");
+                    }}
+                    className="text-xs font-serif text-primary hover:underline"
+                  >
+                    Forgot password?
+                  </button>
+                )}
+              </div>
+              <input
+                type="password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                required
+                minLength={6}
+                className="w-full px-3 py-2 rounded-lg border border-border bg-background text-foreground font-serif text-sm focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary"
+                placeholder="At least 6 characters"
+              />
+            </div>
+          )}
 
           {error && (
             <p className="text-sm font-serif text-red-500">{error}</p>
@@ -126,25 +152,42 @@ export function AuthModal({ onClose, initialMode = "signin" }: AuthModalProps) {
           >
             {loading
               ? "Please wait..."
-              : isSignUp
-                ? "Create account"
-                : "Sign in"}
+              : isForgotPassword
+                ? "Send reset link"
+                : isSignUp
+                  ? "Create account"
+                  : "Sign in"}
           </button>
         </form>
 
         {/* Toggle */}
         <p className="text-center text-sm font-serif text-muted-foreground mt-4">
-          {isSignUp ? "Already have an account?" : "Don't have an account?"}{" "}
-          <button
-            onClick={() => {
-              setIsSignUp(!isSignUp);
-              setError("");
-              setMessage("");
-            }}
-            className="text-primary hover:underline"
-          >
-            {isSignUp ? "Sign in" : "Sign up"}
-          </button>
+          {isForgotPassword ? (
+            <button
+              onClick={() => {
+                setIsForgotPassword(false);
+                setError("");
+                setMessage("");
+              }}
+              className="text-primary hover:underline"
+            >
+              Back to sign in
+            </button>
+          ) : (
+            <>
+              {isSignUp ? "Already have an account?" : "Don't have an account?"}{" "}
+              <button
+                onClick={() => {
+                  setIsSignUp(!isSignUp);
+                  setError("");
+                  setMessage("");
+                }}
+                className="text-primary hover:underline"
+              >
+                {isSignUp ? "Sign in" : "Sign up"}
+              </button>
+            </>
+          )}
         </p>
       </div>
     </div>
