@@ -1,4 +1,4 @@
-import { GoogleGenAI, Type, FunctionDeclaration, Tool, ThinkingLevel } from "@google/genai";
+import { GoogleGenAI, Type, FunctionDeclaration, Tool, ThinkingLevel, FunctionCallingConfigMode } from "@google/genai";
 import { searchCasesRaw, getCaseDetails, getCaseUrl, SearchResult } from "@/lib/pinecone";
 import { createClient } from "@/lib/supabase/server";
 import { SYSTEM_PROMPTS, DIRECT_PROMPTS, INSURANCE_COURTS } from "@/lib/prompts";
@@ -239,18 +239,18 @@ async function generateFollowUpQuestions(
       config: {
         temperature: 0.7,
         tools: [suggestQuestionsTool],
-        toolConfig: { functionCallingConfig: { mode: "ANY" } },
+        toolConfig: { functionCallingConfig: { mode: FunctionCallingConfigMode.ANY } },
       },
     });
 
     // Extract function call result
     const candidate = followUpResponse.candidates?.[0];
-    const functionCall = candidate?.content?.parts?.find((p: { functionCall?: { name: string; args: { questions: string[] } } }) => p.functionCall)?.functionCall;
+    const functionCall = candidate?.content?.parts?.find((p: any) => p.functionCall)?.functionCall;
 
     console.log("[follow-up] Function call:", JSON.stringify(functionCall));
 
-    if (functionCall?.name === "suggestFollowUpQuestions" && functionCall.args?.questions) {
-      const questions = functionCall.args.questions
+    if (functionCall?.name === "suggestFollowUpQuestions" && (functionCall.args as any)?.questions) {
+      const questions = ((functionCall.args as any).questions as string[])
         .filter((q: string) => q && q.length > 5)
         .slice(0, 3);
       console.log("[follow-up] Parsed questions:", questions);
