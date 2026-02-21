@@ -167,7 +167,7 @@ export default function OrdinancePageClient({
     });
 
     return () => subscription.unsubscribe();
-  }, [supabase]);
+  }, []); // Empty deps - supabase ref is stable, only run once on mount
 
   // Auto-scroll to bottom on new messages
   useEffect(() => {

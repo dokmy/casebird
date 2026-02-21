@@ -118,7 +118,7 @@ export default function Home() {
     });
 
     return () => subscription.unsubscribe();
-  }, [supabase]);
+  }, []); // Empty deps - supabase ref is stable, only run once on mount
 
   // Load messages when switching conversations
   useEffect(() => {
