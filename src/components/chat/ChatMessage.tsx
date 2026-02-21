@@ -9,6 +9,7 @@ import {
   Scale,
   Search,
   FileText,
+  BookOpen,
   CheckCircle2,
   Loader2,
 } from "lucide-react";
@@ -289,32 +290,46 @@ interface ToolCallCardProps {
 
 function ToolCallCard({ name, args, result, isComplete }: ToolCallCardProps) {
   const isSearch = name === "searchCases";
+  const isOrdinance = name === "getOrdinanceSection";
+  const isRead = name === "getCaseDetails";
+
+  const icon = isSearch ? (
+    <Search className="w-4 h-4" />
+  ) : isOrdinance ? (
+    <BookOpen className="w-4 h-4" />
+  ) : (
+    <FileText className="w-4 h-4" />
+  );
+
+  const label = isSearch ? "searchCases" : isOrdinance ? "getOrdinanceSection" : isRead ? "getCaseDetails" : name;
+
+  const description = isSearch
+    ? `"${(args as { query?: string }).query}"`
+    : isOrdinance
+      ? `Cap. ${(args as { cap?: number }).cap} s.${(args as { section?: string }).section}`
+      : (args as { citation?: string }).citation;
 
   return (
     <div className="border border-border/40 rounded-md bg-background p-3">
       <div className="flex items-start gap-3">
         <div className="mt-0.5 text-muted-foreground">
-          {isSearch ? (
-            <Search className="w-4 h-4" />
-          ) : (
-            <FileText className="w-4 h-4" />
-          )}
+          {icon}
         </div>
         <div className="flex-1 min-w-0">
           <div className="flex items-center gap-2">
             <span className="text-sm font-serif text-foreground">
-              {isSearch ? "Search" : "Retrieve"}
+              {label}
             </span>
             {(result || isComplete) && <CheckCircle2 className="w-3.5 h-3.5 text-primary" />}
             {!result && !isComplete && (
               <Loader2 className="w-3.5 h-3.5 text-muted-foreground animate-spin" />
             )}
           </div>
-          <p className="text-sm font-serif text-muted-foreground mt-1">
-            {isSearch
-              ? `"${(args as { query?: string }).query}"`
-              : (args as { citation?: string }).citation}
-          </p>
+          {description && (
+            <p className="text-sm font-serif text-muted-foreground mt-1">
+              {description}
+            </p>
+          )}
           {isSearch && (() => {
             const searchArgs = args as { language?: string; court?: string; yearFrom?: number; yearTo?: number };
             const filters: string[] = [];

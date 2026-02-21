@@ -1,8 +1,7 @@
-import { createClient } from '@/lib/supabase/server';
 import { createClient as createSupabaseClient } from '@supabase/supabase-js';
 
 /**
- * Create a Supabase client that works at build time (no cookies needed).
+ * Create a Supabase client that works without cookies (build time, streaming contexts, etc.).
  * Ordinance data is public so the publishable key is sufficient.
  */
 function createBuildClient() {
@@ -28,7 +27,7 @@ export async function getOrdinanceSectionFromDB(
   capNumber: string,
   sectionNumber: string
 ): Promise<OrdinanceSection | null> {
-  const supabase = await createClient();
+  const supabase = createBuildClient();
 
   // Normalize section number (remove "s." prefix if present)
   const normalized = sectionNumber.replace(/^s\.?\s*/i, '');
@@ -50,7 +49,7 @@ export async function getOrdinanceSectionFromDB(
  * Get available sections for an ordinance (for error messages)
  */
 export async function getOrdinanceSections(capNumber: string): Promise<string[]> {
-  const supabase = await createClient();
+  const supabase = createBuildClient();
 
   const { data: ordinance } = await supabase
     .from('ordinances')
