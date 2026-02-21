@@ -24,13 +24,20 @@ interface ChatInputProps {
   messageLimit?: number;
   input: string;
   onInputChange: (value: string) => void;
+  defaultMode?: ResearchMode;
+  onModeChange?: (mode: ResearchMode) => void;
 }
 
-export function ChatInput({ onSend, isLoading, disabled, caseLanguage, onCaseLanguageChange, caseLanguageLocked, messageCount, messageLimit, input, onInputChange: setInput }: ChatInputProps) {
-  const [mode, setMode] = useState<ResearchMode>("normal");
+export function ChatInput({ onSend, isLoading, disabled, caseLanguage, onCaseLanguageChange, caseLanguageLocked, messageCount, messageLimit, input, onInputChange: setInput, defaultMode = "fast", onModeChange }: ChatInputProps) {
+  const [mode, setMode] = useState<ResearchMode>(defaultMode);
   const [showLangMenu, setShowLangMenu] = useState(false);
   const textareaRef = useRef<HTMLTextAreaElement>(null);
   const langMenuRef = useRef<HTMLDivElement>(null);
+
+  // Sync mode when defaultMode changes (e.g., loaded from DB)
+  useEffect(() => {
+    setMode(defaultMode);
+  }, [defaultMode]);
 
   // Auto-resize textarea
   useEffect(() => {
@@ -88,7 +95,7 @@ export function ChatInput({ onSend, isLoading, disabled, caseLanguage, onCaseLan
             {(Object.keys(RESEARCH_MODE_CONFIG) as ResearchMode[]).map((m) => (
               <button
                 key={m}
-                onClick={() => setMode(m)}
+                onClick={() => { setMode(m); onModeChange?.(m); }}
                 disabled={isLoading}
                 className={cn(
                   "flex items-center gap-1 sm:gap-1.5 px-2 sm:px-3 py-1 sm:py-1.5 text-[10px] sm:text-xs font-serif rounded-full transition-all",

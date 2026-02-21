@@ -31,6 +31,7 @@ export default function Home() {
   const [showUpgradeModal, setShowUpgradeModal] = useState(false);
   const [outputLanguage, setOutputLanguage] = useState<"EN" | "TC">("EN");
   const [userRole, setUserRole] = useState<UserRole>("lawyer");
+  const [researchMode, setResearchMode] = useState<ResearchMode>("fast");
   const [caseLanguage, setCaseLanguage] = useState<CaseLanguage>("any");
   const [subscription, setSubscription] = useState<{
     plan: string;
@@ -66,7 +67,7 @@ export default function Home() {
             .order("updated_at", { ascending: false }),
           supabase
             .from("user_settings")
-            .select("output_language, user_role")
+            .select("output_language, user_role, research_mode")
             .eq("user_id", user.id)
             .single(),
           supabase
@@ -80,6 +81,9 @@ export default function Home() {
           setOutputLanguage(settingsResult.data.output_language as "EN" | "TC");
           if (settingsResult.data.user_role) {
             setUserRole(settingsResult.data.user_role as UserRole);
+          }
+          if (settingsResult.data.research_mode) {
+            setResearchMode(settingsResult.data.research_mode as ResearchMode);
           }
         }
         if (subResult.data) {
@@ -151,8 +155,15 @@ export default function Home() {
     }
   }, [messages]);
 
+  const handleModeChange = useCallback(async (mode: ResearchMode) => {
+    setResearchMode(mode);
+    if (userId) {
+      await supabase.from("user_settings").upsert({ user_id: userId, research_mode: mode }, { onConflict: "user_id" });
+    }
+  }, [userId, supabase]);
+
   const handleSend = useCallback(
-    async (content: string, mode: ResearchMode = "normal") => {
+    async (content: string, mode: ResearchMode = "fast") => {
       // Check if user is NOT authenticated (includes null/loading state)
       if (isAuthenticated !== true) {
         const anonymousCount = parseInt(localStorage.getItem('anonymous_message_count') || '0');
@@ -611,7 +622,7 @@ export default function Home() {
               </div>
             )}
 
-            <ChatInput onSend={handleSend} isLoading={isLoading} caseLanguage={caseLanguage} onCaseLanguageChange={setCaseLanguage} caseLanguageLocked={messages.length > 0} messageCount={subscription?.message_count} messageLimit={subscription?.message_limit} input={chatInput} onInputChange={setChatInput} />
+            <ChatInput onSend={handleSend} isLoading={isLoading} caseLanguage={caseLanguage} onCaseLanguageChange={setCaseLanguage} caseLanguageLocked={messages.length > 0} messageCount={subscription?.message_count} messageLimit={subscription?.message_limit} input={chatInput} onInputChange={setChatInput} defaultMode={researchMode} onModeChange={handleModeChange} />
           </div>
 
           {/* Case Viewer Panel - desktop side panel */}

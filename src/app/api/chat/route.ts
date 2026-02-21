@@ -596,52 +596,65 @@ Reply with EXACTLY one word:
               conversationContents.push({ role: "model", parts: searchModelParts });
             }
 
+            // Execute all tool calls concurrently
+            const toolCallResults = await Promise.all(
+              searchFunctionCalls.map(async (call) => {
+                if (call.name === "searchCases") {
+                  try {
+                    const { results, formattedResult, urls } = await executeSearch(call.args, caseLanguage, allowedCourts);
+                    return { name: "searchCases" as const, success: true, results, formattedResult, urls } as const;
+                  } catch (error) {
+                    return { name: "searchCases" as const, success: false, error: error instanceof Error ? error.message : "Unknown error" } as const;
+                  }
+                } else {
+                  const cap = call.args.cap as number;
+                  const section = call.args.section as string;
+                  try {
+                    const sectionText = await executeGetOrdinanceSection(cap, section);
+                    return { name: "getOrdinanceSection" as const, success: true, cap, section, sectionText } as const;
+                  } catch (error) {
+                    return { name: "getOrdinanceSection" as const, success: false, cap, section, error: error instanceof Error ? error.message : "Unknown error" } as const;
+                  }
+                }
+              })
+            );
+
+            // Process results in order for conversation history and events
             const toolResponseParts: Array<{ functionResponse: { name: string; response: { result: string } } }> = [];
 
-            for (const call of searchFunctionCalls) {
-              if (call.name === "searchCases") {
+            for (const result of toolCallResults) {
+              if (result.name === "searchCases") {
                 searchCount++;
-                try {
-                  const { results, formattedResult, urls } = await executeSearch(call.args, caseLanguage, allowedCourts);
+                if (result.success) {
+                  Object.assign(caseUrlMap, result.urls);
+                  sendEvent("case_urls", result.urls);
 
-                  // Merge URLs
-                  Object.assign(caseUrlMap, urls);
-                  sendEvent("case_urls", urls);
-
-                  // Accumulate unique chunks (deduplicate identical chunks, keep different chunks from same case)
-                  for (const r of results) {
+                  for (const r of result.results) {
                     const chunkKey = `${r.citation}|${r.chunkIndex}`;
                     if (!allChunks.has(chunkKey)) {
-                      allChunks.set(chunkKey, { result: r, url: urls[r.citation] || "" });
+                      allChunks.set(chunkKey, { result: r, url: result.urls[r.citation] || "" });
                     }
                   }
 
-                  // Add formatted result to tool responses for Gemini to see
                   toolResponseParts.push({
-                    functionResponse: { name: "searchCases", response: { result: formattedResult } },
+                    functionResponse: { name: "searchCases", response: { result: result.formattedResult } },
                   });
-
-                  sendEvent("tool_result", { name: "searchCases", summary: `Found ${results.length} chunks`, iteration: phaseNum });
-                } catch (error) {
-                  const errorMsg = `Error: ${error instanceof Error ? error.message : "Unknown error"}`;
+                  sendEvent("tool_result", { name: "searchCases", summary: `Found ${result.results.length} chunks`, iteration: phaseNum });
+                } else {
+                  const errorMsg = `Error: ${result.error}`;
                   toolResponseParts.push({
                     functionResponse: { name: "searchCases", response: { result: errorMsg } },
                   });
                   sendEvent("tool_result", { name: "searchCases", summary: errorMsg, iteration: phaseNum });
                 }
-              } else if (call.name === "getOrdinanceSection") {
-                try {
-                  const cap = call.args.cap as number;
-                  const section = call.args.section as string;
-                  const sectionText = await executeGetOrdinanceSection(cap, section);
-
+              } else if (result.name === "getOrdinanceSection") {
+                if (result.success) {
                   toolResponseParts.push({
-                    functionResponse: { name: "getOrdinanceSection", response: { result: sectionText } },
+                    functionResponse: { name: "getOrdinanceSection", response: { result: result.sectionText } },
                   });
-
-                  sendEvent("tool_result", { name: "getOrdinanceSection", summary: `Retrieved Cap. ${cap} s.${section}`, iteration: phaseNum });
-                } catch (error) {
-                  const errorMsg = `Error: ${error instanceof Error ? error.message : "Unknown error"}`;
+                  sendEvent("tool_result", { name: "getOrdinanceSection", summary: `Retrieved Cap. ${result.cap} s.${result.section}`, iteration: phaseNum });
+                } else {
+                  const errorMsg = `Error: ${result.error}`;
                   toolResponseParts.push({
                     functionResponse: { name: "getOrdinanceSection", response: { result: errorMsg } },
                   });
@@ -788,24 +801,37 @@ ${chunkSummary}`;
 
             conversationContents.push({ role: "model", parts: readModelParts });
 
+            // Send all tool_call events upfront
+            for (const citation of casesToReadThisRound) {
+              sendEvent("tool_call", { name: "getCaseDetails", args: { citation }, iteration: phaseNum });
+            }
+            sendStage("retrieving", `Retrieving ${casesToReadThisRound.length} cases...`);
+
+            // Fetch all cases concurrently
+            const readResults = await Promise.all(
+              casesToReadThisRound.map(async (citation) => {
+                try {
+                  const caseText = await executeRead(citation, caseReadCache);
+                  return { citation, success: true, caseText } as const;
+                } catch (error) {
+                  return { citation, success: false, error: error instanceof Error ? error.message : "Unknown error" } as const;
+                }
+              })
+            );
+
+            // Process results in order for conversation history and events
             const readResponseParts: Array<{ functionResponse: { name: string; response: { result: string } } }> = [];
 
-            for (const citation of casesToReadThisRound) {
-              sendStage("retrieving", `Retrieving: ${citation}`);
-              sendEvent("tool_call", { name: "getCaseDetails", args: { citation }, iteration: phaseNum });
-
-              try {
-                const caseText = await executeRead(citation, caseReadCache);
-                casesRead.add(citation);
+            for (const result of readResults) {
+              if (result.success) {
+                casesRead.add(result.citation);
                 readCount++;
-
                 readResponseParts.push({
-                  functionResponse: { name: "getCaseDetails", response: { result: caseText } },
+                  functionResponse: { name: "getCaseDetails", response: { result: result.caseText } },
                 });
-
-                sendEvent("tool_result", { name: "getCaseDetails", summary: `Retrieved full text of ${citation}`, iteration: phaseNum });
-              } catch (error) {
-                const errorMsg = `Error: ${error instanceof Error ? error.message : "Unknown error"}`;
+                sendEvent("tool_result", { name: "getCaseDetails", summary: `Retrieved full text of ${result.citation}`, iteration: phaseNum });
+              } else {
+                const errorMsg = `Error: ${result.error}`;
                 readResponseParts.push({
                   functionResponse: { name: "getCaseDetails", response: { result: errorMsg } },
                 });
