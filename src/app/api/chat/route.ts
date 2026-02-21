@@ -63,24 +63,18 @@ const getCaseDetailsDeclaration: FunctionDeclaration = {
 
 const getOrdinanceSectionDeclaration: FunctionDeclaration = {
   name: "getOrdinanceSection",
-  description: `Get the full statutory text of a Hong Kong ordinance section. Use this when the user asks about a section they are not currently viewing, or when you need to reference the exact wording of a provision.
+  description: `Get the full statutory text (English and Chinese) of a Hong Kong ordinance section. Use this when the user asks about a specific section, wants the exact wording of a provision, or is viewing an ordinance page and asks about a section.
 
-Available ordinances:
+Available ordinances (22 total):
+Cap. 6 (Bankruptcy 破產條例), Cap. 7 (Landlord and Tenant 業主與租客(綜合)條例), Cap. 26 (Sale of Goods 貨品售賣條例), Cap. 32 (Companies Winding Up 公司(清盤及雜項條文)條例), Cap. 57 (Employment 僱傭條例), Cap. 112 (Inland Revenue 稅務條例), Cap. 115 (Immigration 入境條例), Cap. 128 (Land Registration 土地註冊條例), Cap. 179 (Matrimonial Causes 婚姻訴訟條例), Cap. 201 (Prevention of Bribery 防止賄賂條例), Cap. 210 (Theft 盜竊罪條例), Cap. 221 (Criminal Procedure 刑事訴訟程序條例), Cap. 282 (Employees' Compensation 僱員補償條例), Cap. 344 (Building Management 建築物管理條例), Cap. 374 (Road Traffic 道路交通條例), Cap. 455 (Organized and Serious Crimes 有組織及嚴重罪行條例), Cap. 486 (Personal Data Privacy 個人資料(私隱)條例), Cap. 509 (Occupational Safety and Health 職業安全及健康條例), Cap. 528 (Copyright 版權條例), Cap. 553 (Electronic Transactions 電子交易條例), Cap. 559 (Trade Marks 商標條例), Cap. 571 (Securities and Futures 證券及期貨條例)
 
-**Cap. 57 (Employment Ordinance 僱傭條例)**
-Key sections: s.2 (definitions), s.3 (continuous contract), s.4 (fixed term), s.6 (notice), s.6A (continuous contract info), s.7 (payment in lieu), s.9 (unreasonable dismissal), s.18 (employment protection), s.31B (severance payment), s.31I-31R (long service payment), s.32 (sickness allowance), s.33 (maternity leave), s.38B (paternity leave), s.40 (annual leave), s.41 (holiday pay), s.43C (statutory holidays), s.44A (end of year payment), s.63C (offences), s.70 (contracting out)
-
-**Cap. 201 (Prevention of Bribery Ordinance 防止賄賂條例)**
-Key sections: s.4 (bribery by agent), s.5 (corruption in elections), s.8 (bribery of public servants), s.9 (bribery transactions with agents), s.10 (false entries), s.12 (penalties), s.30 (ICAC powers)
-
-**Cap. 282 (Employees' Compensation Ordinance 僱員補償條例)**
-Key sections: s.2 (interpretation), s.3 (liability for compensation), s.4 (scope), s.5 (amount of compensation), s.6 (death cases), s.7 (partial incapacity), s.9 (common law rights), s.10A (employees' compensation insurance), s.18 (occupational diseases), s.24 (assessment), s.36 (certificate of compensation), s.40 (offences)`,
+Always use this tool when the user asks for the text of a section from any of these ordinances. If the section is not found, the tool will return a list of available sections.`,
   parameters: {
     type: Type.OBJECT,
     properties: {
       cap: {
         type: Type.NUMBER,
-        description: "The ordinance chapter number. Must be one of: 57 (Employment Ordinance), 201 (Prevention of Bribery Ordinance), or 282 (Employees' Compensation Ordinance)",
+        description: "The ordinance chapter number (e.g., 6, 7, 26, 32, 57, 112, 115, 128, 179, 201, 210, 221, 282, 344, 374, 455, 486, 509, 528, 553, 559, 571)",
       },
       section: {
         type: Type.STRING,
