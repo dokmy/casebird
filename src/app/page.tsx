@@ -106,11 +106,8 @@ export default function Home() {
         localStorage.removeItem('anonymous_message_count');
         setShowAuthModal(false);
         setShowSignupPrompt(false);
-        // Reload page to fetch user data
-        if (event === 'SIGNED_IN') {
-          console.log('[AUTH] Main page: SIGNED_IN event, reloading page');
-          window.location.reload();
-        }
+        // Note: We don't reload here - state updates handle everything
+        // Reloading on SIGNED_IN causes infinite loop when page loads with existing session
       } else {
         console.log('[AUTH] Main page: no session user, setting authenticated to false');
         setIsAuthenticated(false);
