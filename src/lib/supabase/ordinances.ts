@@ -97,8 +97,6 @@ export async function getOrdinanceStructure(capNumber: string) {
         title_en,
         title_zh,
         subpath,
-        text_en,
-        text_zh,
         sort_order
       )
     `)
@@ -121,8 +119,6 @@ export async function getOrdinanceStructure(capNumber: string) {
           title: s.title_en,
           titleZh: s.title_zh,
           subpath: s.subpath,
-          textEn: s.text_en,
-          textZh: s.text_zh,
         })),
     })) || [],
   };

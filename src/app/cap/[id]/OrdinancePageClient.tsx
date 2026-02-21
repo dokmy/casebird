@@ -185,9 +185,25 @@ export default function OrdinancePageClient({
     }
   }, [selectedSection]);
 
-  const handleSectionClick = (section: Section, part: Part) => {
+  const handleSectionClick = async (section: Section, part: Part) => {
     setSelectedSection({ section, part });
-    setShowingSectionText(true); // Show section text on left side
+    setShowingSectionText(true);
+
+    // Fetch section text on demand if not already loaded
+    if (!section.textEn) {
+      try {
+        const sectionNumber = section.id.replace(/^Section\s*/i, '').replace(/^s\.?\s*/i, '');
+        const res = await fetch(`/api/ordinance-section?cap=${cap}&section=${sectionNumber}`);
+        if (res.ok) {
+          const data = await res.json();
+          section.textEn = data.textEn;
+          section.textZh = data.textZh;
+          setSelectedSection({ section: { ...section }, part });
+        }
+      } catch {
+        // Text will remain unavailable
+      }
+    }
   };
 
   const handleBackToOrdinanceList = () => {
