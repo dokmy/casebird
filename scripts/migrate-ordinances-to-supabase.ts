@@ -31,6 +31,14 @@ interface OrdinanceStructure {
       textZh: string;
     }>;
   }>;
+  schedules?: Array<{
+    id: string;
+    title: string;
+    titleZh: string;
+    subpath: string;
+    textEn: string;
+    textZh: string;
+  }>;
 }
 
 interface OrdinanceAnnotations {
