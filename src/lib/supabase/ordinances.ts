@@ -202,8 +202,9 @@ export async function getAnnotatedSections(capNumber: string) {
 
   const { data: sections } = await supabase
     .from('ordinance_sections')
-    .select('section_number')
-    .in('id', sectionIds);
+    .select('section_number, title_en')
+    .in('id', sectionIds)
+    .order('sort_order');
 
-  return sections?.map(s => ({ section: s.section_number })) || [];
+  return sections?.map(s => ({ section: s.section_number, titleEn: s.title_en })) || [];
 }
