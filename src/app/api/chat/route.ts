@@ -4,9 +4,7 @@ import { createClient } from "@/lib/supabase/server";
 import { SYSTEM_PROMPTS, DIRECT_PROMPTS, INSURANCE_COURTS } from "@/lib/prompts";
 
 // Load ordinance structures for getOrdinanceSection tool
-import cap57Data from "@/data/cap57-annotations.json";
-import cap201Data from "@/data/cap201-structure.json";
-import cap282Data from "@/data/cap282-annotations.json";
+import { getOrdinanceSectionFromDB, getOrdinanceSections } from "@/lib/supabase/ordinances";
 
 
 const searchCasesDeclaration: FunctionDeclaration = {
@@ -266,39 +264,23 @@ async function generateFollowUpQuestions(
 }
 
 // Execute getOrdinanceSection to fetch statutory text
-function executeGetOrdinanceSection(cap: number, section: string): string {
-  // Normalize section number (remove 's.' prefix if present)
+async function executeGetOrdinanceSection(cap: number, section: string): Promise<string> {
   const normalizedSection = section.replace(/^s\.?\s*/i, "");
 
   try {
-    if (cap === 57) {
-      // Cap 57 uses flat sections array in annotations file
-      const sectionData = cap57Data.sections.find((s: { section: string }) => s.section === normalizedSection);
-      if (!sectionData) {
-        return `Section ${section} not found in Cap. 57 (Employment Ordinance). Available sections: ${cap57Data.sections.map((s: { section: string }) => "s." + s.section).join(", ")}`;
+    const sectionData = await getOrdinanceSectionFromDB(cap.toString(), normalizedSection);
+
+    if (!sectionData) {
+      const availableSections = await getOrdinanceSections(cap.toString());
+      if (availableSections.length === 0) {
+        return `Ordinance Cap. ${cap} not found in database.`;
       }
-      return `**Cap. 57 s.${normalizedSection}: ${(sectionData as { titleEn?: string }).titleEn || ""}**\n\nEnglish text:\n${(sectionData as { sectionTextEn?: string }).sectionTextEn || "Text not available"}\n\nChinese text (中文文本):\n${(sectionData as { sectionTextZh?: string }).sectionTextZh || "Text not available"}`;
-    } else if (cap === 201) {
-      // Cap 201 uses hierarchical parts structure
-      for (const part of cap201Data.parts) {
-        const sectionData = part.sections.find((s: { id: string }) => s.id === `s.${normalizedSection}` || s.id === normalizedSection);
-        if (sectionData) {
-          return `**Cap. 201 s.${normalizedSection}: ${(sectionData as { title?: string }).title || ""}**\n\nEnglish text:\n${(sectionData as { textEn?: string }).textEn || "Text not available"}\n\nChinese text (中文文本):\n${(sectionData as { textZh?: string }).textZh || "Text not available"}`;
-        }
-      }
-      return `Section ${section} not found in Cap. 201 (Prevention of Bribery Ordinance).`;
-    } else if (cap === 282) {
-      // Cap 282 uses flat sections array in annotations file
-      const sectionData = cap282Data.sections.find((s: { section: string }) => s.section === normalizedSection);
-      if (!sectionData) {
-        return `Section ${section} not found in Cap. 282 (Employees' Compensation Ordinance). Available sections: ${cap282Data.sections.map((s: { section: string }) => "s." + s.section).join(", ")}`;
-      }
-      return `**Cap. 282 s.${normalizedSection}: ${(sectionData as { titleEn?: string }).titleEn || ""}**\n\nEnglish text:\n${(sectionData as { sectionTextEn?: string }).sectionTextEn || "Text not available"}\n\nChinese text (中文文本):\n${(sectionData as { sectionTextZh?: string }).sectionTextZh || "Text not available"}`;
-    } else {
-      return `Invalid ordinance chapter number: ${cap}. Supported: 57, 201, 282`;
+      return `Section ${section} not found in Cap. ${cap}. Available sections: ${availableSections.map(s => "s." + s).join(", ")}`;
     }
+
+    return `**Cap. ${cap} ${sectionData.section_identifier}: ${sectionData.title_en}**\n\nEnglish text:\n${sectionData.text_en}\n\nChinese text (中文文本):\n${sectionData.text_zh}`;
   } catch (error) {
-    return `Error fetching section: ${error instanceof Error ? error.message : "Unknown error"}`;
+    return `Error retrieving section: ${error instanceof Error ? error.message : "Unknown error"}`;
   }
 }
 
@@ -457,7 +439,7 @@ Reply with EXACTLY one word:
               const ordinanceResponseParts: Array<{ functionResponse: { name: string; response: { result: string } } }> = [];
               for (const { cap, section } of directOrdinanceCalls) {
                 try {
-                  const sectionText = executeGetOrdinanceSection(cap, section);
+                  const sectionText = await executeGetOrdinanceSection(cap, section);
                   ordinanceResponseParts.push({
                     functionResponse: { name: "getOrdinanceSection", response: { result: sectionText } },
                   });
@@ -657,7 +639,7 @@ Reply with EXACTLY one word:
                 try {
                   const cap = call.args.cap as number;
                   const section = call.args.section as string;
-                  const sectionText = executeGetOrdinanceSection(cap, section);
+                  const sectionText = await executeGetOrdinanceSection(cap, section);
 
                   toolResponseParts.push({
                     functionResponse: { name: "getOrdinanceSection", response: { result: sectionText } },
@@ -922,7 +904,7 @@ ${chunkSummary}`;
                 sendEvent("tool_call", { name: "getOrdinanceSection", args: { cap, section }, iteration: phaseNum });
 
                 try {
-                  const sectionText = executeGetOrdinanceSection(cap, section);
+                  const sectionText = await executeGetOrdinanceSection(cap, section);
                   additionalResponseParts.push({
                     functionResponse: { name: "getOrdinanceSection", response: { result: sectionText } },
                   });

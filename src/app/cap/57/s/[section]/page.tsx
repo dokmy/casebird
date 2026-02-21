@@ -5,7 +5,7 @@ import { FeatherIcon } from "@/components/ui/feather-icon";
 import { WarningBanner } from "@/components/ui/warning-banner";
 import { AnnotatedCaseList } from "@/components/cap/AnnotatedCaseList";
 import { LegislationText } from "@/components/cap/LegislationText";
-import annotationsData from "@/data/cap57-annotations.json";
+import { getSectionWithAnnotations, getAnnotatedSections } from "@/lib/supabase/ordinances";
 import { CAP57_SECTIONS } from "@/data/cap57-sections";
 
 type Props = {
@@ -13,17 +13,13 @@ type Props = {
 };
 
 export async function generateStaticParams() {
-  return annotationsData.sections.map((s) => ({
-    section: s.section,
-  }));
+  return await getAnnotatedSections('57');
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { section: sectionId } = await params;
   const sectionDef = CAP57_SECTIONS.find((s) => s.section === sectionId);
-  const sectionData = annotationsData.sections.find(
-    (s) => s.section === sectionId
-  );
+  const sectionData = await getSectionWithAnnotations('57', sectionId);
 
   if (!sectionDef || !sectionData) return {};
 
@@ -47,16 +43,14 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 export default async function SectionPage({ params }: Props) {
   const { section: sectionId } = await params;
   const sectionDef = CAP57_SECTIONS.find((s) => s.section === sectionId);
-  const sectionData = annotationsData.sections.find(
-    (s) => s.section === sectionId
-  );
+  const sectionData = await getSectionWithAnnotations('57', sectionId);
 
   if (!sectionDef || !sectionData) {
     notFound();
   }
 
   // Find adjacent sections for navigation
-  const allSections = annotationsData.sections;
+  const allSections = await getAnnotatedSections('57');
   const currentIndex = allSections.findIndex((s) => s.section === sectionId);
   const prevSection = currentIndex > 0 ? allSections[currentIndex - 1] : null;
   const nextSection =

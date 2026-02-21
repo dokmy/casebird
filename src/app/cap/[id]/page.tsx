@@ -1,21 +1,13 @@
 import { notFound } from "next/navigation";
 import OrdinancePageClient from "./OrdinancePageClient";
 import ordinancesConfig from "@/data/ordinances-config.json";
-import { readFileSync } from "fs";
-import { join } from "path";
+import { getOrdinanceStructure } from "@/lib/supabase/ordinances";
 
 export async function generateStaticParams() {
-  // Only pre-generate smaller ordinances to avoid Vercel's 19MB limit
-  // Ordinances with structure files > 1MB will be generated on-demand
-  // Excluded: 6 (1.2M), 112 (16M), 115 (1.7M), 221 (1.4M), 344 (1.8M), 374 (2.7M),
-  //           455 (801K), 486 (6.9M), 528 (3.2M), 559 (1.3M), 571 (11M), 7 (1.9M), 32 (3.5M)
-  const smallOrdinances = ["26", "57", "128", "179", "201", "210", "282", "509", "553"];
-
-  return ordinancesConfig.ordinances
-    .filter((ord) => smallOrdinances.includes(ord.cap))
-    .map((ord) => ({
-      id: ord.cap,
-    }));
+  // Now we can pre-generate ALL ordinances (no 19MB limit with database!)
+  return ordinancesConfig.ordinances.map((ord) => ({
+    id: ord.cap,
+  }));
 }
 
 export async function generateMetadata({ params }: { params: Promise<{ id: string }> }) {
@@ -44,13 +36,10 @@ export default async function OrdinancePage({ params }: { params: Promise<{ id: 
     notFound();
   }
 
-  // Load structure data
-  let ordinanceData;
-  try {
-    const structurePath = join(process.cwd(), `src/data/cap${id}-structure.json`);
-    const structureContent = readFileSync(structurePath, "utf-8");
-    ordinanceData = JSON.parse(structureContent);
-  } catch (error) {
+  // Load structure data from database
+  const ordinanceData = await getOrdinanceStructure(id);
+
+  if (!ordinanceData) {
     notFound();
   }
 
