@@ -1,4 +1,16 @@
 import { createClient } from '@/lib/supabase/server';
+import { createClient as createSupabaseClient } from '@supabase/supabase-js';
+
+/**
+ * Create a Supabase client that works at build time (no cookies needed).
+ * Ordinance data is public so the publishable key is sufficient.
+ */
+function createBuildClient() {
+  return createSupabaseClient(
+    process.env.NEXT_PUBLIC_SUPABASE_URL!,
+    process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY!
+  );
+}
 
 export interface OrdinanceSection {
   section_identifier: string;
@@ -61,7 +73,7 @@ export async function getOrdinanceSections(capNumber: string): Promise<string[]>
  * Get ordinance structure for listing page (/cap/[id])
  */
 export async function getOrdinanceStructure(capNumber: string) {
-  const supabase = await createClient();
+  const supabase = createBuildClient();
 
   const { data: ordinance } = await supabase
     .from('ordinances')
@@ -120,7 +132,7 @@ export async function getOrdinanceStructure(capNumber: string) {
  * Get section with annotations for section page (/cap/[id]/s/[section])
  */
 export async function getSectionWithAnnotations(capNumber: string, sectionNumber: string) {
-  const supabase = await createClient();
+  const supabase = createBuildClient();
 
   const { data: ordinance } = await supabase
     .from('ordinances')
@@ -180,7 +192,7 @@ export async function getSectionWithAnnotations(capNumber: string, sectionNumber
  * Get annotated sections for generateStaticParams (/cap/[id]/s/[section])
  */
 export async function getAnnotatedSections(capNumber: string) {
-  const supabase = await createClient();
+  const supabase = createBuildClient();
 
   const { data: ordinance } = await supabase
     .from('ordinances')
