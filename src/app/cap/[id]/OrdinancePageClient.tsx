@@ -83,8 +83,11 @@ export default function OrdinancePageClient({
 
   // Check auth status and load user data on mount
   useEffect(() => {
+    console.log(`[AUTH] Cap ${cap} page: checkAuth useEffect triggered`);
     const checkAuth = async () => {
+      console.log(`[AUTH] Cap ${cap} page: fetching user...`);
       const { data: { user } } = await supabase.auth.getUser();
+      console.log(`[AUTH] Cap ${cap} page: user result:`, user ? `authenticated (${user.email})` : 'not authenticated');
       setIsAuthenticated(!!user);
       setUserEmail(user?.email || "");
       setUserId(user?.id || null);
@@ -118,17 +121,20 @@ export default function OrdinancePageClient({
           setSubscription(subRes.data);
         }
       }
+      console.log(`[AUTH] Cap ${cap} page: checkAuth complete`);
     };
     checkAuth();
 
     // Listen for auth state changes
     const { data: { subscription } } = supabase.auth.onAuthStateChange(async (event, session) => {
+      console.log(`[AUTH] Cap ${cap} page: onAuthStateChange triggered, event:`, event, 'session:', session ? 'present' : 'null');
       setIsAuthenticated(!!session?.user);
       setUserEmail(session?.user?.email || "");
       setUserId(session?.user?.id || null);
 
       // Clear anonymous message count on sign in
       if (session?.user) {
+        console.log(`[AUTH] Cap ${cap} page: session user found, reloading settings`);
         localStorage.removeItem('anonymous_message_count');
         setShowAuthModal(false);
         setShowSignupPrompt(false);

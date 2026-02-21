@@ -46,9 +46,13 @@ export default function Home() {
 
   // Load user and conversations on mount
   useEffect(() => {
+    console.log('[AUTH] Main page: init useEffect triggered');
     const init = async () => {
+      console.log('[AUTH] Main page: fetching user...');
       const { data: { user } } = await supabase.auth.getUser();
+      console.log('[AUTH] Main page: user result:', user ? `authenticated (${user.email})` : 'not authenticated');
       if (user) {
+        console.log('[AUTH] Main page: setting authenticated state to true');
         setIsAuthenticated(true);
         setUserEmail(user.email || "");
         setUserId(user.id);
@@ -85,24 +89,30 @@ export default function Home() {
           setSubscription({ plan: "free", message_count: 0, message_limit: 10 });
         }
       } else {
+        console.log('[AUTH] Main page: setting authenticated state to false');
         setIsAuthenticated(false);
       }
+      console.log('[AUTH] Main page: init complete, loadingConversations = false');
       setLoadingConversations(false);
     };
     init();
 
     // Listen for auth state changes
     const { data: { subscription } } = supabase.auth.onAuthStateChange((event, session) => {
+      console.log('[AUTH] Main page: onAuthStateChange triggered, event:', event, 'session:', session ? 'present' : 'null');
       if (session?.user) {
+        console.log('[AUTH] Main page: session user found, setting authenticated to true');
         setIsAuthenticated(true);
         localStorage.removeItem('anonymous_message_count');
         setShowAuthModal(false);
         setShowSignupPrompt(false);
         // Reload page to fetch user data
         if (event === 'SIGNED_IN') {
+          console.log('[AUTH] Main page: SIGNED_IN event, reloading page');
           window.location.reload();
         }
       } else {
+        console.log('[AUTH] Main page: no session user, setting authenticated to false');
         setIsAuthenticated(false);
       }
     });
