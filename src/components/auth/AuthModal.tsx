@@ -44,6 +44,10 @@ export function AuthModal({ onClose, initialMode = "signin", onSuccess }: AuthMo
           },
         });
         if (error) throw error;
+        // Fire Google Ads conversion event for signup
+        if (typeof window !== "undefined" && typeof window.gtag === "function") {
+          window.gtag("event", "conversion", { send_to: "AW-17918140153/NmMfCICd7PwbEPm9hOBC" });
+        }
         setMessage("Check your email for a confirmation link.");
       } else {
         const { error } = await supabase.auth.signInWithPassword({
