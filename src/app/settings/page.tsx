@@ -191,6 +191,33 @@ function SettingsContent() {
             )}
           </div>
 
+          {/* About */}
+          <div className="pt-6 border-t border-border">
+            <h2 className="text-sm font-serif font-medium text-foreground mb-1">
+              About
+            </h2>
+            <p className="text-xs font-serif text-muted-foreground mb-3">
+              Casebird is a Hong Kong legal research assistant built by{" "}
+              <a
+                href="https://stepone.agency"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-primary hover:underline"
+              >
+                StepOne Digital Agency
+              </a>
+              . We combine AI with Hong Kong case law to help legal professionals find relevant authorities faster.
+            </p>
+            <div className="flex gap-4">
+              <Link href="/privacy" className="text-xs font-serif text-primary hover:underline">
+                Privacy Policy
+              </Link>
+              <Link href="/terms" className="text-xs font-serif text-primary hover:underline">
+                Terms of Service
+              </Link>
+            </div>
+          </div>
+
           {/* Subscription */}
           <div className="pt-6 border-t border-border">
             <h2 className="text-sm font-serif font-medium text-foreground mb-1">
