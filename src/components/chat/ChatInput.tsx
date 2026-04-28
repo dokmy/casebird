@@ -4,7 +4,7 @@ import { useRef, useEffect, KeyboardEvent, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { Send, Loader2, Zap, Scale, Search, ChevronDown } from "lucide-react";
-import { ResearchMode, CaseLanguage, RESEARCH_MODE_CONFIG } from "@/types/chat";
+import { ResearchMode, CaseLanguage, AIProvider, RESEARCH_MODE_CONFIG } from "@/types/chat";
 import { cn } from "@/lib/utils";
 
 const CASE_LANGUAGE_OPTIONS: { value: CaseLanguage; label: string }[] = [
@@ -26,9 +26,11 @@ interface ChatInputProps {
   onInputChange: (value: string) => void;
   defaultMode?: ResearchMode;
   onModeChange?: (mode: ResearchMode) => void;
+  aiProvider: AIProvider;
+  onAIProviderChange: (provider: AIProvider) => void;
 }
 
-export function ChatInput({ onSend, isLoading, disabled, caseLanguage, onCaseLanguageChange, caseLanguageLocked, messageCount, messageLimit, input, onInputChange: setInput, defaultMode = "fast", onModeChange }: ChatInputProps) {
+export function ChatInput({ onSend, isLoading, disabled, caseLanguage, onCaseLanguageChange, caseLanguageLocked, messageCount, messageLimit, input, onInputChange: setInput, defaultMode = "fast", onModeChange, aiProvider, onAIProviderChange }: ChatInputProps) {
   const [mode, setMode] = useState<ResearchMode>(defaultMode);
   const [showLangMenu, setShowLangMenu] = useState(false);
   const textareaRef = useRef<HTMLTextAreaElement>(null);
@@ -88,7 +90,7 @@ export function ChatInput({ onSend, isLoading, disabled, caseLanguage, onCaseLan
   return (
     <div className="border-t bg-background px-3 pt-4 pb-2 sm:p-4">
       <div className="max-w-3xl mx-auto">
-        {/* Mode selector & case language dropdown */}
+        {/* Mode selector, AI provider toggle & case language dropdown */}
         <div className="flex items-center justify-center gap-2 sm:gap-4 mb-2 sm:mb-3">
           {/* Research mode */}
           <div className="flex items-center gap-0.5 sm:gap-1">
@@ -107,6 +109,28 @@ export function ChatInput({ onSend, isLoading, disabled, caseLanguage, onCaseLan
               >
                 {modeIcons[m]}
                 <span>{RESEARCH_MODE_CONFIG[m].label}</span>
+              </button>
+            ))}
+          </div>
+
+          {/* Divider */}
+          <div className="w-px h-4 bg-border" />
+
+          {/* AI Provider toggle */}
+          <div className="flex items-center gap-0.5 sm:gap-1">
+            {(["gemini", "openai"] as AIProvider[]).map((p) => (
+              <button
+                key={p}
+                onClick={() => onAIProviderChange(p)}
+                disabled={isLoading}
+                className={cn(
+                  "px-2 sm:px-3 py-1 sm:py-1.5 text-[10px] sm:text-xs font-serif rounded-full transition-all",
+                  aiProvider === p
+                    ? "bg-primary text-primary-foreground"
+                    : "bg-muted text-muted-foreground hover:bg-muted/80"
+                )}
+              >
+                {p === "gemini" ? "Gemini" : "OpenAI"}
               </button>
             ))}
           </div>

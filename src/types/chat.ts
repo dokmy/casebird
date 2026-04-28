@@ -40,6 +40,8 @@ export interface SelectedCase {
   url: string;
 }
 
+export type AIProvider = "gemini" | "openai";
+
 export type ResearchMode = "fast" | "normal" | "deep";
 
 export type CaseLanguage = "any" | "EN" | "TC";

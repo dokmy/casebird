@@ -1,67 +1,46 @@
-import { GoogleGenAI, Type, FunctionDeclaration, Tool, ThinkingLevel, FunctionCallingConfigMode } from "@google/genai";
+import { createAIAdapter, type AIProvider, type AIMessage, type AIPart, type AIToolDefinition, type NormalizedPart } from "@/lib/ai";
 import { searchCasesRaw, getCaseDetails, getCaseUrl, SearchResult } from "@/lib/pinecone";
 import { createClient } from "@/lib/supabase/server";
 import { SYSTEM_PROMPTS, DIRECT_PROMPTS, INSURANCE_COURTS } from "@/lib/prompts";
-
-// Load ordinance structures for getOrdinanceSection tool
 import { getOrdinanceSectionFromDB, getOrdinanceSections } from "@/lib/supabase/ordinances";
 
-
-const searchCasesDeclaration: FunctionDeclaration = {
+// Provider-agnostic tool definitions
+const searchCasesTool: AIToolDefinition = {
   name: "searchCases",
   description:
     "Search Hong Kong legal cases using hybrid search (semantic + keyword matching). Returns case citations with relevant text snippets.",
   parameters: {
-    type: Type.OBJECT,
+    type: "object",
     properties: {
-      query: {
-        type: Type.STRING,
-        description: "Search query for finding relevant cases",
-      },
-      numResults: {
-        type: Type.NUMBER,
-        description: "Number of results to return (default 15, max 30)",
-      },
+      query: { type: "string", description: "Search query for finding relevant cases" },
+      numResults: { type: "number", description: "Number of results to return (default 15, max 30)" },
       court: {
-        type: Type.STRING,
+        type: "string",
         description:
           "Filter by court: hkcfa (Court of Final Appeal), ukpc (UK Privy Council), hkca (Court of Appeal), hkcfi (Court of First Instance), hkct (Competition Tribunal), hkdc (District Court), hkfc (Family Court), hkmagc (Magistrates' Courts), hkcrc (Coroner's Court), hklat (Labour Tribunal), hkldt (Lands Tribunal), hkoat (Obscene Articles Tribunal), hksct (Small Claims Tribunal)",
       },
-      language: {
-        type: Type.STRING,
-        description:
-          "Filter by language: EN (English) or TC (Traditional Chinese)",
-      },
-      yearFrom: {
-        type: Type.NUMBER,
-        description: "Filter cases from this year onwards",
-      },
-      yearTo: {
-        type: Type.NUMBER,
-        description: "Filter cases up to this year",
-      },
+      language: { type: "string", description: "Filter by language: EN (English) or TC (Traditional Chinese)" },
+      yearFrom: { type: "number", description: "Filter cases from this year onwards" },
+      yearTo: { type: "number", description: "Filter cases up to this year" },
     },
     required: ["query"],
   },
 };
 
-const getCaseDetailsDeclaration: FunctionDeclaration = {
+const getCaseDetailsTool: AIToolDefinition = {
   name: "getCaseDetails",
   description:
     "Get the full text of a specific case by its neutral citation. Use this to read the complete judgment before quoting or analyzing.",
   parameters: {
-    type: Type.OBJECT,
+    type: "object",
     properties: {
-      citation: {
-        type: Type.STRING,
-        description: "The neutral citation, e.g., '[2024] HKCA 620'",
-      },
+      citation: { type: "string", description: "The neutral citation, e.g., '[2024] HKCA 620'" },
     },
     required: ["citation"],
   },
 };
 
-const getOrdinanceSectionDeclaration: FunctionDeclaration = {
+const getOrdinanceSectionTool: AIToolDefinition = {
   name: "getOrdinanceSection",
   description: `Get the full statutory text (English and Chinese) of a Hong Kong ordinance section. Use this when the user asks about a specific section, wants the exact wording of a provision, or is viewing an ordinance page and asks about a section.
 
@@ -70,50 +49,37 @@ Cap. 6 (Bankruptcy 破產條例), Cap. 7 (Landlord and Tenant 業主與租客(�
 
 Always use this tool when the user asks for the text of a section from any of these ordinances. If the section is not found, the tool will return a list of available sections.`,
   parameters: {
-    type: Type.OBJECT,
+    type: "object",
     properties: {
       cap: {
-        type: Type.NUMBER,
+        type: "number",
         description: "The ordinance chapter number (e.g., 6, 7, 26, 32, 57, 112, 115, 128, 179, 201, 210, 221, 282, 344, 374, 455, 486, 509, 528, 553, 559, 571)",
       },
-      section: {
-        type: Type.STRING,
-        description: "The section number, e.g., '4', '9', '31B', '6A'",
-      },
+      section: { type: "string", description: "The section number, e.g., '4', '9', '31B', '6A'" },
     },
     required: ["cap", "section"],
   },
 };
 
-const searchOnlyTools: Tool[] = [
-  { functionDeclarations: [searchCasesDeclaration, getOrdinanceSectionDeclaration] },
-];
-
-const readOnlyTools: Tool[] = [
-  { functionDeclarations: [getCaseDetailsDeclaration, getOrdinanceSectionDeclaration] },
-];
+const searchOnlyTools: AIToolDefinition[] = [searchCasesTool, getOrdinanceSectionTool];
+const readOnlyTools: AIToolDefinition[] = [getCaseDetailsTool, getOrdinanceSectionTool];
 
 // Phase types: which tools are available at each iteration
-// "filter" has no tools — Gemini just sees accumulated chunks and picks cases
 type Phase = "search" | "filter" | "read" | "answer";
 
 // Phase schedules per mode
-// Pipeline: search wide → filter smart → read deep → answer
 const PHASE_SCHEDULES: Record<string, Phase[]> = {
-  // Fast (4 phases): search → filter → read → answer
   fast: ["search", "filter", "read", "answer"],
-  // Normal (6 phases): search → search → filter → read → read → answer
   normal: ["search", "search", "filter", "read", "read", "answer"],
-  // Deep (8 phases): search → search → filter → read → read → read → read → answer
   deep: ["search", "search", "filter", "read", "read", "read", "read", "answer"],
 };
 
-function getToolsForPhase(phase: Phase): Tool[] | undefined {
+function getToolsForPhase(phase: Phase): AIToolDefinition[] | undefined {
   switch (phase) {
     case "search": return searchOnlyTools;
     case "read": return readOnlyTools;
-    case "filter": return undefined; // No tools — Gemini just picks cases
-    case "answer": return undefined; // No tools — force final answer
+    case "filter": return undefined;
+    case "answer": return undefined;
   }
 }
 
@@ -182,67 +148,46 @@ async function executeRead(
 
 // Generate follow-up questions based on conversation context
 async function generateFollowUpQuestions(
-  ai: GoogleGenAI,
-  conversationContents: Array<{ role: string; parts: Array<unknown> }>,
+  adapter: ReturnType<typeof createAIAdapter>,
+  conversationMessages: AIMessage[],
   userMessage: string
 ): Promise<string[]> {
   try {
-    // Extract the last assistant message text
-    const lastModelMessage = conversationContents
+    // Extract the last model message text
+    const lastModelMessage = [...conversationMessages]
       .reverse()
-      .find(msg => {
-        const parts = msg.parts as Array<{ text?: string }>;
-        return msg.role === "model" && parts.some(p => p.text && p.text.length > 50);
-      });
+      .find(msg => msg.role === "model" && msg.parts.some(p => p.type === "text" && p.text.length > 50));
 
     if (!lastModelMessage) {
       console.log("[follow-up] No model message found");
       return [];
     }
 
-    const parts = lastModelMessage.parts as Array<{ text?: string }>;
-    const answerText = parts.find(p => p.text)?.text || "";
+    const answerText = lastModelMessage.parts.find(p => p.type === "text")?.text || "";
 
-    // Use function calling for structured output
-    const suggestQuestionsTool: Tool = {
-      functionDeclarations: [{
-        name: "suggestFollowUpQuestions",
-        description: "Suggest follow-up questions",
-        parameters: {
-          type: Type.OBJECT,
-          properties: {
-            questions: {
-              type: Type.ARRAY,
-              items: { type: Type.STRING },
-            },
-          },
-          required: ["questions"],
+    const followUpPrompt = `Legal answer: "${(answerText as string).slice(0, 500)}..."\n\nYou MUST call the suggestFollowUpQuestions function with 2-3 follow-up questions. Do not write text - only call the function.`;
+
+    const suggestTool: AIToolDefinition = {
+      name: "suggestFollowUpQuestions",
+      description: "Suggest follow-up questions",
+      parameters: {
+        type: "object",
+        properties: {
+          questions: { type: "array", items: { type: "string" } },
         },
-      }],
+        required: ["questions"],
+      },
     };
 
-    const followUpPrompt = `Legal answer: "${answerText.slice(0, 500)}..."\n\nYou MUST call the suggestFollowUpQuestions function with 2-3 follow-up questions. Do not write text - only call the function.`;
+    const response = await adapter.generateContent(
+      [{ role: "user", parts: [{ type: "text", text: followUpPrompt }] }],
+      "pipeline",
+      { temperature: 0.7, tools: [suggestTool], toolChoice: "required" }
+    );
 
-    const followUpResponse = await ai.models.generateContent({
-      model: "gemini-3.1-flash-lite-preview",
-      contents: [
-        { role: "user", parts: [{ text: followUpPrompt }] },
-      ],
-      config: {
-        temperature: 0.7,
-        tools: [suggestQuestionsTool],
-        toolConfig: { functionCallingConfig: { mode: FunctionCallingConfigMode.ANY } },
-      },
-    });
-
-    // Extract function call result
-    const candidate = followUpResponse.candidates?.[0];
-    const functionCall = candidate?.content?.parts?.find((p: any) => p.functionCall)?.functionCall;
-
-    console.log("[follow-up] Function call:", JSON.stringify(functionCall));
-
-    if (functionCall?.name === "suggestFollowUpQuestions" && (functionCall.args as any)?.questions) {
-      const questions = ((functionCall.args as any).questions as string[])
+    const functionCallPart = response.parts.find(p => p.type === "functionCall");
+    if (functionCallPart && functionCallPart.name === "suggestFollowUpQuestions" && functionCallPart.args?.questions) {
+      const questions = (functionCallPart.args.questions as string[])
         .filter((q: string) => q && q.length > 5)
         .slice(0, 3);
       console.log("[follow-up] Parsed questions:", questions);
@@ -278,6 +223,28 @@ async function executeGetOrdinanceSection(cap: number, section: string): Promise
   }
 }
 
+// Helper: collect all parts from a streaming response
+async function collectStreamParts(
+  stream: AsyncIterable<NormalizedPart[]>,
+  onPart: (part: NormalizedPart) => void
+): Promise<AIPart[]> {
+  const collectedParts: AIPart[] = [];
+  for await (const parts of stream) {
+    for (const part of parts) {
+      onPart(part);
+      // Convert NormalizedPart to AIPart for conversation history
+      if (part.type === "text") {
+        collectedParts.push({ type: "text", text: part.text! });
+      } else if (part.type === "thought") {
+        collectedParts.push({ type: "text", text: part.text!, thought: true });
+      } else if (part.type === "functionCall") {
+        collectedParts.push({ type: "functionCall", name: part.name!, args: part.args!, toolCallId: part.toolCallId });
+      }
+    }
+  }
+  return collectedParts;
+}
+
 export async function POST(request: Request) {
   try {
     // Auth check - allow anonymous users (for ordinance landing pages)
@@ -286,7 +253,6 @@ export async function POST(request: Request) {
 
     // Only enforce message limits for authenticated users
     if (user) {
-      // Atomically check limit and increment message count
       const { data: rpcResult, error: rpcError } = await supabase
         .rpc("increment_message_count", { uid: user.id });
 
@@ -302,45 +268,44 @@ export async function POST(request: Request) {
         );
       }
     }
-    // Anonymous users can proceed without message counting (limited by frontend)
 
-    const { message, history, mode = "normal", outputLanguage = "EN", userRole = "lawyer", caseLanguage } = (await request.json()) as {
+    const { message, history, mode = "normal", outputLanguage = "EN", userRole = "lawyer", caseLanguage, provider: requestedProvider = "gemini" } = (await request.json()) as {
       message: string;
       history: Message[];
       mode?: "fast" | "normal" | "deep";
       outputLanguage?: "EN" | "TC";
       userRole?: "insurance" | "lawyer";
       caseLanguage?: "EN" | "TC";
+      provider?: AIProvider;
     };
 
-    console.log("[chat] outputLanguage:", outputLanguage, "userRole:", userRole, "caseLanguage:", caseLanguage, "mode:", mode);
+    console.log("[chat] provider:", requestedProvider, "outputLanguage:", outputLanguage, "userRole:", userRole, "caseLanguage:", caseLanguage, "mode:", mode);
     const systemPrompt = SYSTEM_PROMPTS[userRole]?.[outputLanguage] || SYSTEM_PROMPTS.lawyer.EN;
     const allowedCourts = userRole === "insurance" ? INSURANCE_COURTS : undefined;
 
-    const thinkingLevelConfig: Record<string, ThinkingLevel> = {
-      fast: ThinkingLevel.LOW,
-      normal: ThinkingLevel.MEDIUM,
-      deep: ThinkingLevel.HIGH,
+    const thinkingLevelMap: Record<string, "low" | "medium" | "high"> = {
+      fast: "low",
+      normal: "medium",
+      deep: "high",
     };
-    const thinkingLevel = thinkingLevelConfig[mode] || ThinkingLevel.MEDIUM;
+    const thinkingLevel = thinkingLevelMap[mode] || "medium";
 
-    const ai = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY! });
+    const adapter = createAIAdapter(requestedProvider);
 
-    // Build conversation contents from history
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const conversationContents: any[] = [];
+    // Build conversation contents from history (provider-agnostic format)
+    const conversationMessages: AIMessage[] = [];
 
     for (const msg of history) {
-      conversationContents.push({
+      conversationMessages.push({
         role: msg.role === "user" ? "user" : "model",
-        parts: [{ text: msg.content }],
+        parts: [{ type: "text", text: msg.content }],
       });
     }
 
     // Add the new user message
-    conversationContents.push({
+    conversationMessages.push({
       role: "user",
-      parts: [{ text: message }],
+      parts: [{ type: "text", text: message }],
     });
 
     // Create a streaming response
@@ -363,18 +328,17 @@ export async function POST(request: Request) {
           // ────────────────────────────────────────────────────────────
           sendStage("understanding", "Understanding your question...");
 
-          const triageResponse = await ai.models.generateContent({
-            model: "gemini-2.0-flash",
-            contents: conversationContents,
-            config: {
+          const triageResponse = await adapter.generateContent(
+            conversationMessages,
+            "triage",
+            {
               systemInstruction: `You are a routing classifier for a Hong Kong legal research tool. Given the user's message (and any conversation history), determine whether the user needs to SEARCH the case law database, or whether the question can be answered DIRECTLY without research.
 
 Reply with EXACTLY one word:
 - SEARCH — if the user wants to find specific cases, compare quantum/compensation awards, or needs case law evidence
 - DIRECT — if the question is general legal knowledge (e.g., "what is PSLA?"), a follow-up on previous conversation (e.g., drafting a letter, summarizing), or does not require searching for specific cases`,
-              // Note: gemini-2.0-flash does not support thinkingConfig
-            },
-          });
+            }
+          );
 
           const triageText = triageResponse.text?.trim().toUpperCase() || "SEARCH";
           const needsResearch = triageText !== "DIRECT";
@@ -387,100 +351,82 @@ Reply with EXACTLY one word:
             sendStage("responding", "Generating response...");
 
             const directPrompt = DIRECT_PROMPTS[userRole]?.[outputLanguage] || DIRECT_PROMPTS.lawyer.EN;
-            const directTools: Tool[] = [{ functionDeclarations: [getOrdinanceSectionDeclaration] }];
 
-            const directResponse = await ai.models.generateContentStream({
-              model: "gemini-3.1-flash-lite-preview",
-              contents: conversationContents,
-              config: {
+            const directStream = adapter.generateContentStream(
+              conversationMessages,
+              "pipeline",
+              {
                 systemInstruction: directPrompt,
-                tools: directTools,
-                thinkingConfig: { thinkingLevel, includeThoughts: true },
-              },
-            });
+                tools: [getOrdinanceSectionTool],
+                thinkingLevel,
+                includeThoughts: true,
+              }
+            );
 
-            // eslint-disable-next-line @typescript-eslint/no-explicit-any
-            const directParts: any[] = [];
-            const directOrdinanceCalls: Array<{ cap: number; section: string }> = [];
-
-            for await (const chunk of directResponse) {
-              const candidate = (chunk as { candidates?: Array<{ content?: { parts?: Array<unknown> } }> }).candidates?.[0];
-              if (!candidate?.content?.parts) continue;
-
-              for (const part of candidate.content.parts) {
-                directParts.push(part);
-                const typedPart = part as { thought?: boolean; text?: string; functionCall?: { name: string; args: Record<string, unknown> } };
-
-                if (typedPart.text && !typedPart.thought) {
-                  sendEvent("text", typedPart.text);
-                } else if (typedPart.thought && typedPart.text) {
-                  sendEvent("thinking", { type: "thought", content: typedPart.text, iteration: 1 });
-                } else if (typedPart.functionCall?.name === "getOrdinanceSection") {
-                  const cap = typedPart.functionCall.args.cap as number;
-                  const section = typedPart.functionCall.args.section as string;
-                  if (cap && section) {
-                    directOrdinanceCalls.push({ cap, section });
-                    sendEvent("tool_call", { name: "getOrdinanceSection", args: { cap, section }, iteration: 1 });
-                  }
+            const directOrdinanceCalls: Array<{ cap: number; section: string; toolCallId?: string }> = [];
+            const directParts = await collectStreamParts(directStream, (part) => {
+              if (part.type === "text") {
+                sendEvent("text", part.text);
+              } else if (part.type === "thought") {
+                sendEvent("thinking", { type: "thought", content: part.text, iteration: 1 });
+              } else if (part.type === "functionCall" && part.name === "getOrdinanceSection") {
+                const cap = part.args?.cap as number;
+                const section = part.args?.section as string;
+                if (cap && section) {
+                  directOrdinanceCalls.push({ cap, section, toolCallId: part.toolCallId });
+                  sendEvent("tool_call", { name: "getOrdinanceSection", args: { cap, section }, iteration: 1 });
                 }
               }
-            }
+            });
 
             // If ordinance calls were made, execute them and continue
             if (directOrdinanceCalls.length > 0) {
-              conversationContents.push({ role: "model", parts: directParts });
+              conversationMessages.push({ role: "model", parts: directParts });
 
-              const ordinanceResponseParts: Array<{ functionResponse: { name: string; response: { result: string } } }> = [];
-              for (const { cap, section } of directOrdinanceCalls) {
+              const ordinanceResponseParts: AIPart[] = [];
+              for (const { cap, section, toolCallId } of directOrdinanceCalls) {
                 try {
                   const sectionText = await executeGetOrdinanceSection(cap, section);
                   ordinanceResponseParts.push({
-                    functionResponse: { name: "getOrdinanceSection", response: { result: sectionText } },
+                    type: "functionResponse", name: "getOrdinanceSection", result: sectionText, toolCallId,
                   });
                   sendEvent("tool_result", { name: "getOrdinanceSection", summary: `Retrieved Cap. ${cap} s.${section}`, iteration: 1 });
                 } catch (error) {
                   const errorMsg = `Error: ${error instanceof Error ? error.message : "Unknown error"}`;
                   ordinanceResponseParts.push({
-                    functionResponse: { name: "getOrdinanceSection", response: { result: errorMsg } },
+                    type: "functionResponse", name: "getOrdinanceSection", result: errorMsg, toolCallId,
                   });
                 }
               }
 
-              conversationContents.push({ role: "user", parts: ordinanceResponseParts });
+              conversationMessages.push({ role: "user", parts: ordinanceResponseParts });
 
               // Generate final response with ordinance context
-              const finalDirectResponse = await ai.models.generateContentStream({
-                model: "gemini-3.1-flash-lite-preview",
-                contents: conversationContents,
-                config: {
+              const finalDirectStream = adapter.generateContentStream(
+                conversationMessages,
+                "pipeline",
+                {
                   systemInstruction: directPrompt,
-                  thinkingConfig: { thinkingLevel: ThinkingLevel.LOW, includeThoughts: true },
-                },
-              });
-
-              for await (const chunk of finalDirectResponse) {
-                const candidate = (chunk as { candidates?: Array<{ content?: { parts?: Array<unknown> } }> }).candidates?.[0];
-                if (!candidate?.content?.parts) continue;
-
-                for (const part of candidate.content.parts) {
-                  const typedPart = part as { thought?: boolean; text?: string };
-                  if (typedPart.text && !typedPart.thought) {
-                    sendEvent("text", typedPart.text);
-                  } else if (typedPart.thought && typedPart.text) {
-                    sendEvent("thinking", { type: "thought", content: typedPart.text, iteration: 1 });
-                  }
+                  thinkingLevel: "low",
+                  includeThoughts: true,
                 }
-              }
+              );
+
+              await collectStreamParts(finalDirectStream, (part) => {
+                if (part.type === "text") {
+                  sendEvent("text", part.text);
+                } else if (part.type === "thought") {
+                  sendEvent("thinking", { type: "thought", content: part.text, iteration: 1 });
+                }
+              });
             }
 
             sendEvent("done", { iterations: 1 });
 
-            // Generate follow-up questions AFTER sending done
-            const followUpQuestions = await generateFollowUpQuestions(ai, conversationContents, message);
-            // Always send the event, even if empty, to clear loading state
+            const followUpQuestions = await generateFollowUpQuestions(adapter, conversationMessages, message);
             sendEvent("follow_up_questions", followUpQuestions);
 
-            return; // Don't close here - let finally block handle it
+            return;
           }
 
           // ────────────────────────────────────────────────────────────
@@ -491,19 +437,14 @@ Reply with EXACTLY one word:
           let searchCount = 0;
           let readCount = 0;
 
-          // Accumulated state across all search phases
-          // Key: "citation|chunkIndex" to deduplicate identical chunks across queries
           const allChunks: Map<string, { result: SearchResult; url: string }> = new Map();
           const caseUrlMap: Record<string, string> = {};
           const casesRead = new Set<string>();
           const caseReadCache = new Map<string, string>();
-          // Citations selected by filter phase for reading
           let filterSelectedCitations: string[] = [];
-          // Track queries across search rounds so later rounds know what was already searched
           const previousQueries: string[] = [];
 
           // ── SEARCH PHASES ──
-          // Front-load all searching. Gemini generates queries, we execute them.
           for (; iteration < phases.length; iteration++) {
             const phase = phases[iteration];
             if (phase !== "search") break;
@@ -519,7 +460,6 @@ Reply with EXACTLY one word:
             // Build search guidance
             let searchGuidance = "";
             if (iteration > 0 && allChunks.size > 0) {
-              // Second+ search round: tell Gemini what was already searched and found
               const uniqueCitations = new Set<string>();
               for (const { result } of allChunks.values()) {
                 uniqueCitations.add(result.citation);
@@ -528,60 +468,51 @@ Reply with EXACTLY one word:
               searchGuidance = `\n\nYou have already run ${searchCount} searches and found ${uniqueCitations.size} unique cases.\n\nPrevious queries:\n${prevQueryList}\n\nDo NOT repeat similar queries. Search from DIFFERENT angles — try different legal concepts, broader/narrower terms, or different injury comparisons.`;
             }
 
-            // Ask Gemini to generate search queries
-            const searchContents = [...conversationContents];
+            // Ask LLM to generate search queries
+            const searchMessages: AIMessage[] = [...conversationMessages];
             if (searchGuidance) {
-              searchContents.push({ role: "user", parts: [{ text: searchGuidance }] });
+              searchMessages.push({ role: "user", parts: [{ type: "text", text: searchGuidance }] });
             }
 
-            const searchResponse = await ai.models.generateContentStream({
-              model: "gemini-3.1-flash-lite-preview",
-              contents: searchContents,
-              config: {
+            const searchStream = adapter.generateContentStream(
+              searchMessages,
+              "pipeline",
+              {
                 systemInstruction: systemPrompt,
                 tools: searchOnlyTools,
-                thinkingConfig: { thinkingLevel, includeThoughts: true },
-              },
-            });
+                thinkingLevel,
+                includeThoughts: true,
+              }
+            );
 
             // Process search response — collect function calls
-            const searchFunctionCalls: Array<{ name: string; args: Record<string, unknown> }> = [];
-            // eslint-disable-next-line @typescript-eslint/no-explicit-any
-            const searchModelParts: any[] = [];
+            const searchFunctionCalls: Array<{ name: string; args: Record<string, unknown>; toolCallId?: string }> = [];
 
-            for await (const chunk of searchResponse) {
-              const candidate = (chunk as { candidates?: Array<{ content?: { parts?: Array<unknown> } }> }).candidates?.[0];
-              if (!candidate?.content?.parts) continue;
+            const searchModelParts = await collectStreamParts(searchStream, (part) => {
+              if (part.type === "thought") {
+                sendEvent("thinking", { type: "thought", content: part.text, iteration: phaseNum });
+                const thought = (part.text || "").toLowerCase();
+                if (thought.includes("search") || thought.includes("find")) sendStage("strategizing", "Creating search strategy...");
+              } else if (part.type === "functionCall") {
+                searchFunctionCalls.push({ name: part.name!, args: part.args!, toolCallId: part.toolCallId });
 
-              for (const part of candidate.content.parts) {
-                searchModelParts.push(part);
-                const typedPart = part as { thought?: boolean; text?: string; functionCall?: { name: string; args: Record<string, unknown> } };
-
-                if (typedPart.thought && typedPart.text) {
-                  sendEvent("thinking", { type: "thought", content: typedPart.text, iteration: phaseNum });
-                  const thought = typedPart.text.toLowerCase();
-                  if (thought.includes("search") || thought.includes("find")) sendStage("strategizing", "Creating search strategy...");
-                } else if (typedPart.functionCall) {
-                  searchFunctionCalls.push({ name: typedPart.functionCall.name, args: typedPart.functionCall.args });
-
-                  if (typedPart.functionCall.name === "searchCases") {
-                    const query = (typedPart.functionCall.args.query as string) || "";
-                    const filters: string[] = [];
-                    if (caseLanguage) filters.push(`lang=${caseLanguage}`);
-                    else if (typedPart.functionCall.args.language) filters.push(`lang=${typedPart.functionCall.args.language}`);
-                    if (typedPart.functionCall.args.court) filters.push(`court=${typedPart.functionCall.args.court}`);
-                    const filterStr = filters.length > 0 ? ` [${filters.join(", ")}]` : "";
-                    sendStage("searching", `Searching: "${query.substring(0, 50)}${query.length > 50 ? "..." : ""}"${filterStr}`);
-                  }
-
-                  const displayArgs = { ...typedPart.functionCall.args };
-                  if (typedPart.functionCall.name === "searchCases" && caseLanguage) {
-                    displayArgs.language = caseLanguage;
-                  }
-                  sendEvent("tool_call", { name: typedPart.functionCall.name, args: displayArgs, iteration: phaseNum });
+                if (part.name === "searchCases") {
+                  const query = (part.args?.query as string) || "";
+                  const filters: string[] = [];
+                  if (caseLanguage) filters.push(`lang=${caseLanguage}`);
+                  else if (part.args?.language) filters.push(`lang=${part.args.language}`);
+                  if (part.args?.court) filters.push(`court=${part.args.court}`);
+                  const filterStr = filters.length > 0 ? ` [${filters.join(", ")}]` : "";
+                  sendStage("searching", `Searching: "${query.substring(0, 50)}${query.length > 50 ? "..." : ""}"${filterStr}`);
                 }
+
+                const displayArgs = { ...part.args! };
+                if (part.name === "searchCases" && caseLanguage) {
+                  displayArgs.language = caseLanguage;
+                }
+                sendEvent("tool_call", { name: part.name, args: displayArgs, iteration: phaseNum });
               }
-            }
+            });
 
             // Track queries for next round's guidance
             for (const call of searchFunctionCalls) {
@@ -591,9 +522,8 @@ Reply with EXACTLY one word:
             }
 
             // Execute all tool calls
-            // First add model's function calls to conversation
             if (searchFunctionCalls.length > 0) {
-              conversationContents.push({ role: "model", parts: searchModelParts });
+              conversationMessages.push({ role: "model", parts: searchModelParts });
             }
 
             // Execute all tool calls concurrently
@@ -602,25 +532,25 @@ Reply with EXACTLY one word:
                 if (call.name === "searchCases") {
                   try {
                     const { results, formattedResult, urls } = await executeSearch(call.args, caseLanguage, allowedCourts);
-                    return { name: "searchCases" as const, success: true, results, formattedResult, urls } as const;
+                    return { name: "searchCases" as const, success: true, results, formattedResult, urls, toolCallId: call.toolCallId } as const;
                   } catch (error) {
-                    return { name: "searchCases" as const, success: false, error: error instanceof Error ? error.message : "Unknown error" } as const;
+                    return { name: "searchCases" as const, success: false, error: error instanceof Error ? error.message : "Unknown error", toolCallId: call.toolCallId } as const;
                   }
                 } else {
                   const cap = call.args.cap as number;
                   const section = call.args.section as string;
                   try {
                     const sectionText = await executeGetOrdinanceSection(cap, section);
-                    return { name: "getOrdinanceSection" as const, success: true, cap, section, sectionText } as const;
+                    return { name: "getOrdinanceSection" as const, success: true, cap, section, sectionText, toolCallId: call.toolCallId } as const;
                   } catch (error) {
-                    return { name: "getOrdinanceSection" as const, success: false, cap, section, error: error instanceof Error ? error.message : "Unknown error" } as const;
+                    return { name: "getOrdinanceSection" as const, success: false, cap, section, error: error instanceof Error ? error.message : "Unknown error", toolCallId: call.toolCallId } as const;
                   }
                 }
               })
             );
 
-            // Process results in order for conversation history and events
-            const toolResponseParts: Array<{ functionResponse: { name: string; response: { result: string } } }> = [];
+            // Process results in order
+            const toolResponseParts: AIPart[] = [];
 
             for (const result of toolCallResults) {
               if (result.name === "searchCases") {
@@ -637,40 +567,38 @@ Reply with EXACTLY one word:
                   }
 
                   toolResponseParts.push({
-                    functionResponse: { name: "searchCases", response: { result: result.formattedResult } },
+                    type: "functionResponse", name: "searchCases", result: result.formattedResult, toolCallId: result.toolCallId,
                   });
                   sendEvent("tool_result", { name: "searchCases", summary: `Found ${result.results.length} chunks`, iteration: phaseNum });
                 } else {
                   const errorMsg = `Error: ${result.error}`;
                   toolResponseParts.push({
-                    functionResponse: { name: "searchCases", response: { result: errorMsg } },
+                    type: "functionResponse", name: "searchCases", result: errorMsg, toolCallId: result.toolCallId,
                   });
                   sendEvent("tool_result", { name: "searchCases", summary: errorMsg, iteration: phaseNum });
                 }
               } else if (result.name === "getOrdinanceSection") {
                 if (result.success) {
                   toolResponseParts.push({
-                    functionResponse: { name: "getOrdinanceSection", response: { result: result.sectionText } },
+                    type: "functionResponse", name: "getOrdinanceSection", result: result.sectionText, toolCallId: result.toolCallId,
                   });
                   sendEvent("tool_result", { name: "getOrdinanceSection", summary: `Retrieved Cap. ${result.cap} s.${result.section}`, iteration: phaseNum });
                 } else {
                   const errorMsg = `Error: ${result.error}`;
                   toolResponseParts.push({
-                    functionResponse: { name: "getOrdinanceSection", response: { result: errorMsg } },
+                    type: "functionResponse", name: "getOrdinanceSection", result: errorMsg, toolCallId: result.toolCallId,
                   });
                   sendEvent("tool_result", { name: "getOrdinanceSection", summary: errorMsg, iteration: phaseNum });
                 }
               }
             }
 
-            // Add tool responses to conversation if any tools were called
             if (toolResponseParts.length > 0) {
-              conversationContents.push({ role: "user", parts: toolResponseParts });
+              conversationMessages.push({ role: "user", parts: toolResponseParts });
             }
           }
 
           // ── FILTER PHASE ──
-          // Gemini sees ALL accumulated chunks and picks which cases to read
           if (iteration < phases.length && phases[iteration] === "filter") {
             const phaseNum = iteration + 1;
             sendStage("analyzing", "Filtering cases for relevance...");
@@ -680,7 +608,7 @@ Reply with EXACTLY one word:
               iteration: phaseNum,
             });
 
-            // Build the chunk summary for Gemini
+            // Build the chunk summary
             const chunkSummary = [...allChunks.values()]
               .sort((a, b) => b.result.score - a.result.score)
               .map(({ result, url }) =>
@@ -688,9 +616,8 @@ Reply with EXACTLY one word:
               )
               .join("\n\n---\n\n");
 
-            // Count how many reads we have available
             const readPhasesRemaining = phases.slice(iteration + 1).filter(p => p === "read").length;
-            const maxReads = Math.max(readPhasesRemaining * 3, 3); // ~3 cases per read phase
+            const maxReads = Math.max(readPhasesRemaining * 3, 3);
 
             const filterPrompt = `You have searched for cases and found the following ${allChunks.size} chunks from ${new Set([...allChunks.values()].map(c => c.result.citation)).size} unique cases.
 
@@ -708,38 +635,33 @@ CHUNKS:
 
 ${chunkSummary}`;
 
-            const filterContents = [...conversationContents, { role: "user", parts: [{ text: filterPrompt }] }];
+            const filterMessages: AIMessage[] = [...conversationMessages, { role: "user", parts: [{ type: "text", text: filterPrompt }] }];
 
-            const filterResponse = await ai.models.generateContent({
-              model: "gemini-3.1-flash-lite-preview",
-              contents: filterContents,
-              config: {
+            const filterResponse = await adapter.generateContent(
+              filterMessages,
+              "pipeline",
+              {
                 systemInstruction: systemPrompt,
-                thinkingConfig: { thinkingLevel, includeThoughts: true },
-              },
-            });
-
-            // Parse the citation list from Gemini's response
-            const filterText = filterResponse.text || "";
+                thinkingLevel,
+                includeThoughts: true,
+              }
+            );
 
             // Send thinking from filter
-            const filterCandidates = filterResponse.candidates;
-            if (filterCandidates?.[0]?.content?.parts) {
-              for (const part of filterCandidates[0].content.parts) {
-                const typedPart = part as { thought?: boolean; text?: string };
-                if (typedPart.thought && typedPart.text) {
-                  sendEvent("thinking", { type: "thought", content: typedPart.text, iteration: phaseNum });
-                }
+            for (const part of filterResponse.parts) {
+              if (part.type === "thought") {
+                sendEvent("thinking", { type: "thought", content: part.text, iteration: phaseNum });
               }
             }
 
-            // Extract citations from numbered list (e.g., "1. [2024] HKDC 620")
+            const filterText = filterResponse.text || "";
+
+            // Extract citations from numbered list
             const citationRegex = /\[(\d{4})\]\s*(\w+)\s+(?:No\.\s*)?(\d+)/g;
             let match;
             const selectedCitations: string[] = [];
             while ((match = citationRegex.exec(filterText)) !== null) {
               const citation = `[${match[1]}] ${match[2]} ${match[3]}`;
-              // Only include if we actually have this citation in our search results
               if (caseUrlMap[citation] && !selectedCitations.includes(citation)) {
                 selectedCitations.push(citation);
               }
@@ -757,7 +679,6 @@ ${chunkSummary}`;
           }
 
           // ── READ PHASES ──
-          // Read the cases selected by the filter phase
           let readQueueIndex = 0;
           for (; iteration < phases.length; iteration++) {
             const phase = phases[iteration];
@@ -765,7 +686,6 @@ ${chunkSummary}`;
 
             const phaseNum = iteration + 1;
 
-            // Determine which cases to read this round
             const casesToReadThisRound: string[] = [];
             while (readQueueIndex < filterSelectedCitations.length && casesToReadThisRound.length < 3) {
               const citation = filterSelectedCitations[readQueueIndex];
@@ -776,7 +696,6 @@ ${chunkSummary}`;
             }
 
             if (casesToReadThisRound.length === 0) {
-              // No more cases to read — skip remaining read phases
               sendEvent("thinking", {
                 type: "reasoning",
                 content: `Phase: READ (iteration ${phaseNum}/${phases.length}) — No more unread cases, skipping.`,
@@ -792,16 +711,16 @@ ${chunkSummary}`;
               iteration: phaseNum,
             });
 
-            // Read each case and add to conversation as tool results
-            // We simulate tool calls for getCaseDetails so the conversation history
-            // looks natural to Gemini
-            const readModelParts = casesToReadThisRound.map(citation => ({
-              functionCall: { name: "getCaseDetails", args: { citation } },
+            // Simulate tool calls for getCaseDetails
+            const readModelParts: AIPart[] = casesToReadThisRound.map((citation, i) => ({
+              type: "functionCall" as const,
+              name: "getCaseDetails",
+              args: { citation },
+              toolCallId: `read_${phaseNum}_${i}`,
             }));
 
-            conversationContents.push({ role: "model", parts: readModelParts });
+            conversationMessages.push({ role: "model", parts: readModelParts });
 
-            // Send all tool_call events upfront
             for (const citation of casesToReadThisRound) {
               sendEvent("tool_call", { name: "getCaseDetails", args: { citation }, iteration: phaseNum });
             }
@@ -819,86 +738,74 @@ ${chunkSummary}`;
               })
             );
 
-            // Process results in order for conversation history and events
-            const readResponseParts: Array<{ functionResponse: { name: string; response: { result: string } } }> = [];
+            const readResponseParts: AIPart[] = [];
 
-            for (const result of readResults) {
+            for (let i = 0; i < readResults.length; i++) {
+              const result = readResults[i];
+              const toolCallId = `read_${phaseNum}_${i}`;
               if (result.success) {
                 casesRead.add(result.citation);
                 readCount++;
                 readResponseParts.push({
-                  functionResponse: { name: "getCaseDetails", response: { result: result.caseText } },
+                  type: "functionResponse", name: "getCaseDetails", result: result.caseText, toolCallId,
                 });
                 sendEvent("tool_result", { name: "getCaseDetails", summary: `Retrieved full text of ${result.citation}`, iteration: phaseNum });
               } else {
                 const errorMsg = `Error: ${result.error}`;
                 readResponseParts.push({
-                  functionResponse: { name: "getCaseDetails", response: { result: errorMsg } },
+                  type: "functionResponse", name: "getCaseDetails", result: errorMsg, toolCallId,
                 });
                 sendEvent("tool_result", { name: "getCaseDetails", summary: errorMsg, iteration: phaseNum });
               }
             }
 
-            conversationContents.push({ role: "user", parts: readResponseParts });
+            conversationMessages.push({ role: "user", parts: readResponseParts });
 
-            // Have Gemini process the read results (to absorb the case content)
+            // Have LLM process the read results
             const readGuidance = readQueueIndex < filterSelectedCitations.length
               ? `You have read ${casesRead.size} cases so far. More cases will be read in the next round. For now, analyze what you've read and note key findings.`
               : `You have now read all ${casesRead.size} selected cases. Analyze the key findings from all cases.`;
 
-            conversationContents.push({ role: "user", parts: [{ text: readGuidance }] });
+            conversationMessages.push({ role: "user", parts: [{ type: "text", text: readGuidance }] });
 
-            const readResponse = await ai.models.generateContentStream({
-              model: "gemini-3.1-flash-lite-preview",
-              contents: conversationContents,
-              config: {
+            const readStream = adapter.generateContentStream(
+              conversationMessages,
+              "pipeline",
+              {
                 systemInstruction: systemPrompt,
                 tools: readOnlyTools,
-                thinkingConfig: { thinkingLevel, includeThoughts: true },
-              },
-            });
+                thinkingLevel,
+                includeThoughts: true,
+              }
+            );
 
-            // Process — collect any thoughts or additional read requests
-            // eslint-disable-next-line @typescript-eslint/no-explicit-any
-            const readProcessParts: any[] = [];
-            const additionalReads: string[] = [];
-            const additionalOrdinanceCalls: Array<{ cap: number; section: string }> = [];
+            const additionalReads: Array<{ citation: string; toolCallId?: string }> = [];
+            const additionalOrdinanceCalls: Array<{ cap: number; section: string; toolCallId?: string }> = [];
 
-            for await (const chunk of readResponse) {
-              const candidate = (chunk as { candidates?: Array<{ content?: { parts?: Array<unknown> } }> }).candidates?.[0];
-              if (!candidate?.content?.parts) continue;
-
-              for (const part of candidate.content.parts) {
-                readProcessParts.push(part);
-                const typedPart = part as { thought?: boolean; text?: string; functionCall?: { name: string; args: Record<string, unknown> } };
-
-                if (typedPart.thought && typedPart.text) {
-                  sendEvent("thinking", { type: "thought", content: typedPart.text, iteration: phaseNum });
-                } else if (typedPart.functionCall?.name === "getCaseDetails") {
-                  // Gemini wants to read an additional case — allow it
-                  const citation = (typedPart.functionCall.args as { citation?: string })?.citation;
-                  if (citation && !casesRead.has(citation) && caseUrlMap[citation]) {
-                    additionalReads.push(citation);
-                  }
-                } else if (typedPart.functionCall?.name === "getOrdinanceSection") {
-                  // Gemini wants to reference an ordinance section
-                  const cap = typedPart.functionCall.args.cap as number;
-                  const section = typedPart.functionCall.args.section as string;
-                  if (cap && section) {
-                    additionalOrdinanceCalls.push({ cap, section });
-                  }
+            const readProcessParts = await collectStreamParts(readStream, (part) => {
+              if (part.type === "thought") {
+                sendEvent("thinking", { type: "thought", content: part.text, iteration: phaseNum });
+              } else if (part.type === "functionCall" && part.name === "getCaseDetails") {
+                const citation = part.args?.citation as string;
+                if (citation && !casesRead.has(citation) && caseUrlMap[citation]) {
+                  additionalReads.push({ citation, toolCallId: part.toolCallId });
+                }
+              } else if (part.type === "functionCall" && part.name === "getOrdinanceSection") {
+                const cap = part.args?.cap as number;
+                const section = part.args?.section as string;
+                if (cap && section) {
+                  additionalOrdinanceCalls.push({ cap, section, toolCallId: part.toolCallId });
                 }
               }
-            }
+            });
 
-            // Handle any additional tool calls Gemini requested
+            // Handle any additional tool calls
             if (additionalReads.length > 0 || additionalOrdinanceCalls.length > 0) {
-              conversationContents.push({ role: "model", parts: readProcessParts });
+              conversationMessages.push({ role: "model", parts: readProcessParts });
 
-              const additionalResponseParts: Array<{ functionResponse: { name: string; response: { result: string } } }> = [];
+              const additionalResponseParts: AIPart[] = [];
 
-              // Handle additional case reads
-              for (const citation of additionalReads) {
+              for (const { citation, toolCallId } of additionalReads) {
                 sendStage("retrieving", `Retrieving: ${citation}`);
                 sendEvent("tool_call", { name: "getCaseDetails", args: { citation }, iteration: phaseNum });
 
@@ -907,40 +814,38 @@ ${chunkSummary}`;
                   casesRead.add(citation);
                   readCount++;
                   additionalResponseParts.push({
-                    functionResponse: { name: "getCaseDetails", response: { result: caseText } },
+                    type: "functionResponse", name: "getCaseDetails", result: caseText, toolCallId,
                   });
                   sendEvent("tool_result", { name: "getCaseDetails", summary: `Retrieved full text of ${citation}`, iteration: phaseNum });
                 } catch (error) {
                   const errorMsg = `Error: ${error instanceof Error ? error.message : "Unknown error"}`;
                   additionalResponseParts.push({
-                    functionResponse: { name: "getCaseDetails", response: { result: errorMsg } },
+                    type: "functionResponse", name: "getCaseDetails", result: errorMsg, toolCallId,
                   });
                 }
               }
 
-              // Handle additional ordinance section requests
-              for (const { cap, section } of additionalOrdinanceCalls) {
+              for (const { cap, section, toolCallId } of additionalOrdinanceCalls) {
                 sendStage("retrieving", `Retrieving: Cap. ${cap} s.${section}`);
                 sendEvent("tool_call", { name: "getOrdinanceSection", args: { cap, section }, iteration: phaseNum });
 
                 try {
                   const sectionText = await executeGetOrdinanceSection(cap, section);
                   additionalResponseParts.push({
-                    functionResponse: { name: "getOrdinanceSection", response: { result: sectionText } },
+                    type: "functionResponse", name: "getOrdinanceSection", result: sectionText, toolCallId,
                   });
                   sendEvent("tool_result", { name: "getOrdinanceSection", summary: `Retrieved Cap. ${cap} s.${section}`, iteration: phaseNum });
                 } catch (error) {
                   const errorMsg = `Error: ${error instanceof Error ? error.message : "Unknown error"}`;
                   additionalResponseParts.push({
-                    functionResponse: { name: "getOrdinanceSection", response: { result: errorMsg } },
+                    type: "functionResponse", name: "getOrdinanceSection", result: errorMsg, toolCallId,
                   });
                 }
               }
 
-              conversationContents.push({ role: "user", parts: additionalResponseParts });
+              conversationMessages.push({ role: "user", parts: additionalResponseParts });
             } else {
-              // Add model's analysis to conversation
-              conversationContents.push({ role: "model", parts: readProcessParts });
+              conversationMessages.push({ role: "model", parts: readProcessParts });
             }
           }
 
@@ -951,15 +856,15 @@ ${chunkSummary}`;
             iteration: phases.length,
           });
 
-          // Build citation whitelist with explicit URL mapping
           const foundCitations = Object.entries(caseUrlMap);
           const citationList = foundCitations.length > 0
             ? `\n\n## CITATION → URL MAPPING (use EXACTLY these URLs)\n${foundCitations.map(([c, u]) => `${c} → ${u}`).join("\n")}\n\nWhen you mention ANY case above, you MUST link it as [Case Name [YEAR] COURT NUMBER](exact URL from mapping). Do NOT construct URLs yourself. Do NOT use any other domain. Copy the URL exactly as shown.`
             : "\n\nYou did not find any relevant cases during research. Do NOT invent or fabricate any case citations.";
 
-          conversationContents.push({
+          conversationMessages.push({
             role: "user",
             parts: [{
+              type: "text",
               text: `Please provide your final answer based on the research so far. Do not search anymore.
 
 IMPORTANT RULES FOR YOUR RESPONSE:
@@ -972,34 +877,27 @@ IMPORTANT RULES FOR YOUR RESPONSE:
 
           sendStage("responding", "Generating final response...");
 
-          const finalResponse = await ai.models.generateContentStream({
-            model: "gemini-3.1-flash-lite-preview",
-            contents: conversationContents,
-            config: {
+          const finalStream = adapter.generateContentStream(
+            conversationMessages,
+            "pipeline",
+            {
               systemInstruction: systemPrompt,
-              thinkingConfig: { thinkingLevel: ThinkingLevel.LOW, includeThoughts: true },
-            },
-          });
-
-          for await (const chunk of finalResponse) {
-            const candidate = (chunk as { candidates?: Array<{ content?: { parts?: Array<unknown> } }> }).candidates?.[0];
-            if (!candidate?.content?.parts) continue;
-
-            for (const part of candidate.content.parts) {
-              const typedPart = part as { thought?: boolean; text?: string };
-              if (typedPart.text && !typedPart.thought) {
-                sendEvent("text", typedPart.text);
-              } else if (typedPart.thought && typedPart.text) {
-                sendEvent("thinking", { type: "thought", content: typedPart.text, iteration: phases.length });
-              }
+              thinkingLevel: "low",
+              includeThoughts: true,
             }
-          }
+          );
+
+          await collectStreamParts(finalStream, (part) => {
+            if (part.type === "text") {
+              sendEvent("text", part.text);
+            } else if (part.type === "thought") {
+              sendEvent("thinking", { type: "thought", content: part.text, iteration: phases.length });
+            }
+          });
 
           sendEvent("done", { iterations: phases.length });
 
-          // Generate follow-up questions AFTER sending done
-          const followUpQuestions = await generateFollowUpQuestions(ai, conversationContents, message);
-          // Always send the event, even if empty, to clear loading state
+          const followUpQuestions = await generateFollowUpQuestions(adapter, conversationMessages, message);
           sendEvent("follow_up_questions", followUpQuestions);
 
         } catch (error) {

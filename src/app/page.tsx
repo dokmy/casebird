@@ -13,7 +13,7 @@ import { SignupPromptModal } from "@/components/auth/SignupPromptModal";
 import { UpgradeModal } from "@/components/chat/UpgradeModal";
 import { AnimatedBird } from "@/components/ui/animated-bird";
 import { Header } from "@/components/layout/Header";
-import { Message, SelectedCase, ThinkingStep, Stage, ResearchMode, CaseLanguage, UserRole } from "@/types/chat";
+import { Message, SelectedCase, ThinkingStep, Stage, ResearchMode, CaseLanguage, UserRole, AIProvider } from "@/types/chat";
 import { createClient } from "@/lib/supabase/client";
 
 export default function Home() {
@@ -40,6 +40,7 @@ export default function Home() {
   } | null>(null);
   const [mobileSidebarOpen, setMobileSidebarOpen] = useState(false);
   const [chatInput, setChatInput] = useState("");
+  const [aiProvider, setAIProvider] = useState<AIProvider>("gemini");
   const scrollRef = useRef<HTMLDivElement>(null);
   const isSendingRef = useRef(false);
   // Create supabase client once to avoid infinite loops in useEffects
@@ -292,6 +293,7 @@ export default function Home() {
             outputLanguage,
             userRole,
             caseLanguage: caseLanguage === "any" ? undefined : caseLanguage,
+            provider: aiProvider,
             history: messages.map((m) => ({
               role: m.role,
               content: m.content,
@@ -493,7 +495,7 @@ export default function Home() {
         isSendingRef.current = false;
       }
     },
-    [messages, activeConversationId, userId, isAuthenticated, outputLanguage, userRole, caseLanguage, supabase]
+    [messages, activeConversationId, userId, isAuthenticated, outputLanguage, userRole, caseLanguage, aiProvider, supabase]
   );
 
   const handleCaseClick = useCallback((url: string, citation: string) => {
@@ -622,7 +624,7 @@ export default function Home() {
               </div>
             )}
 
-            <ChatInput onSend={handleSend} isLoading={isLoading} caseLanguage={caseLanguage} onCaseLanguageChange={setCaseLanguage} caseLanguageLocked={messages.length > 0} messageCount={subscription?.message_count} messageLimit={subscription?.message_limit} input={chatInput} onInputChange={setChatInput} defaultMode={researchMode} onModeChange={handleModeChange} />
+            <ChatInput onSend={handleSend} isLoading={isLoading} caseLanguage={caseLanguage} onCaseLanguageChange={setCaseLanguage} caseLanguageLocked={messages.length > 0} messageCount={subscription?.message_count} messageLimit={subscription?.message_limit} input={chatInput} onInputChange={setChatInput} defaultMode={researchMode} onModeChange={handleModeChange} aiProvider={aiProvider} onAIProviderChange={setAIProvider} />
           </div>
 
           {/* Case Viewer Panel - desktop side panel */}
