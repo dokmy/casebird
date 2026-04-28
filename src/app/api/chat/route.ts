@@ -224,7 +224,7 @@ async function generateFollowUpQuestions(
     const followUpPrompt = `Legal answer: "${answerText.slice(0, 500)}..."\n\nYou MUST call the suggestFollowUpQuestions function with 2-3 follow-up questions. Do not write text - only call the function.`;
 
     const followUpResponse = await ai.models.generateContent({
-      model: "gemini-3-flash-preview",
+      model: "gemini-3.1-flash-lite-preview",
       contents: [
         { role: "user", parts: [{ text: followUpPrompt }] },
       ],
@@ -390,7 +390,7 @@ Reply with EXACTLY one word:
             const directTools: Tool[] = [{ functionDeclarations: [getOrdinanceSectionDeclaration] }];
 
             const directResponse = await ai.models.generateContentStream({
-              model: "gemini-3-flash-preview",
+              model: "gemini-3.1-flash-lite-preview",
               contents: conversationContents,
               config: {
                 systemInstruction: directPrompt,
@@ -450,7 +450,7 @@ Reply with EXACTLY one word:
 
               // Generate final response with ordinance context
               const finalDirectResponse = await ai.models.generateContentStream({
-                model: "gemini-3-flash-preview",
+                model: "gemini-3.1-flash-lite-preview",
                 contents: conversationContents,
                 config: {
                   systemInstruction: directPrompt,
@@ -535,7 +535,7 @@ Reply with EXACTLY one word:
             }
 
             const searchResponse = await ai.models.generateContentStream({
-              model: "gemini-3-flash-preview",
+              model: "gemini-3.1-flash-lite-preview",
               contents: searchContents,
               config: {
                 systemInstruction: systemPrompt,
@@ -711,7 +711,7 @@ ${chunkSummary}`;
             const filterContents = [...conversationContents, { role: "user", parts: [{ text: filterPrompt }] }];
 
             const filterResponse = await ai.models.generateContent({
-              model: "gemini-3-flash-preview",
+              model: "gemini-3.1-flash-lite-preview",
               contents: filterContents,
               config: {
                 systemInstruction: systemPrompt,
@@ -849,7 +849,7 @@ ${chunkSummary}`;
             conversationContents.push({ role: "user", parts: [{ text: readGuidance }] });
 
             const readResponse = await ai.models.generateContentStream({
-              model: "gemini-3-flash-preview",
+              model: "gemini-3.1-flash-lite-preview",
               contents: conversationContents,
               config: {
                 systemInstruction: systemPrompt,
@@ -973,7 +973,7 @@ IMPORTANT RULES FOR YOUR RESPONSE:
           sendStage("responding", "Generating final response...");
 
           const finalResponse = await ai.models.generateContentStream({
-            model: "gemini-3-flash-preview",
+            model: "gemini-3.1-flash-lite-preview",
             contents: conversationContents,
             config: {
               systemInstruction: systemPrompt,
