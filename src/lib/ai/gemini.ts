@@ -2,7 +2,7 @@ import { GoogleGenAI, Type, ThinkingLevel, FunctionCallingConfigMode } from "@go
 import type { AIAdapter, AIMessage, AIPart, AIGenerateOptions, AIToolDefinition, NormalizedPart } from "./types";
 
 const MODELS = {
-  triage: "gemini-2.0-flash",
+  triage: "gemini-3-flash-preview",
   pipeline: "gemini-3.1-flash-lite-preview",
 };
 
